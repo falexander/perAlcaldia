@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+    <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/bdAlcaldia</property>
+    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.password">password</property>
+    <property name="hibernate.show_sql">true</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</property>
+    <mapping class="peralcaldia.model.Contribuyentes"/>
+    <mapping class="peralcaldia.model.Categorias"/>
+    <mapping class="peralcaldia.model.Comentarios"/>
+    <mapping class="peralcaldia.model.Estados"/>
+    <mapping class="peralcaldia.model.Impuestos"/>
+    <mapping class="peralcaldia.model.Imgdescriptions"/>
+    <mapping class="peralcaldia.model.Usuarios"/>
+    <mapping class="peralcaldia.model.Roles"/>
+    <mapping class="peralcaldia.model.Zonas"/>
+    <mapping class="peralcaldia.model.Inmuebles"/>
+    <mapping class="peralcaldia.model.Publicaciones"/>
+    <mapping class="peralcaldia.model.Impuestosinmuebles"/>
+    <mapping class="peralcaldia.model.Montosimpuestos"/>
+    <mapping class="peralcaldia.model.Pagos"/>
+    <mapping class="peralcaldia.model.historico_inmueble"/>    
+  </session-factory>
+</hibernate-configuration>

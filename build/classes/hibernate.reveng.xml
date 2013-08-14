@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="bdAlcaldia" match-schema="public"/>
+  <table-filter match-name="comentarios"/>
+  <table-filter match-name="montosimpuestos"/>
+  <table-filter match-name="usuarios"/>
+  <table-filter match-name="estados"/>
+  <table-filter match-name="categorias"/>
+  <table-filter match-name="contribuyentes"/>
+  <table-filter match-name="imgdescriptions"/>
+  <table-filter match-name="roles"/>
+  <table-filter match-name="inmuebles"/>
+  <table-filter match-name="impuestosinmuebles"/>
+  <table-filter match-name="publicaciones"/>
+  <table-filter match-name="pagos"/>
+  <table-filter match-name="impuestos"/>
+  <table-filter match-name="zonas"/>
+  <table-filter match-name="historico_inmueble"/>  
+</hibernate-reverse-engineering>
