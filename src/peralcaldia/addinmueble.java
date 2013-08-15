@@ -8,13 +8,16 @@ import controller.AbstractDAO;
 import java.util.AbstractList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import peralcaldia.model.Inmuebles;
 import peralcaldia.model.Contribuyentes;
 import peralcaldia.model.Zonas;
 import peralcaldia.model.Estados;
 import peralcaldia.model.Usuarios;
+import peralcaldia.model.historico_inmueble;
 /**
  *
  * @author alex
@@ -70,6 +73,57 @@ public class addinmueble extends javax.swing.JInternalFrame {
         }        
     }
     
+    public void guardarinmueble(){
+        Inmuebles ninmueble = new Inmuebles();
+        Zonas zninm = new Zonas();
+        Estados stinm = new Estados();
+        Contribuyentes ctbinm = new Contribuyentes();
+        Usuarios usctbinm = new Usuarios();
+        Set<Contribuyentes> lctr=null;
+        historico_inmueble hstinm = new historico_inmueble();
+        
+        //Cargando datos para agregar un nuevo inmueble
+        zninm = (Zonas) dao.findByWhereStatementoneobj(Zonas.class, "zona = '"+ cmbzona.getSelectedItem().toString() +"'");
+        stinm = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado = '"+ cmbestados.getSelectedItem().toString() +"'");
+        usctbinm = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, " (nombres || ' ' || apellidos) = '"+ cmbcontribuyente.getSelectedItem().toString() +"'");
+        lctr =  usctbinm.getContribuyenteses();
+        
+        Iterator it = lctr.iterator();
+        while (it.hasNext()) {            
+            ctbinm=(Contribuyentes) it.next();
+        }
+
+        ninmueble.setContribuyentes(ctbinm);
+        ninmueble.setDireccion(txtdirinm.getText());
+        ninmueble.setEstadosinm(stinm);
+        ninmueble.setFecharegistro(jdfechareg.getDate());
+        ninmueble.setFolio1(txtfolio1.getText());
+        ninmueble.setFolio2(txtfolio2.getText());
+        ninmueble.setTomo1(txttomo1.getText());
+        ninmueble.setTomo2(txttomo2.getText());
+        ninmueble.setTomoreal(txttomoreal.getText());
+        ninmueble.setZonas(zninm);
+        ninmueble.setTelefono(txtphone.getText());
+        ninmueble.setMetros_cuadrados(Double.parseDouble(txtmcdrs.getText()));
+        ninmueble.setMetros_lineales(Double.parseDouble(txtmtln.getText()));
+        
+
+        
+        try {
+            dao.save(ninmueble);
+           //Cargando datos para agregar en el historico
+            hstinm.setContribuyenteshid(ctbinm);
+            hstinm.setFecha_inicio(jdfechareg.getDate());
+            hstinm.setInmuebleshid(ninmueble);                        
+            dao.save(hstinm);
+            JOptionPane.showMessageDialog(this, "Guardado Completo");            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Hubo un error al guardar los datos, por favor intente mas tarde");
+            e.printStackTrace();            
+        }
+        
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -90,6 +144,10 @@ public class addinmueble extends javax.swing.JInternalFrame {
         cmbestados = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jdfechareg = new com.toedter.calendar.JDateChooser();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtmtln = new javax.swing.JTextField();
+        txtmcdrs = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txttomo1 = new javax.swing.JTextField();
@@ -150,19 +208,33 @@ public class addinmueble extends javax.swing.JInternalFrame {
 
         jLabel10.setText("Fecha de Registro:");
 
+        jLabel12.setText("Metros Lineales :");
+
+        jLabel13.setText("Metros Cuadrados:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cmbestados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cmbestados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtmtln, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtmcdrs)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,13 +242,21 @@ public class addinmueble extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel11)
                         .addComponent(cmbestados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel10)))
+                        .addComponent(jLabel10))
+                    .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12)
+                        .addComponent(txtmtln, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel13)
+                        .addComponent(txtmcdrs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -271,8 +351,18 @@ public class addinmueble extends javax.swing.JInternalFrame {
         );
 
         btngrdinm.setText("Guardar");
+        btngrdinm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngrdinmActionPerformed(evt);
+            }
+        });
 
         btnslinm.setText("Salir");
+        btnslinm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnslinmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -318,13 +408,25 @@ public class addinmueble extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jpcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnslinmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnslinmActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnslinmActionPerformed
+
+    private void btngrdinmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngrdinmActionPerformed
+        // TODO add your handling code here:
+        guardarinmueble();
+    }//GEN-LAST:event_btngrdinmActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btngrdinm;
     private javax.swing.JButton btnslinm;
@@ -334,6 +436,8 @@ public class addinmueble extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -351,6 +455,8 @@ public class addinmueble extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtdirinm;
     private javax.swing.JTextField txtfolio1;
     private javax.swing.JTextField txtfolio2;
+    private javax.swing.JTextField txtmcdrs;
+    private javax.swing.JTextField txtmtln;
     private javax.swing.JTextField txtphone;
     private javax.swing.JTextField txttomo1;
     private javax.swing.JTextField txttomo2;

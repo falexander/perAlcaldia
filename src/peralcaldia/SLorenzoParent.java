@@ -38,6 +38,8 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmimpuesto = new javax.swing.JMenuItem();
         jminm = new javax.swing.JMenuItem();
         jmzona = new javax.swing.JMenuItem();
+        jmdf = new javax.swing.JMenu();
+        jmmnt = new javax.swing.JMenuItem();
         jmpsalir = new javax.swing.JMenuItem();
         jmeditar = new javax.swing.JMenu();
 
@@ -106,6 +108,18 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jnuevo.add(jmzona);
 
         jmarchivo.add(jnuevo);
+
+        jmdf.setText("Establecer");
+
+        jmmnt.setText("Monto Impuesto");
+        jmmnt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmmntActionPerformed(evt);
+            }
+        });
+        jmdf.add(jmmnt);
+
+        jmarchivo.add(jmdf);
 
         jmpsalir.setText("Salir");
         jmpsalir.addActionListener(new java.awt.event.ActionListener() {
@@ -213,6 +227,20 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jminmActionPerformed
 
+    private void jmmntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmmntActionPerformed
+        // TODO add your handling code here:
+        addmntimpuestos admnti = new addmntimpuestos();
+        try {
+            this.jpprincipal.add(admnti);
+            admnti.setSelected(true);
+            admnti.toFront();
+            admnti.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jmmntActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,9 +280,11 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuBar jbarramenu;
     private javax.swing.JMenu jmarchivo;
     private javax.swing.JMenuItem jmcontribuyente;
+    private javax.swing.JMenu jmdf;
     private javax.swing.JMenu jmeditar;
     private javax.swing.JMenuItem jmimpuesto;
     private javax.swing.JMenuItem jminm;
+    private javax.swing.JMenuItem jmmnt;
     private javax.swing.JMenuItem jmpsalir;
     private javax.swing.JMenuItem jmusuario;
     private javax.swing.JMenuItem jmzona;

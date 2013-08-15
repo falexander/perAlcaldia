@@ -64,6 +64,21 @@
                 </MenuItem>
               </SubComponents>
             </Menu>
+            <Menu class="javax.swing.JMenu" name="jmdf">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Establecer"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="jmmnt">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Monto Impuesto"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmmntActionPerformed"/>
+                  </Events>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
             <MenuItem class="javax.swing.JMenuItem" name="jmpsalir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>
