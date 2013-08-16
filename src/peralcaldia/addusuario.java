@@ -150,9 +150,27 @@ public class addusuario extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Nombres:");
 
+        txtnombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnombresKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("Apellidos:");
 
+        txtapellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtapellidosKeyTyped(evt);
+            }
+        });
+
         jLabel5.setText("Username:");
+
+        txtusername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtusernameKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Password:");
 
@@ -160,7 +178,19 @@ public class addusuario extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Telefono:");
 
+        txttelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txttelefonoKeyTyped(evt);
+            }
+        });
+
         jLabel9.setText("Celular:");
+
+        txtmovil.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtmovilKeyTyped(evt);
+            }
+        });
 
         jLabel10.setText("Dirección:");
 
@@ -266,7 +296,7 @@ public class addusuario extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnguardar)
                     .addComponent(jbsalir))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -292,6 +322,51 @@ public class addusuario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jbsalirActionPerformed
+
+    private void txtnombresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombresKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+       // Verificar si la tecla pulsada no es un numero y es una lera de la "a" a la "z" o de la "A" a la "Z"
+      if(((caracter < 'a') || (caracter > 'z')) && ((caracter < 'A') || (caracter > 'Z')) && (caracter != ' ') )
+          evt.consume();
+    }//GEN-LAST:event_txtnombresKeyTyped
+
+    private void txtapellidosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtapellidosKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+       // Verificar si la tecla pulsada no es un numero y es una lera de la "a" a la "z" o de la "A" a la "Z"
+      if(((caracter < 'a') || (caracter > 'z')) && ((caracter < 'A') || (caracter > 'Z')) && (caracter != ' ') )
+          evt.consume();
+    }//GEN-LAST:event_txtapellidosKeyTyped
+
+    private void txtusernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+       // Verificar si la tecla pulsada no es un numero y es una lera de la "a" a la "z" o de la "A" a la "Z"
+      if(((caracter < 'a') || (caracter > 'z')) && ((caracter < 'A') || (caracter > 'Z')) && ((caracter < '0') || (caracter > '9')))
+          evt.consume();
+    }//GEN-LAST:event_txtusernameKeyTyped
+
+    private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+        // Verificar si la tecla pulsada no es una letra y esta entre 0 y 9
+        if(((caracter < '0') || (caracter > '9')) )
+            evt.consume();
+    }//GEN-LAST:event_txttelefonoKeyTyped
+
+    private void txtmovilKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmovilKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+        // Verificar si la tecla pulsada no es una letra y esta entre 0 y 9
+        if(((caracter < '0') || (caracter > '9')) )
+            evt.consume();
+    }//GEN-LAST:event_txtmovilKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardar;

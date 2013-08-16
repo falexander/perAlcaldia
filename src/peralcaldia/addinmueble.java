@@ -192,6 +192,12 @@ public class addinmueble extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Telefono :");
 
+        txtphone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtphoneKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -288,7 +294,7 @@ public class addinmueble extends javax.swing.JInternalFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btngrdinm)
                     .addComponent(btnslinm))
@@ -325,6 +331,16 @@ public class addinmueble extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtphoneKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtphoneKeyTyped
+        // TODO add your handling code here:
+         char caracter = evt.getKeyChar();
+
+        // Verificar si la tecla pulsada no es una letra y esta entre 0 y 9
+        if(((caracter < '0') || (caracter > '9')) )
+            evt.consume();
+    }//GEN-LAST:event_txtphoneKeyTyped
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btngrdinm;
     private javax.swing.JButton btnslinm;

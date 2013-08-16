@@ -7,6 +7,8 @@ package peralcaldia;
 import controller.AbstractDAO;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import util.codemd5;
 import peralcaldia.model.Contribuyentes;
@@ -124,6 +126,116 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
     }
     
     
+    public boolean validarMail(String m) {
+
+        char c1 = m.charAt(0);
+        int pos1 = 0;
+        int pos2 = 0;
+        int a1 = 0;
+        int a2 = 0;
+        int a3 = 0;
+        int x = 0;
+        String cadena1 = "";
+        String cadena2 = "";
+        String cadena3 = "";
+
+        if (c1 != '@' && c1 != '.') {
+
+
+            for (int i=1; i < m.length(); i++) {
+                if (m.charAt(i) == '@') {
+                    pos1 = i;
+                }
+            }
+            for (int i=1; i < m.length(); i++) {
+                if (m.charAt(i) == '.') {
+                    pos2 = i;
+                }
+            }
+
+            cadena1 = m.substring(0, pos1);
+            cadena2 = m.substring(pos1+1, pos2);
+            cadena3 = m.substring(pos2+1, m.length());
+
+            for (int i = 0;i < cadena1.length(); i++) {
+                System.out.println("carcater "+cadena1);
+                a1 = cadena1.codePointAt(i);//
+                if ((a1 > 47 && a1 < 58  ) || (a1 > 64 && a1 < 91)
+                        || (a1 > 96 && a1 < 123) || a1==46 ) {
+                    x++;
+                }
+            }
+            System.out.println("1 "+cadena2);
+            for (int i = 0; i < cadena2.length(); i++) {
+                a2 = cadena2.codePointAt(i);
+                System.out.println("carcater "+a2);
+                if ((a2 > 47 && a2 < 58  ) || (a2 > 64 && a2 < 91)
+                        || (a2 > 96 && a2 < 123)) {
+                    x++;
+                }
+            }
+
+            for (int i = 0;i < cadena3.length(); i++) {
+                a3 = cadena3.codePointAt(i);
+                if ((a3 > 47 && a3 < 58  ) || (a3 > 64 && a3 < 91)
+                        || (a3 > 96 && a3 < 123)) {
+                    x++;
+                }
+            }
+            System.out.println("xxx "+x+"    "+(m.length()-2));
+            if (x == m.length()- 2) {
+                if (pos1 != 0 && pos2 != 0 && (pos1 + 2) < pos2) {
+
+                    if (m.length()-1 >= (pos2 + 2)) {
+
+                        return true;
+                    }else {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+    }
+    
+    
+    
+    public static boolean checkEmail (String email) {
+
+    // Establecer el patron
+   Pattern p = Pattern.compile("[-\\w\\.]+@\\w+\\.\\w+");
+    // Asociar el string al patron
+    Matcher m = p.matcher(email);
+
+   // Comprobar si encaja
+   if (!m.matches()){
+   Pattern pp = Pattern.compile("[-\\w\\.]+@\\w+\\.\\w+\\w+\\.\\w+");
+    // Asociar el string al patron
+    Matcher mm = pp.matcher(email);
+   return mm.matches();
+   }
+   // Comprobar si encaja
+    return m.matches();
+
+}
+    
+    public boolean isEmail(String correo) {
+        Pattern pat = null;
+        Matcher mat = null;        
+        pat = Pattern.compile("^([0-9a-zA-Z]([_.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+([a-zA-Z]{2,9}.)+[a-zA-Z]{2,3})$");
+        mat = pat.matcher(correo);
+        if (mat.find()) {
+            System.out.println("[" + mat.group() + "]");
+            return true;
+        }else{
+            return false;
+        }        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -159,6 +271,8 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
         cmbestado = new javax.swing.JComboBox();
         btnguardar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -183,9 +297,21 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Username:");
 
+        txtusername.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtusernameKeyTyped(evt);
+            }
+        });
+
         jLabel6.setText("Password:");
 
         jLabel7.setText("Email:");
+
+        txtemail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtemailFocusLost(evt);
+            }
+        });
 
         jLabel8.setText("Telefono:");
 
@@ -248,6 +374,15 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton2.setText("jButton2");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+
+        jLabel12.setText("jLabel12");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -272,7 +407,11 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jrnit)
                                 .addGap(54, 54, 54)
-                                .addComponent(jrnjuridico))
+                                .addComponent(jrnjuridico)
+                                .addGap(28, 28, 28)
+                                .addComponent(jButton2)
+                                .addGap(98, 98, 98)
+                                .addComponent(jLabel12))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel5)
@@ -321,7 +460,7 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
                 .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(84, 84, 84)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 229, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -365,7 +504,9 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrnit)
-                    .addComponent(jrnjuridico))
+                    .addComponent(jrnjuridico)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -378,7 +519,7 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnguardar)
                     .addComponent(jButton1))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -466,15 +607,56 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
             evt.consume();
     }//GEN-LAST:event_txtnissKeyTyped
 
+    private void txtusernameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtusernameKeyTyped
+        // TODO add your handling code here:
+        char caracter = evt.getKeyChar();
+
+       // Verificar si la tecla pulsada no es un numero y es una lera de la "a" a la "z" o de la "A" a la "Z"
+      if(((caracter < 'a') || (caracter > 'z')) && ((caracter < 'A') || (caracter > 'Z')) && ((caracter < '0') || (caracter > '9')))
+          evt.consume();
+    }//GEN-LAST:event_txtusernameKeyTyped
+
+    private void txtemailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtemailFocusLost
+        // TODO add your handling code here:
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_txtemailFocusLost
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        String a;
+        a= "lazotim@ues.edu.sv.lk";
+        if (checkEmail (a))
+         // if (validarMail (a))
+        //if (isEmail (a))
+        {
+            jLabel12.setText("es correcto");
+        }else{
+            jLabel12.setText("no correcto");
+          }
+        
+    }//GEN-LAST:event_jButton2MouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnguardar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox cmbestado;
     private javax.swing.JComboBox cmbrol;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
