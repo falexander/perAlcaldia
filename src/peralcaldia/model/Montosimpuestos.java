@@ -81,9 +81,9 @@ public class Montosimpuestos  implements java.io.Serializable {
         this.impuestos = impuestos;
     }
     
-    @Column(name="monto", precision=17, scale=17)
+    @Column(name="monto")
     public BigDecimal getMonto() {
-        return this.monto;
+        return this.monto.setScale(2);
     }
     
     public void setMonto(BigDecimal monto) {

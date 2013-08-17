@@ -4,6 +4,7 @@
  */
 package peralcaldia;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,6 +18,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
      */
     public SLorenzoParent() {
         initComponents();
+        this.setExtendedState(this.MAXIMIZED_BOTH);
     }
 
     /**
@@ -46,6 +48,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("FormularioPrincipal"); // NOI18N
 
         jpprincipal.setAutoscrolls(true);

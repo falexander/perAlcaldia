@@ -2,6 +2,7 @@ package peralcaldia.model;
 // Generated 08-10-2013 10:26:32 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +30,7 @@ public class Pagos  implements java.io.Serializable {
      private int id;
      private Inmuebles inmuebles;
      private Date fechapago;
-     private Double monto;
+     private BigDecimal monto;
      private String norecibo;
      private String mespagado;
 
@@ -40,7 +41,7 @@ public class Pagos  implements java.io.Serializable {
     public Pagos(int id) {
         this.id = id;
     }
-    public Pagos(int id, Inmuebles inmuebles, Date fechapago, Double monto, String norecibo, String mespagado) {
+    public Pagos(int id, Inmuebles inmuebles, Date fechapago, BigDecimal monto, String norecibo, String mespagado) {
        this.id = id;
        this.inmuebles = inmuebles;
        this.fechapago = fechapago;
@@ -80,11 +81,11 @@ public class Pagos  implements java.io.Serializable {
     }
     
     @Column(name="monto", precision=17, scale=17)
-    public Double getMonto() {
-        return this.monto;
+    public BigDecimal getMonto() {
+        return this.monto.setScale(2);
     }
     
-    public void setMonto(Double monto) {
+    public void setMonto(BigDecimal monto) {
         this.monto = monto;
     }
     
@@ -105,9 +106,6 @@ public class Pagos  implements java.io.Serializable {
     public void setMespagado(String mespagado) {
         this.mespagado = mespagado;
     }
-
-
-
 
 }
 

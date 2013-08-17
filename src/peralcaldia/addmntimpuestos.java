@@ -17,6 +17,7 @@ import peralcaldia.model.Estados;
 import peralcaldia.model.Impuestos;
 import peralcaldia.model.Montosimpuestos;
 import sun.text.normalizer.UCharacter;
+import util.codemd5;
 /**
  *
  * @author alex
@@ -78,8 +79,8 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
                     datos[0]= impuestosobj.getNombre();
                     while (it1.hasNext()) {
                         mntimobj = (Montosimpuestos) it1.next();
-                        datos[1]= mntimobj.getMonto();
-                        datos[2]= mntimobj.getFechainicio();
+                        datos[1]= "$" + mntimobj.getMonto().toString();
+                        datos[2]= mntimobj.getFechainicio().toString();
                     }                    
                     tablam.addRow(datos);                      
                 }
@@ -107,7 +108,9 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
         jtmntimp.getColumnModel().getColumn(0).setHeaderRenderer(alinearCentro);
         jtmntimp.getColumnModel().getColumn(1).setHeaderRenderer(alinearCentro);
-        jtmntimp.getColumnModel().getColumn(2).setHeaderRenderer(alinearCentro);        
+        jtmntimp.getColumnModel().getColumn(2).setHeaderRenderer(alinearCentro);
+        jtmntimp.getColumnModel().getColumn(1).setCellRenderer(alinearCentro);
+        jtmntimp.getColumnModel().getColumn(2).setCellRenderer(alinearCentro);
 //        jtaddzonas.getColumnModel().getColumn(0).setCellRenderer(alinearCentro);        
     }
     
@@ -121,33 +124,48 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Error limpiando tabla");
         }
         jtmntimp.setModel(tablam);
-    }    
+    }         
     
     public void guardarmntimpuestos(){
         Montosimpuestos nmntimp = new Montosimpuestos();
         Impuestos impid = new Impuestos();
         Estados stid = new Estados();
-        
+        codemd5 isn = new codemd5();
         
         impid = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, "nombre = '"+ cmbimpuestomnt.getSelectedItem().toString() +"'");
         stid = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado = 'Activo'");
         nmntimp.setEstados(stid);
         nmntimp.setImpuestos(impid);
         nmntimp.setFechainicio(jdfini.getDate());
-        nmntimp.setMonto(new BigDecimal(txtmonto.getText()));
+
         
         try {
-            dao.save(nmntimp);
-            limpiartabla();
-            cargarjtable();
-            centrardatos();            
-            JOptionPane.showMessageDialog(this, "Guardado");
+            if (isn.esnumero(txtmonto.getText())) {
+                nmntimp.setMonto(new BigDecimal(txtmonto.getText()));                
+                dao.save(nmntimp);
+                limpiartabla();
+                cmbimpuestomnt.removeAllItems();
+                fillcomboboximpuestos();
+                cargarjtable();
+                centrardatos(); 
+                limpiarpantalla();
+                JOptionPane.showMessageDialog(this, "Guardado");                
+
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Debe de ser un numero con 2 decimales");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Hubo un error al guardar los datos, por favor intente mas tarde");
             e.printStackTrace();                        
         }
-    }
+    }   
     
+    public void limpiarpantalla(){
+        txtmonto.setText("");
+        jdfini.setDate(null);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -173,6 +191,11 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         btngrd = new javax.swing.JButton();
         btnsl = new javax.swing.JButton();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+
         jLabel1.setText("Impuesto:");
 
         jLabel4.setText("Monto :");
@@ -191,7 +214,7 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtmonto)
+                .addComponent(txtmonto, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -246,9 +269,8 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -287,7 +309,7 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btngrd)
                     .addComponent(btnsl))
@@ -300,19 +322,19 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 

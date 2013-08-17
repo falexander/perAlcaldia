@@ -91,6 +91,7 @@ public class addzonas extends javax.swing.JInternalFrame {
             otz = (Zonas) dao.findByWhereStatementoneobj(Zonas.class, "zona ='" + txtzona.getText().toUpperCase() + "'");
             if (otz==null){
                 dao.save(nzone);
+                limpiarpantalla();
                 limpiartabla();             
                 cargarjtable();
                 centrardatos();
@@ -107,6 +108,9 @@ public class addzonas extends javax.swing.JInternalFrame {
         }
     }
     
+    public void limpiarpantalla(){
+        txtzona.setText("");
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -183,14 +187,14 @@ public class addzonas extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(txtzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnszona)
                     .addComponent(btngzona))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

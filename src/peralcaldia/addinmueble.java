@@ -30,7 +30,6 @@ public class addinmueble extends javax.swing.JInternalFrame {
     public addinmueble() {
         initComponents();
         fillComboBoxcontribuyente();
-        fillComboBoxestado();
         fillComboBoxrol();
     }
 
@@ -44,19 +43,6 @@ public class addinmueble extends javax.swing.JInternalFrame {
         while(it.hasNext()){
             zonasobj = (Zonas) it.next();
             cmbzona.addItem(zonasobj.getZona());
-        }        
-    }
-    
-    private void fillComboBoxestado(){
-        List<Estados> lest=null;
-        Estados estadosobj=new Estados();
-        lest = dao.findAll(Estados.class);
-        
-        Iterator it = lest.iterator();
-        
-        while(it.hasNext()){
-            estadosobj = (Estados) it.next();
-            cmbestados.addItem(estadosobj.getEstado());
         }        
     }    
     
@@ -84,7 +70,7 @@ public class addinmueble extends javax.swing.JInternalFrame {
         
         //Cargando datos para agregar un nuevo inmueble
         zninm = (Zonas) dao.findByWhereStatementoneobj(Zonas.class, "zona = '"+ cmbzona.getSelectedItem().toString() +"'");
-        stinm = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado = '"+ cmbestados.getSelectedItem().toString() +"'");
+        stinm = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado = 'Activo'");
         usctbinm = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, " (nombres || ' ' || apellidos) = '"+ cmbcontribuyente.getSelectedItem().toString() +"'");
         lctr =  usctbinm.getContribuyenteses();
         
@@ -94,7 +80,7 @@ public class addinmueble extends javax.swing.JInternalFrame {
         }
 
         ninmueble.setContribuyentes(ctbinm);
-        ninmueble.setDireccion(txtdirinm.getText());
+        ninmueble.setDireccion(txtdirinm.getText().toUpperCase());
         ninmueble.setEstadosinm(stinm);
         ninmueble.setFecharegistro(jdfechareg.getDate());
         ninmueble.setFolio1(txtfolio1.getText());
@@ -110,13 +96,26 @@ public class addinmueble extends javax.swing.JInternalFrame {
 
         
         try {
-            dao.save(ninmueble);
-           //Cargando datos para agregar en el historico
-            hstinm.setContribuyenteshid(ctbinm);
-            hstinm.setFecha_inicio(jdfechareg.getDate());
-            hstinm.setInmuebleshid(ninmueble);                        
-            dao.save(hstinm);
-            JOptionPane.showMessageDialog(this, "Guardado Completo");            
+            Inmuebles tmpinm= new Inmuebles();
+            tmpinm = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion = '"+ txtdirinm.getText().toUpperCase() +"'" );
+            if (tmpinm == null) {
+                dao.save(ninmueble);
+                //Cargando datos para agregar en el historico
+                hstinm.setContribuyenteshid(ctbinm);
+                hstinm.setFecha_inicio(jdfechareg.getDate());
+                hstinm.setInmuebleshid(ninmueble);                        
+                dao.save(hstinm);
+                cmbcontribuyente.removeAllItems();
+                cmbzona.removeAllItems();
+                fillComboBoxcontribuyente();
+                fillComboBoxrol();
+                limpiarpantalla();
+                JOptionPane.showMessageDialog(this, "Guardado Completo");             
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Ya Existe un inmueble con esa dirección por favor verifique");
+            }
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Hubo un error al guardar los datos, por favor intente mas tarde");
             e.printStackTrace();            
@@ -124,7 +123,19 @@ public class addinmueble extends javax.swing.JInternalFrame {
         
     }
     
-    
+    public void limpiarpantalla(){
+        txtdirinm.setText("");
+        txtfolio1.setText("");
+        txtfolio2.setText("");
+        txtmcdrs.setText("");
+        txtmtln.setText("");
+        txtphone.setText("");
+        txttomo1.setText("");
+        txttomo2.setText("");
+        txttomoreal.setText("");
+        jdfechareg.setDate(null);
+        
+    }    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,14 +151,12 @@ public class addinmueble extends javax.swing.JInternalFrame {
         cmbcontribuyente = new javax.swing.JComboBox();
         cmbzona = new javax.swing.JComboBox();
         jPanel1 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        cmbestados = new javax.swing.JComboBox();
-        jLabel10 = new javax.swing.JLabel();
-        jdfechareg = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtmtln = new javax.swing.JTextField();
         txtmcdrs = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jdfechareg = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         txttomo1 = new javax.swing.JTextField();
@@ -204,13 +213,11 @@ public class addinmueble extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel11.setText("Estado:");
-
-        jLabel10.setText("Fecha de Registro:");
-
         jLabel12.setText("Metros Lineales :");
 
         jLabel13.setText("Metros Cuadrados:");
+
+        jLabel10.setText("Fecha de Registro:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -218,23 +225,19 @@ public class addinmueble extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cmbestados, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(20, 20, 20)
                         .addComponent(txtmtln, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel13)
+                        .addComponent(jLabel13))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtmcdrs)))
+                        .addComponent(jdfechareg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtmcdrs)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -243,20 +246,15 @@ public class addinmueble extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
-                        .addComponent(cmbestados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel10))
-                    .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel12)
                         .addComponent(txtmtln, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel13)
                         .addComponent(txtmcdrs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel10)
+                    .addComponent(jdfechareg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -368,21 +366,21 @@ public class addinmueble extends javax.swing.JInternalFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(105, 105, 105)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(113, 113, 113)
                 .addComponent(btngrdinm)
-                .addGap(111, 111, 111)
+                .addGap(76, 76, 76)
                 .addComponent(btnslinm, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btngrdinm)
                     .addComponent(btnslinm))
-                .addContainerGap())
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -410,8 +408,7 @@ public class addinmueble extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -431,11 +428,9 @@ public class addinmueble extends javax.swing.JInternalFrame {
     private javax.swing.JButton btngrdinm;
     private javax.swing.JButton btnslinm;
     private javax.swing.JComboBox cmbcontribuyente;
-    private javax.swing.JComboBox cmbestados;
     private javax.swing.JComboBox cmbzona;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;

@@ -35,5 +35,14 @@ public class codemd5 {
         }
         return buf.toString();
      }
+ 
+    public static boolean esnumero(String Cadena){
+        try {
+            Double.parseDouble(Cadena);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
     
 }

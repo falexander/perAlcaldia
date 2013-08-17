@@ -5,6 +5,8 @@
 package peralcaldia;
 
 import controller.AbstractDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -26,6 +28,9 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
         initComponents();
         fillComboBoxrol();
         fillComboBoxestado();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize(); 
+        Dimension ventana = this.getSize(); 
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);
     }
 
     /**
@@ -49,7 +54,7 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
     private void fillComboBoxestado(){
         List<Estados> lest=null;
         Estados estadosobj=null;
-        lest = dao.findAll(Estados.class);
+        lest = dao.findByWhereStatement(Estados.class, "estado = 'Activo' or estado='Inactivo'");
         
         Iterator it = lest.iterator();
         
@@ -76,12 +81,12 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
         //Usuario
         rl = (Roles) dao.findByWhereStatementoneobj(Roles.class, "rol='"+cmbrol.getSelectedItem().toString() +"'");
         st = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado='"+cmbestado.getSelectedItem().toString() +"'");
-        user.setAlias(txtusername.getText());
-        user.setApellidos(txtapellidos.getText());
-        user.setDireccion(txtdireccion.getText());
+        user.setAlias(txtusername.getText().toUpperCase());
+        user.setApellidos(txtapellidos.getText().toUpperCase());
+        user.setDireccion(txtdireccion.getText().toUpperCase());
         user.setEmail(txtemail.getText());
         user.setEstados(st);
-        user.setNombres(txtnombres.getText());
+        user.setNombres(txtnombres.getText().toUpperCase());
         user.setPassword(key);
         user.setRoles(rl);
         user.setTelefonocelular(txtmovil.getText());
@@ -100,13 +105,14 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
         contribuyente.setUsuarios(user);
         try {
             Usuarios cmpalias = new Usuarios();
-            cmpalias = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, "alias='"+ txtusername.getText() +"'");
+            cmpalias = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, "alias='"+ txtusername.getText().toUpperCase() +"'");
             if (cmpalias == null) {
                 cmpalias= (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, "email='"+ txtemail.getText() +"'");
                 if (cmpalias==null){
                     dao.save(user);
                     dao.save(contribuyente);
-                    JOptionPane.showMessageDialog(this, "Guardado Completado");                                        
+                    JOptionPane.showMessageDialog(this, "Guardado Completado");
+                    limpiarpantalla();
                 }
                 else {
                     JOptionPane.showMessageDialog(this, "Correo registrado, Ingresar uno diferente");                                                        
@@ -121,6 +127,25 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
         }
         
 
+    }
+    
+    
+    public void limpiarpantalla(){
+        txtapellidos.setText("");
+        txtdireccion.setText("");
+        txtdui.setText("");
+        txtemail.setText("");
+        txtmovil.setText("");
+        txtniss.setText("");
+        txtnit.setText("");
+        txtnombres.setText("");
+        txtpassword.setText("");
+        txttelefono.setText("");
+        txtusername.setText("");
+        cmbestado.removeAllItems();
+        cmbrol.removeAllItems();
+        fillComboBoxrol();
+        fillComboBoxestado();
     }
     
     

@@ -93,6 +93,7 @@ public class addimpuestos extends javax.swing.JInternalFrame {
                 limpiartabla();
                 cargarjtable();
                 centrardatos();
+                limpiarpantalla();
                 JOptionPane.showMessageDialog(this, "Guardado Completo");
             }
             else {
@@ -102,6 +103,10 @@ public class addimpuestos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Hubo un error al guardar los datos, por favor intente mas tarde");
             e.printStackTrace();
         }
+    }
+    
+    public void limpiarpantalla(){
+        txtnimpuesto.setText("");
     }
     /**
      * This method is called from within the constructor to initialize the form.
