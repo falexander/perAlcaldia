@@ -27,6 +27,8 @@ public class Zonas  implements java.io.Serializable {
 
      private int id;
      private String zona;
+     private String zonecode;
+     private int correlativozona;
      private Set<Inmuebles> inmuebleses = new HashSet<Inmuebles>(0);
 
     public Zonas() {
@@ -36,10 +38,12 @@ public class Zonas  implements java.io.Serializable {
     public Zonas(int id) {
         this.id = id;
     }
-    public Zonas(int id, String zona, Set inmuebleses) {
+    public Zonas(int id, String zona, Set inmuebleses, String zonecode, int correlativozona) {
        this.id = id;
        this.zona = zona;
        this.inmuebleses = inmuebleses;
+       this.zonecode = zonecode;
+       this.correlativozona = correlativozona;
     }
    
     @Id 
@@ -70,8 +74,23 @@ public class Zonas  implements java.io.Serializable {
     public void setInmuebleses(Set<Inmuebles> inmuebleses) {
         this.inmuebleses = inmuebleses;
     }
+    @Column(name="zone_code")
+    public String getZonecode() {
+        return zonecode;
+    }
 
+    public void setZonecode(String zonecode) {
+        this.zonecode = zonecode;
+    }
+    
+    @Column(name="correlativo_zona")
+    public int getCorrelativozona() {
+        return correlativozona;
+    }
 
+    public void setCorrelativozona(int correlativozona) {
+        this.correlativozona = correlativozona;
+    }
 
 
 }

@@ -44,6 +44,10 @@ public class Inmuebles  implements java.io.Serializable {
      private Double metros_cuadrados;
      private Date fecharegistro;
      private Estados estadosinm;
+     private String cuentacorriente;
+     private String sector;
+     private String parcela;
+     private String correlativoinmueble;
      private Set<Impuestosinmuebles> impuestosinmuebleses = new HashSet<Impuestosinmuebles>(0);
      private Set<Pagos> pagoses = new HashSet<Pagos>(0);
      private Set<historico_inmueble> historicosinmuebles = new HashSet<historico_inmueble>(0);
@@ -55,7 +59,7 @@ public class Inmuebles  implements java.io.Serializable {
     public Inmuebles(int id) {
         this.id = id;
     }
-    public Inmuebles(int id, Zonas zonas, Contribuyentes contribuyentes, String direccion, String telefono, String tomo1, String folio1, String tomo2, String folio2, String tomoreal, Double metros_lineales, Double metros_cuadrados,Date fecharegistro, Estados estadosinm, Set impuestosinmuebleses, Set pagoses, Set historicosinmuebles) {
+    public Inmuebles(int id, Zonas zonas, Contribuyentes contribuyentes, String direccion, String telefono, String tomo1, String folio1, String tomo2, String folio2, String tomoreal, Double metros_lineales, Double metros_cuadrados,Date fecharegistro, Estados estadosinm, Set impuestosinmuebleses, Set pagoses, Set historicosinmuebles, String cuentacorriente, String sector, String parcela, String correlativoinmueble) {
        this.id = id;
        this.zonas = zonas;
        this.contribuyentes = contribuyentes;
@@ -73,6 +77,10 @@ public class Inmuebles  implements java.io.Serializable {
        this.fecharegistro= fecharegistro;
        this.estadosinm = estadosinm;
        this.historicosinmuebles = historicosinmuebles;
+       this.cuentacorriente =  cuentacorriente;
+       this.sector = sector;
+       this.parcela = parcela;
+       this.correlativoinmueble = correlativoinmueble;
     }
    
     @Id 
@@ -233,6 +241,43 @@ public class Inmuebles  implements java.io.Serializable {
     public void setHistoricosinmuebles(Set<historico_inmueble> historicosinmuebles) {
         this.historicosinmuebles = historicosinmuebles;
     }
+    
+    @Column(name="cuentacorriente")
+    public String getCuentacorriente() {
+        return cuentacorriente;
+    }
+
+    public void setCuentacorriente(String cuentacorriente) {
+        this.cuentacorriente = cuentacorriente;
+    }
+    
+    @Column(name="sector")
+    public String getSector() {
+        return sector;
+    }
+
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
+    
+    @Column(name="parcela")
+    public String getParcela() {
+        return parcela;
+    }
+
+    public void setParcela(String parcela) {
+        this.parcela = parcela;
+    }
+    
+    @Column(name="correlativoinmueble")
+
+    public String getCorrelativoinmueble() {
+        return correlativoinmueble;
+    }
+
+    public void setCorrelativoinmueble(String correlativoinmueble) {
+        this.correlativoinmueble = correlativoinmueble;
+    }    
 }
 
 
