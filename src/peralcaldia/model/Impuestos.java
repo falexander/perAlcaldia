@@ -27,6 +27,7 @@ public class Impuestos  implements java.io.Serializable {
 
      private int id;
      private String nombre;
+     private String formula;
      private Set<Montosimpuestos> montosimpuestoses = new HashSet<Montosimpuestos>(0);
      private Set<Impuestosinmuebles> impuestosinmuebleses = new HashSet<Impuestosinmuebles>(0);
 
@@ -37,9 +38,10 @@ public class Impuestos  implements java.io.Serializable {
     public Impuestos(int id) {
         this.id = id;
     }
-    public Impuestos(int id, String nombre, Set montosimpuestoses, Set impuestosinmuebleses) {
+    public Impuestos(int id, String nombre, String formula, Set montosimpuestoses, Set impuestosinmuebleses) {
        this.id = id;
        this.nombre = nombre;
+       this.formula = formula;
        this.montosimpuestoses = montosimpuestoses;
        this.impuestosinmuebleses = impuestosinmuebleses;
     }
@@ -64,10 +66,20 @@ public class Impuestos  implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+    
+    @Column(name="formula")    
+    public String getFormula() {
+        return formula;
+    }
+
+    public void setFormula(String formula) {
+        this.formula = formula;
+    }    
+    
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="impuestos")
     public Set<Montosimpuestos> getMontosimpuestoses() {
         return this.montosimpuestoses;
-    }
+    }    
     
     public void setMontosimpuestoses(Set<Montosimpuestos> montosimpuestoses) {
         this.montosimpuestoses = montosimpuestoses;

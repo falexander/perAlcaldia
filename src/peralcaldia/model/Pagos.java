@@ -33,6 +33,9 @@ public class Pagos  implements java.io.Serializable {
      private BigDecimal monto;
      private String norecibo;
      private String mespagado;
+     private int descuento;
+     private BigDecimal montopagado;
+     private String comentario;
 
     public Pagos() {
     }
@@ -41,13 +44,16 @@ public class Pagos  implements java.io.Serializable {
     public Pagos(int id) {
         this.id = id;
     }
-    public Pagos(int id, Inmuebles inmuebles, Date fechapago, BigDecimal monto, String norecibo, String mespagado) {
+    public Pagos(int id, Inmuebles inmuebles, Date fechapago, BigDecimal monto, String norecibo, String mespagado, int descuento, BigDecimal montopagado, String comentario) {
        this.id = id;
        this.inmuebles = inmuebles;
        this.fechapago = fechapago;
        this.monto = monto;
        this.norecibo = norecibo;
        this.mespagado = mespagado;
+       this.descuento = descuento;
+       this.montopagado = montopagado;
+       this.comentario = comentario;
     }
    
     @Id 
@@ -106,7 +112,35 @@ public class Pagos  implements java.io.Serializable {
     public void setMespagado(String mespagado) {
         this.mespagado = mespagado;
     }
+    
+    @Column(name="descuento")    
+    public int getDescuento() {
+        return descuento;
+    }
 
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
+    }
+
+    @Column(name="montopagado")    
+    public BigDecimal getMontopagado() {
+        return montopagado;
+    }
+
+    public void setMontopagado(BigDecimal montopagado) {
+        this.montopagado = montopagado;
+    }
+    
+    @Column(name="comentario")
+    public String getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
+    
+    
 }
 
 

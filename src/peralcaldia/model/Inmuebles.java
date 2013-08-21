@@ -2,6 +2,7 @@ package peralcaldia.model;
 // Generated 08-10-2013 10:26:32 AM by Hibernate Tools 3.2.1.GA
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,14 +41,15 @@ public class Inmuebles  implements java.io.Serializable {
      private String tomo2;
      private String folio2;
      private String tomoreal;
-     private Double metros_lineales;
-     private Double metros_cuadrados;
+     private BigDecimal metros_lineales;
+     private BigDecimal metros_cuadrados;
      private Date fecharegistro;
      private Estados estadosinm;
      private String cuentacorriente;
      private String sector;
      private String parcela;
      private String correlativoinmueble;
+     private BigDecimal adoquinado;
      private Set<Impuestosinmuebles> impuestosinmuebleses = new HashSet<Impuestosinmuebles>(0);
      private Set<Pagos> pagoses = new HashSet<Pagos>(0);
      private Set<historico_inmueble> historicosinmuebles = new HashSet<historico_inmueble>(0);
@@ -59,7 +61,7 @@ public class Inmuebles  implements java.io.Serializable {
     public Inmuebles(int id) {
         this.id = id;
     }
-    public Inmuebles(int id, Zonas zonas, Contribuyentes contribuyentes, String direccion, String telefono, String tomo1, String folio1, String tomo2, String folio2, String tomoreal, Double metros_lineales, Double metros_cuadrados,Date fecharegistro, Estados estadosinm, Set impuestosinmuebleses, Set pagoses, Set historicosinmuebles, String cuentacorriente, String sector, String parcela, String correlativoinmueble) {
+    public Inmuebles(int id, Zonas zonas, Contribuyentes contribuyentes, String direccion, String telefono, String tomo1, String folio1, String tomo2, String folio2, String tomoreal, BigDecimal metros_lineales, BigDecimal metros_cuadrados,Date fecharegistro, Estados estadosinm, Set impuestosinmuebleses, Set pagoses, Set historicosinmuebles, String cuentacorriente, String sector, String parcela, String correlativoinmueble, BigDecimal adoquinado) {
        this.id = id;
        this.zonas = zonas;
        this.contribuyentes = contribuyentes;
@@ -81,6 +83,7 @@ public class Inmuebles  implements java.io.Serializable {
        this.sector = sector;
        this.parcela = parcela;
        this.correlativoinmueble = correlativoinmueble;
+       this.adoquinado = adoquinado;
     }
    
     @Id 
@@ -189,20 +192,20 @@ public class Inmuebles  implements java.io.Serializable {
     }
 
     @Column(name="metros_lineales")    
-    public Double getMetros_lineales() {
+    public BigDecimal getMetros_lineales() {
         return metros_lineales;
     }
 
-    public void setMetros_lineales(Double metros_lineales) {
+    public void setMetros_lineales(BigDecimal metros_lineales) {
         this.metros_lineales = metros_lineales;
     }
 
     @Column(name="metros_cuadrados")    
-    public Double getMetros_cuadrados() {
+    public BigDecimal getMetros_cuadrados() {
         return metros_cuadrados;
     }
 
-    public void setMetros_cuadrados(Double metros_cuadrados) {
+    public void setMetros_cuadrados(BigDecimal metros_cuadrados) {
         this.metros_cuadrados = metros_cuadrados;
     }        
     
@@ -270,14 +273,23 @@ public class Inmuebles  implements java.io.Serializable {
     }
     
     @Column(name="correlativoinmueble")
-
     public String getCorrelativoinmueble() {
         return correlativoinmueble;
     }
 
     public void setCorrelativoinmueble(String correlativoinmueble) {
         this.correlativoinmueble = correlativoinmueble;
-    }    
+    }
+    
+    @Column(name="adoquinado")
+    public BigDecimal getAdoquinado() {
+        return adoquinado;
+    }
+
+    public void setAdoquinado(BigDecimal adoquinado) {
+        this.adoquinado = adoquinado;
+    }
+    
 }
 
 

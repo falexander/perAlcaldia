@@ -41,7 +41,7 @@ public class addcontribuyente extends javax.swing.JInternalFrame {
     private void fillComboBoxrol(){
         List<Roles> lrol=null;
         Roles rolesobj=null;
-        lrol = dao.findAll(Roles.class);
+        lrol = dao.findByWhereStatement(Roles.class, "rol = 'Contribuyente'");
         
         Iterator it = lrol.iterator();
         

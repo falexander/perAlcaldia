@@ -31,6 +31,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         jpprincipal = new javax.swing.JPanel();
         jbarramenu = new javax.swing.JMenuBar();
         jmarchivo = new javax.swing.JMenu();
@@ -42,10 +43,15 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmzona = new javax.swing.JMenuItem();
         jmdf = new javax.swing.JMenu();
         jmmnt = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jmpsalir = new javax.swing.JMenuItem();
         jmeditar = new javax.swing.JMenu();
+        jmtrans = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem3.setText("jMenuItem3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -122,6 +128,14 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmdf.add(jmmnt);
 
+        jMenuItem2.setText("Impuestos por Inmueble");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jmdf.add(jMenuItem2);
+
         jmarchivo.add(jmdf);
 
         jmpsalir.setText("Salir");
@@ -136,6 +150,18 @@ public class SLorenzoParent extends javax.swing.JFrame {
 
         jmeditar.setText("Editar");
         jbarramenu.add(jmeditar);
+
+        jmtrans.setText("Transacciones");
+
+        jMenuItem4.setText("Generar Boleta de Pago");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem4);
+
+        jbarramenu.add(jmtrans);
 
         setJMenuBar(jbarramenu);
 
@@ -244,6 +270,34 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jmmntActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        addimpuestosinmuebles adiminm = new addimpuestosinmuebles();
+        try {
+            this.jpprincipal.add(adiminm);
+            adiminm.setSelected(true);
+            adiminm.toFront();
+            adiminm.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+        generarpagos boleta = new generarpagos();
+        try {
+            this.jpprincipal.add(boleta);
+            boleta.setSelected(true);
+            boleta.toFront();
+            boleta.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();            
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,6 +334,9 @@ public class SLorenzoParent extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuBar jbarramenu;
     private javax.swing.JMenu jmarchivo;
     private javax.swing.JMenuItem jmcontribuyente;
@@ -289,6 +346,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuItem jminm;
     private javax.swing.JMenuItem jmmnt;
     private javax.swing.JMenuItem jmpsalir;
+    private javax.swing.JMenu jmtrans;
     private javax.swing.JMenuItem jmusuario;
     private javax.swing.JMenuItem jmzona;
     private javax.swing.JMenu jnuevo;

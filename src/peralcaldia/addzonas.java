@@ -6,11 +6,13 @@ package peralcaldia;
 
 import javax.swing.table.DefaultTableModel;
 import controller.AbstractDAO;
+import java.awt.Font;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.StyledEditorKit;
 import peralcaldia.model.Zonas;
 /**
  *
@@ -18,7 +20,7 @@ import peralcaldia.model.Zonas;
  */
 public class addzonas extends javax.swing.JInternalFrame {
     DefaultTableModel tablam = new DefaultTableModel();
-    DefaultTableCellRenderer alinearCentro;
+    DefaultTableCellRenderer alinearCentro, alinearcentroceldas;    
     AbstractDAO dao = new AbstractDAO();
     
     /**
@@ -26,7 +28,9 @@ public class addzonas extends javax.swing.JInternalFrame {
      */
     public addzonas() {
         initComponents();
-        tablam.addColumn("ZONAS");
+        tablam.addColumn("CODIGO ZONA");
+        tablam.addColumn("DESCRIPCIÓN");
+        tablam.addColumn("NUMERO DE INMUEBLES ACTUALES");
         jtaddzonas.setModel(tablam);        
         cargarjtable();
         centrardatos();
@@ -35,7 +39,7 @@ public class addzonas extends javax.swing.JInternalFrame {
     public void cargarjtable(){    
         List<Zonas> lzon=null;
         Zonas zonesobj= new Zonas();
-        Object[] datos = new Object[1];
+        Object[] datos = new Object[3];
         lzon = dao.findAll(Zonas.class);
         
         Iterator it = lzon.iterator();
@@ -43,7 +47,9 @@ public class addzonas extends javax.swing.JInternalFrame {
         while(it.hasNext()){
             try {
             zonesobj = (Zonas) it.next();
-            datos[0]= zonesobj.getZona();
+            datos[0]= zonesobj.getZonecode();
+            datos[1]= zonesobj.getZona();
+            datos[2]= zonesobj.getCorrelativozona();
             tablam.addRow(datos);                            
             }
             catch (Exception e) 
@@ -63,10 +69,18 @@ public class addzonas extends javax.swing.JInternalFrame {
     }
     
     public void centrardatos(){
-        alinearCentro = new DefaultTableCellRenderer();
-        alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        alinearCentro = new DefaultTableCellRenderer();        
+        alinearcentroceldas = new DefaultTableCellRenderer();                
+        Font negrilla = new Font( "Tahoma",Font.BOLD,18 );        
+        alinearCentro.setHorizontalAlignment(0);          
+        alinearCentro.setFont(negrilla);
+        alinearcentroceldas.setHorizontalAlignment(SwingConstants.CENTER);               
         jtaddzonas.getColumnModel().getColumn(0).setHeaderRenderer(alinearCentro);
-//        jtaddzonas.getColumnModel().getColumn(0).setCellRenderer(alinearCentro);        
+        jtaddzonas.getColumnModel().getColumn(1).setHeaderRenderer(alinearCentro);
+        jtaddzonas.getColumnModel().getColumn(2).setHeaderRenderer(alinearCentro);
+        jtaddzonas.getColumnModel().getColumn(0).setCellRenderer(alinearcentroceldas);
+        jtaddzonas.getColumnModel().getColumn(2).setCellRenderer(alinearcentroceldas);
+
     }
     
     public void limpiartabla(){
@@ -84,18 +98,27 @@ public class addzonas extends javax.swing.JInternalFrame {
     public void guardarzona(){
         Zonas nzone = new Zonas();
         
+        nzone.setZonecode(txtcodez.getText().toUpperCase());
         nzone.setZona(txtzona.getText().toUpperCase());
+        nzone.setCorrelativozona(1);
         
         try {
             Zonas otz = new Zonas();
-            otz = (Zonas) dao.findByWhereStatementoneobj(Zonas.class, "zona ='" + txtzona.getText().toUpperCase() + "'");
+            otz = (Zonas) dao.findByWhereStatementoneobj(Zonas.class, "zona ='" + txtzona.getText().toUpperCase() + "'");            
             if (otz==null){
-                dao.save(nzone);
-                limpiarpantalla();
-                limpiartabla();             
-                cargarjtable();
-                centrardatos();
-                JOptionPane.showMessageDialog(this, "Guardado Completo");                            
+                otz = (Zonas) dao.findByWhereStatementoneobj(Zonas.class, "zone_code ='"+ txtcodez.getText().toUpperCase() +"'");
+                if (otz==null) {
+                    dao.save(nzone);
+                    limpiarpantalla();
+                    limpiartabla();             
+                    cargarjtable();
+                    centrardatos();
+                    JOptionPane.showMessageDialog(this, "Guardado Completo");                                               
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "El codigo ya ha sido asignado a otra zona, ingresar un codigo valido");
+                }
+                
             }
             else{
                 JOptionPane.showMessageDialog(this, "La zona ya existe");
@@ -110,6 +133,7 @@ public class addzonas extends javax.swing.JInternalFrame {
     
     public void limpiarpantalla(){
         txtzona.setText("");
+        txtcodez.setText("");
     }
     
     /**
@@ -122,12 +146,16 @@ public class addzonas extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        txtzona = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtaddzonas = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        txtzona = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtcodez = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
         btngzona = new javax.swing.JButton();
         btnszona = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -149,6 +177,53 @@ public class addzonas extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtaddzonas);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel1.setText("Nombre Zona:");
+
+        jLabel2.setText("Codigo:");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtzona)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(txtcodez)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtcodez, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         btngzona.setText("Guardar");
         btngzona.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -163,49 +238,43 @@ public class addzonas extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel1.setText("Zona:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(108, 108, 108)
                 .addComponent(btngzona, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGap(96, 96, 96)
                 .addComponent(btnszona, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtzona))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtzona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnszona)
-                    .addComponent(btngzona))
-                .addContainerGap(15, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btngzona)
+                    .addComponent(btnszona))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -225,9 +294,13 @@ public class addzonas extends javax.swing.JInternalFrame {
     private javax.swing.JButton btngzona;
     private javax.swing.JButton btnszona;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jtaddzonas;
+    private javax.swing.JTextField txtcodez;
     private javax.swing.JTextField txtzona;
     // End of variables declaration//GEN-END:variables
 }
