@@ -35,6 +35,8 @@ public class Contribuyentes  implements java.io.Serializable {
      private String nitjuridico;
      private Set<Inmuebles> inmuebleses = new HashSet<Inmuebles>(0);
      private Set<historico_inmueble> historicosconinm = new HashSet<historico_inmueble>(0);
+     private Set<Negocios> negocioses = new HashSet<Negocios>(0);
+     
 
     public Contribuyentes() {
     }
@@ -43,7 +45,7 @@ public class Contribuyentes  implements java.io.Serializable {
     public Contribuyentes(int id) {
         this.id = id;
     }
-    public Contribuyentes(int id, Usuarios usuarios, String dui, String nit, String niss, String nitjuridico, Set inmuebleses, Set historicosconinm) {
+    public Contribuyentes(int id, Usuarios usuarios, String dui, String nit, String niss, String nitjuridico, Set inmuebleses, Set historicosconinm, Set negocioses) {
        this.id = id;
        this.usuarios = usuarios;
        this.dui = dui;
@@ -52,6 +54,7 @@ public class Contribuyentes  implements java.io.Serializable {
        this.nitjuridico = nitjuridico;
        this.inmuebleses = inmuebleses;
        this.historicosconinm = historicosconinm;
+       this.negocioses = negocioses;
     }
    
     @Id 
@@ -127,7 +130,15 @@ public class Contribuyentes  implements java.io.Serializable {
         this.historicosconinm = historicosconinm;
     }
 
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="contribuyentes")
+    public Set<Negocios> getNegocioses() {
+        return negocioses;
+    }
 
+    public void setNegocioses(Set<Negocios> negocioses) {
+        this.negocioses = negocioses;
+    }
+    
 
 }
 

@@ -47,6 +47,8 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         
         limp= dao.findAll(Impuestos.class);        
         Iterator it = limp.iterator();
+        cmbimpuestomnt.removeAllItems();
+        cmbimpuestomnt.addItem("-");
             while (it.hasNext()) {
             impobj = (Impuestos) it.next();
             check = impobj.getMontosimpuestoses();
@@ -132,34 +134,46 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
         Estados stid = new Estados();
         codemd5 isn = new codemd5();
         
-        impid = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, "nombre = '"+ cmbimpuestomnt.getSelectedItem().toString() +"'");
-        stid = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado = 'Activo'");
-        nmntimp.setEstados(stid);
-        nmntimp.setImpuestos(impid);
-        nmntimp.setFechainicio(jdfini.getDate());
-
-        
-        try {
-            if (isn.esnumero(txtmonto.getText())) {
-                nmntimp.setMonto(new BigDecimal(txtmonto.getText()));                
-                dao.save(nmntimp);
-                limpiartabla();
-                cmbimpuestomnt.removeAllItems();
-                fillcomboboximpuestos();
-                cargarjtable();
-                centrardatos(); 
-                limpiarpantalla();
-                JOptionPane.showMessageDialog(this, "Guardado");                
-
+        if (cmbimpuestomnt.getSelectedItem().toString().equals("-")) {
+            JOptionPane.showMessageDialog(this, "Elija un Impuesto para aplicar el monto");
+        }
+        else{
+            if(jdfini.getDate() != null) {
+                
             }
             else{
-                JOptionPane.showMessageDialog(this, "Debe de ser un numero con 2 decimales");
+                impid = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, "nombre = '"+ cmbimpuestomnt.getSelectedItem().toString() +"'");
+                stid = (Estados) dao.findByWhereStatementoneobj(Estados.class, "estado = 'Activo'");
+                nmntimp.setEstados(stid);
+                nmntimp.setImpuestos(impid);
+                nmntimp.setFechainicio(jdfini.getDate());
+
+
+                try {
+                    if (isn.esnumero(txtmonto.getText())) {
+                        nmntimp.setMonto(new BigDecimal(txtmonto.getText()));                
+                        dao.save(nmntimp);
+                        limpiartabla();
+                        cmbimpuestomnt.removeAllItems();
+                        fillcomboboximpuestos();
+                        cargarjtable();
+                        centrardatos(); 
+                        limpiarpantalla();
+                        JOptionPane.showMessageDialog(this, "Guardado");                
+
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "Debe de ser un numero con 2 decimales");
+                    }
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Hubo un error al guardar los datos, por favor intente mas tarde");
+                    e.printStackTrace();                        
+                }                            
             }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Hubo un error al guardar los datos, por favor intente mas tarde");
-            e.printStackTrace();                        
         }
+
     }   
     
     public void limpiarpantalla(){

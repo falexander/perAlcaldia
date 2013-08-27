@@ -6,6 +6,7 @@ package peralcaldia;
 
 import controller.AbstractDAO;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,14 +15,18 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import peralcaldia.model.Contribuyentes;
+import peralcaldia.model.Formulas;
 import peralcaldia.model.Impuestos;
 import peralcaldia.model.Impuestosinmuebles;
 import peralcaldia.model.Inmuebles;
+import peralcaldia.model.Montosimpuestos;
 import peralcaldia.model.Pagos;
 import peralcaldia.model.Usuarios;
 import util.totalesimpuestosinmuebles;
@@ -40,7 +45,6 @@ public class generarpagos extends javax.swing.JInternalFrame {
     public generarpagos() {
         initComponents();
         fillComboBoxcontribuyente();
-        tablam.addColumn("SELECCIONAR");
         tablam.addColumn("MES");
         tablam.addColumn("MONTO A PAGAR");
         tablam.addColumn("ESTADO");
@@ -118,7 +122,7 @@ public class generarpagos extends javax.swing.JInternalFrame {
         Inmuebles tmpinm = new Inmuebles();
         Pagos tmppagos = new Pagos();
         verpagos vpg = new verpagos();
-        Object[] datos = new Object[4];
+        Object[] datos = new Object[3];
         int contador,anio,actual;
         String compruebames,formato;
         Date registroinmu;
@@ -138,36 +142,94 @@ public class generarpagos extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(this, "El inmueble aun no tiene impuestos asignados");
                 }
                 else{
-                    ltot = calcularmonotosimpuestos(limpinm);
+                    //Generando el Monto total de los impuestos de acuerdo a las propiedades
+                    ltot = calcularmonotosimpuestos(limpinm, tmpinm);
+                    
+                    //Determinando fechas para realizar el recorrido de determinación de meses pagados y en mora
                     registroinmu = tmpinm.getFecharegistro();
                     formato="yyyy";
                     SimpleDateFormat dateFormat = new SimpleDateFormat(formato);
+
                     //anio de registro del inmueble
                     anio = Integer.parseInt(dateFormat.format(registroinmu));
+                    
                     //obteniendo anio actual
                     c1= Calendar.getInstance();
                     actual = c1.get(Calendar.YEAR);
+                    
                     //obteniendo lista de pagos
                     while (anio <= actual) {                        
                         contador=1;
-                        for (int i = 0; i < 11; i++) {
-                            Iterator it = lpagos.iterator();
-                            while (it.hasNext()) {
-                                compruebames=lmeses.get(i)+"-"+ Integer.toString(anio);
-                                tmppagos = (Pagos) it.next();
-                                if (tmppagos.getMespagado() == compruebames) {
-                                    vpg.setEstapagado(true);
-                                    vpg.setMespagado(tmppagos.getMespagado());
-                                    vpg.setMonto(tmppagos.getMontopagado());
+                        for (int i = 0; i <= 11; i++) {                            
+                            compruebames=lmeses.get(i)+"-"+ Integer.toString(anio);                            
+                            if (lpagos.isEmpty()) {                                
+                                BigDecimal total;
+                                total = BigDecimal.ZERO;
+                                Iterator littot = ltot.iterator();
+                                while (littot.hasNext()) {                                    
+                                    totalesimpuestosinmuebles a = new totalesimpuestosinmuebles();
+                                    a = (totalesimpuestosinmuebles) littot.next();
+                                    total = total.add(a.getTImpuesto());
+                                } 
+                                    vpg = new verpagos();
+                                    vpg.setEstapagado(false);
+                                    vpg.setMespagado(compruebames);
+                                    vpg.setMonto(total);
                                     lvpag.add(vpg);
-                                }
-                                else{
-                                    
-                                }
-                                
+                            }
+                            else{
+                                Iterator it = lpagos.iterator();
+                                while (it.hasNext()) {
+                                    tmppagos = (Pagos) it.next();
+                                    if (tmppagos.getMespagado() == compruebames) {
+                                        //Si existen los pagos se agregan los datos directamente
+                                        vpg = new verpagos();
+                                        vpg.setEstapagado(true);
+                                        vpg.setMespagado(tmppagos.getMespagado());
+                                        vpg.setMonto(tmppagos.getMontopagado());
+                                        lvpag.add(vpg);
+                                    }
+                                    else{
+                                        //Si el pago no se ha efectuado se genera el valor total del impuesto a pagar
+                                        //de acuerdo a los montos ya generados
+                                        BigDecimal total;
+                                        total = BigDecimal.ZERO;
+                                        Iterator littot = ltot.iterator();
+                                        while (littot.hasNext()) {
+                                            totalesimpuestosinmuebles a = new totalesimpuestosinmuebles();
+                                            a = (totalesimpuestosinmuebles) littot.next();
+                                            total = total.add(a.getTImpuesto());
+                                        }
+                                        vpg = new verpagos();
+                                        vpg.setEstapagado(false);
+                                        vpg.setMespagado(compruebames);
+                                        vpg.setMonto(total);
+                                        lvpag.add(vpg);
+                                    }
+
+                                }                                
                             }
                            contador+=1; 
                         }
+                    anio+=1;
+                    }
+                    try {
+                        Iterator v = lvpag.iterator();
+                        while (v.hasNext()) {
+                            vpg = (verpagos) v.next();
+                            datos[0]=vpg.getMespagado();
+                            datos[1]=vpg.getMonto().setScale(2, RoundingMode.HALF_EVEN).toString();
+                            if (vpg.isEstapagado()==true) {
+                                datos[2]="Pagado";
+                            }
+                            else{
+                                datos[2]="En Mora";
+                            }
+                            tablam.addRow(datos);
+                        }
+                        jtpagos.setModel(tablam);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Error en la carga de la tabla");
                     }
                 }
                 
@@ -175,16 +237,65 @@ public class generarpagos extends javax.swing.JInternalFrame {
             }
                         
         } catch (Exception e) {
+            e.printStackTrace();
         }
         
     }
     
-    public List calcularmonotosimpuestos(Set limpuestos){
+    public List calcularmonotosimpuestos(Set limpuestos, Inmuebles tmp){
         List<totalesimpuestosinmuebles> objects = new ArrayList<totalesimpuestosinmuebles>();
+        totalesimpuestosinmuebles adding = new totalesimpuestosinmuebles();
         Impuestos tmpimpuesto = new Impuestos();
+        Montosimpuestos tmpmntimp = new Montosimpuestos();
+        Impuestosinmuebles impinm = new Impuestosinmuebles();
+        //Variables para interpretar formulas
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine interprete = manager.getEngineByName("js");        
+        String formula;
         
+        Iterator it = limpuestos.iterator();
         
-        
+        while (it.hasNext()) {
+            impinm = (Impuestosinmuebles) it.next();
+            try {                
+                tmpmntimp = (Montosimpuestos) dao.findByWhereStatementoneobj(Montosimpuestos.class, "impuestos_id= "+ impinm.getImpuestos().getId() + " and estados_id=1" );
+                tmpimpuesto = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, "id = " + impinm.getImpuestos().getId());
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if (tmpmntimp != null) {
+                try {
+                    Object res = new Object();
+//                    formula = tmpimpuesto.getFormula();
+                    formula= "0";
+                    if (formula.equals("0")) {
+                        adding = new totalesimpuestosinmuebles();
+                        adding.setNImpuesto(tmpimpuesto.getNombre());
+                        adding.setTImpuesto(tmpmntimp.getMonto());
+                        objects.add(adding);
+                    }
+                    else{                        
+                        interprete.put("ML", tmp.getMetros_lineales());
+                        interprete.put("MC", tmp.getMetros_cuadrados());
+                        interprete.put("MONTO", tmpmntimp.getMonto());
+                        //agregando los montos totales de los impuestos
+                        adding = new totalesimpuestosinmuebles();
+                        adding.setNImpuesto(tmpimpuesto.getNombre());
+                        res=interprete.eval(formula);
+                        adding.setTImpuesto(new BigDecimal(res.toString()));
+                        objects.add(adding);                                                                                                
+                    }
+                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Hubo un error en el calculo de los impuestos");
+                }                                
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "No se ha definido un monto para el impuesto" + tmpimpuesto.getNombre());
+            }            
+        }                
         return objects;
     }
     
@@ -337,7 +448,9 @@ public class generarpagos extends javax.swing.JInternalFrame {
 
     private void cmbcontribuyenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbcontribuyenteActionPerformed
         // TODO add your handling code here:
-        fillcomboboxinmueble();
+        if (cmbcontribuyente.getSelectedItem().toString()!= "-") {            
+            fillcomboboxinmueble();   
+        }
     }//GEN-LAST:event_cmbcontribuyenteActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

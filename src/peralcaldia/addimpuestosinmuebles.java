@@ -384,9 +384,7 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
 
     private void cmbimpuestosiminmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbimpuestosiminmActionPerformed
         // TODO add your handling code here:
-//        if (cmbimpuestosiminm.getSelectedItem().toString() !="-") {
-//            fillcomboboximpuestos();
-//        }
+
     }//GEN-LAST:event_cmbimpuestosiminmActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

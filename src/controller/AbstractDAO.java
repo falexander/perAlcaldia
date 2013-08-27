@@ -17,7 +17,7 @@ import util.HibernateUtil;
  * @author luis
  */
 public class AbstractDAO {
-    private final SessionFactory sessionFactory = getSessionFactory();
+    protected SessionFactory sessionFactory = getSessionFactory();
     private Transaction transaction;
 
     protected SessionFactory getSessionFactory() {
@@ -66,7 +66,7 @@ public class AbstractDAO {
         List objects = null;
         try {
             sessionFactory.getCurrentSession().beginTransaction();
-            Query query = sessionFactory.getCurrentSession().createQuery("from " + clazz.getName());
+            Query query = sessionFactory.getCurrentSession().createQuery("from " + clazz.getName() + " order by id");
             objects = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class AbstractDAO {
         List objects = null;
         try {
             sessionFactory.getCurrentSession().beginTransaction();
-            Query query = sessionFactory.getCurrentSession().createQuery("from " + clazz.getName() + " where " + whereStatement);
+            Query query = sessionFactory.getCurrentSession().createQuery("from " + clazz.getName() + " where " + whereStatement + " order by id");
             objects = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();

@@ -32,6 +32,8 @@ public class SLorenzoParent extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jpprincipal = new javax.swing.JPanel();
         jbarramenu = new javax.swing.JMenuBar();
         jmarchivo = new javax.swing.JMenu();
@@ -48,10 +50,16 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmeditar = new javax.swing.JMenu();
         jmtrans = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
         jMenuItem3.setText("jMenuItem3");
+
+        jMenuItem6.setText("jMenuItem6");
+
+        jMenuItem7.setText("jMenuItem7");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -160,6 +168,17 @@ public class SLorenzoParent extends javax.swing.JFrame {
             }
         });
         jmtrans.add(jMenuItem4);
+
+        jMenuItem5.setText("Carga Inicial");
+        jmtrans.add(jMenuItem5);
+
+        jMenuItem8.setText("Aplicar Pagos Inmuebles");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem8);
 
         jbarramenu.add(jmtrans);
 
@@ -298,6 +317,20 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        aplicarpagos pg = new aplicarpagos();
+        try {
+            this.jpprincipal.add(pg);
+            pg.setSelected(true);
+            pg.toFront();
+            pg.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -337,6 +370,10 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuBar jbarramenu;
     private javax.swing.JMenu jmarchivo;
     private javax.swing.JMenuItem jmcontribuyente;

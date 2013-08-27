@@ -49,10 +49,11 @@ public class Inmuebles  implements java.io.Serializable {
      private String sector;
      private String parcela;
      private String correlativoinmueble;
-     private BigDecimal adoquinado;
      private Set<Impuestosinmuebles> impuestosinmuebleses = new HashSet<Impuestosinmuebles>(0);
      private Set<Pagos> pagoses = new HashSet<Pagos>(0);
      private Set<historico_inmueble> historicosinmuebles = new HashSet<historico_inmueble>(0);
+     private Set<Pagosadelantados> padelantados = new HashSet<Pagosadelantados>(0);
+     private Set<Boleta> boletaes = new HashSet<Boleta>(0);
 
     public Inmuebles() {
     }
@@ -61,7 +62,7 @@ public class Inmuebles  implements java.io.Serializable {
     public Inmuebles(int id) {
         this.id = id;
     }
-    public Inmuebles(int id, Zonas zonas, Contribuyentes contribuyentes, String direccion, String telefono, String tomo1, String folio1, String tomo2, String folio2, String tomoreal, BigDecimal metros_lineales, BigDecimal metros_cuadrados,Date fecharegistro, Estados estadosinm, Set impuestosinmuebleses, Set pagoses, Set historicosinmuebles, String cuentacorriente, String sector, String parcela, String correlativoinmueble, BigDecimal adoquinado) {
+    public Inmuebles(int id, Zonas zonas, Contribuyentes contribuyentes, String direccion, String telefono, String tomo1, String folio1, String tomo2, String folio2, String tomoreal, BigDecimal metros_lineales, BigDecimal metros_cuadrados,Date fecharegistro, Estados estadosinm, Set impuestosinmuebleses, Set pagoses, Set historicosinmuebles, String cuentacorriente, String sector, String parcela, String correlativoinmueble, Set padelantados, Set boletaes) {
        this.id = id;
        this.zonas = zonas;
        this.contribuyentes = contribuyentes;
@@ -83,7 +84,8 @@ public class Inmuebles  implements java.io.Serializable {
        this.sector = sector;
        this.parcela = parcela;
        this.correlativoinmueble = correlativoinmueble;
-       this.adoquinado = adoquinado;
+       this.padelantados = padelantados;
+       this.boletaes = boletaes;
     }
    
     @Id 
@@ -236,7 +238,6 @@ public class Inmuebles  implements java.io.Serializable {
         this.pagoses = pagoses;
     }
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="inmuebleshid")
-
     public Set<historico_inmueble> getHistoricosinmuebles() {
         return historicosinmuebles;
     }
@@ -279,17 +280,26 @@ public class Inmuebles  implements java.io.Serializable {
 
     public void setCorrelativoinmueble(String correlativoinmueble) {
         this.correlativoinmueble = correlativoinmueble;
-    }
+    } 
     
-    @Column(name="adoquinado")
-    public BigDecimal getAdoquinado() {
-        return adoquinado;
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="inmuebles")    
+    public Set<Pagosadelantados> getPadelantados() {
+        return padelantados;
     }
 
-    public void setAdoquinado(BigDecimal adoquinado) {
-        this.adoquinado = adoquinado;
+    public void setPadelantados(Set<Pagosadelantados> padelantados) {
+        this.padelantados = padelantados;
     }
     
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="inmuebles")
+    public Set<Boleta> getBoletaes() {
+        return boletaes;
+    }
+
+    public void setBoletaes(Set<Boleta> boletaes) {
+        this.boletaes = boletaes;
+    }
+
 }
 
 

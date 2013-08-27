@@ -3,6 +3,7 @@ package peralcaldia.model;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -83,7 +84,7 @@ public class Montosimpuestos  implements java.io.Serializable {
     
     @Column(name="monto")
     public BigDecimal getMonto() {
-        return this.monto.setScale(2);
+        return this.monto.setScale(2, RoundingMode.HALF_EVEN);
     }
     
     public void setMonto(BigDecimal monto) {

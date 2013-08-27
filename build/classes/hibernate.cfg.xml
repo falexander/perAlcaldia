@@ -25,5 +25,12 @@
     <mapping class="peralcaldia.model.Montosimpuestos"/>
     <mapping class="peralcaldia.model.Pagos"/>
     <mapping class="peralcaldia.model.historico_inmueble"/>    
+    <mapping class="peralcaldia.model.Formulas"/>        
+    <mapping class="peralcaldia.model.Negocios"/>        
+    <mapping class="peralcaldia.model.Giros"/>        
+    <mapping class="peralcaldia.model.Tiposcomercio"/> 
+    <mapping class="peralcaldia.model.Montosimpuestosnegocios"/>
+    <mapping class="peralcaldia.model.Pagosadelantados"/>
+    <mapping class="peralcaldia.model.Boleta"/>                      
   </session-factory>
 </hibernate-configuration>

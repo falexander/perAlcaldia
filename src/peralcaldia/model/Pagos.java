@@ -3,6 +3,7 @@ package peralcaldia.model;
 
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +37,9 @@ public class Pagos  implements java.io.Serializable {
      private int descuento;
      private BigDecimal montopagado;
      private String comentario;
+     private Estados estadosid;
+     private Negocios negocios;
+     private Boleta boletas;
 
     public Pagos() {
     }
@@ -44,7 +48,7 @@ public class Pagos  implements java.io.Serializable {
     public Pagos(int id) {
         this.id = id;
     }
-    public Pagos(int id, Inmuebles inmuebles, Date fechapago, BigDecimal monto, String norecibo, String mespagado, int descuento, BigDecimal montopagado, String comentario) {
+    public Pagos(int id, Inmuebles inmuebles, Date fechapago, BigDecimal monto, String norecibo, String mespagado, int descuento, BigDecimal montopagado, String comentario, Estados estadosid, Negocios negocios, Boleta boletas) {
        this.id = id;
        this.inmuebles = inmuebles;
        this.fechapago = fechapago;
@@ -54,6 +58,9 @@ public class Pagos  implements java.io.Serializable {
        this.descuento = descuento;
        this.montopagado = montopagado;
        this.comentario = comentario;
+       this.estadosid = estadosid;
+       this.negocios = negocios;
+       this.boletas = boletas;
     }
    
     @Id 
@@ -88,7 +95,7 @@ public class Pagos  implements java.io.Serializable {
     
     @Column(name="monto", precision=17, scale=17)
     public BigDecimal getMonto() {
-        return this.monto.setScale(2);
+        return this.monto.setScale(2,RoundingMode.HALF_EVEN);
     }
     
     public void setMonto(BigDecimal monto) {
@@ -140,6 +147,35 @@ public class Pagos  implements java.io.Serializable {
         this.comentario = comentario;
     }
     
+@ManyToOne(fetch=FetchType.LAZY)    
+    @JoinColumn(name="estados_id")
+    public Estados getEstadosid() {
+        return estadosid;
+    }
+
+    public void setEstadosid(Estados estadosid) {
+        this.estadosid = estadosid;
+    }
+    
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="negocios_id")
+    public Negocios getNegocios() {
+        return negocios;
+    }
+
+    public void setNegocios(Negocios negocios) {
+        this.negocios = negocios;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="boleta_id")
+    public Boleta getBoletas() {
+        return boletas;
+    }
+
+    public void setBoletas(Boleta boletas) {
+        this.boletas = boletas;
+    }
     
 }
 

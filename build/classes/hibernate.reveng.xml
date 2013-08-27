@@ -16,5 +16,12 @@
   <table-filter match-name="pagos"/>
   <table-filter match-name="impuestos"/>
   <table-filter match-name="zonas"/>
-  <table-filter match-name="historico_inmueble"/>  
+  <table-filter match-name="historico_inmueble"/>
+  <table-filter match-name="Formulas"/>
+  <table-filter match-name="Negocios"/>
+  <table-filter match-name="Giros"/>
+  <table-filter match-name="Tiposcomercio"/>
+  <table-filter match-name="Montosimpuestosnegocios"/>
+  <table-filter match-name="Pagosadelantados"/>
+  <table-filter match-name="Boleta"/>
 </hibernate-reverse-engineering>

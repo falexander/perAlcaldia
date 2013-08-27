@@ -30,6 +30,11 @@ public class Estados  implements java.io.Serializable {
      private Set<Usuarios> usuarioses = new HashSet<Usuarios>(0);
      private Set<Montosimpuestos> montosimpuestoses = new HashSet<Montosimpuestos>(0);
      private Set<Inmuebles> estadoses = new HashSet<Inmuebles>(0);
+     private Set<Pagos> pagoes = new HashSet<Pagos>(0);
+     private Set<Negocios> negocioses = new HashSet<Negocios>(0);
+     private Set<Montosimpuestosnegocios> mntimpuestoes = new HashSet<Montosimpuestosnegocios>(0);
+     private Set<Boleta> boletaes =  new HashSet<Boleta>(0);
+     private Set<Formulas> formulaes = new HashSet<Formulas>(0);
 
     public Estados() {
     }
@@ -38,12 +43,17 @@ public class Estados  implements java.io.Serializable {
     public Estados(int id) {
         this.id = id;
     }
-    public Estados(int id, String estado, Set usuarioses, Set montosimpuestoses, Set estadoses) {
+    public Estados(int id, String estado, Set usuarioses, Set montosimpuestoses, Set estadoses, Set pagoes, Set negocioses, Set mntimpuestoes, Set boletaes, Set formulaes) {
        this.id = id;
        this.estado = estado;
        this.usuarioses = usuarioses;
        this.montosimpuestoses = montosimpuestoses;
        this.estadoses = estadoses;
+       this.pagoes = pagoes;
+       this.negocioses = negocioses;
+       this.mntimpuestoes = mntimpuestoes;
+       this.boletaes =  boletaes;
+       this.formulaes = formulaes;
     }
    
     @Id 
@@ -82,6 +92,7 @@ public class Estados  implements java.io.Serializable {
     public void setMontosimpuestoses(Set<Montosimpuestos> montosimpuestoses) {
         this.montosimpuestoses = montosimpuestoses;
     }
+    
 @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estadosinm")
     public Set<Inmuebles> getEstadoses() {
         return estadoses;
@@ -90,6 +101,52 @@ public class Estados  implements java.io.Serializable {
     public void setEstadoses(Set<Inmuebles> estadoses) {
         this.estadoses = estadoses;
     }
+    
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estadosid")
+    public Set<Pagos> getPagoes() {
+        return pagoes;
+    }
+
+    public void setPagoes(Set<Pagos> pagoes) {
+        this.pagoes = pagoes;
+    }
+    
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")
+    public Set<Negocios> getNegocioses() {
+        return negocioses;
+    }
+
+    public void setNegocioses(Set<Negocios> negocioses) {
+        this.negocioses = negocioses;
+    }
+    
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")
+    public Set<Montosimpuestosnegocios> getMntimpuestoes() {
+        return mntimpuestoes;
+    }
+
+    public void setMntimpuestoes(Set<Montosimpuestosnegocios> mntimpuestoes) {
+        this.mntimpuestoes = mntimpuestoes;
+    }
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")    
+    public Set<Boleta> getBoletaes() {
+        return boletaes;
+    }
+
+    public void setBoletaes(Set<Boleta> boletaes) {
+        this.boletaes = boletaes;
+    }
+    
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")
+    public Set<Formulas> getFormulaes() {
+        return formulaes;
+    }
+
+    public void setFormulaes(Set<Formulas> formulaes) {
+        this.formulaes = formulaes;
+    }
+
 
 }
 
