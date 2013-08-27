@@ -4,8 +4,16 @@
  */
 package peralcaldia;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -45,9 +53,13 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmmnt = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jmpsalir = new javax.swing.JMenuItem();
-        jmeditar = new javax.swing.JMenu();
         jmtrans = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jmeditar = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -148,9 +160,6 @@ public class SLorenzoParent extends javax.swing.JFrame {
 
         jbarramenu.add(jmarchivo);
 
-        jmeditar.setText("Editar");
-        jbarramenu.add(jmeditar);
-
         jmtrans.setText("Transacciones");
 
         jMenuItem4.setText("Generar Boleta de Pago");
@@ -162,6 +171,33 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmtrans.add(jMenuItem4);
 
         jbarramenu.add(jmtrans);
+
+        jmeditar.setText("Editar");
+        jbarramenu.add(jmeditar);
+
+        jMenu1.setText("Formularios");
+
+        jMenuItem5.setText("F-UATM-1 Declaracion Anual Jurada");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem5);
+
+        jMenu2.setText("F-UATM-13 Estado de cuenta y notificacion");
+
+        jMenuItem7.setText("Inmueble ");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
+
+        jMenu1.add(jMenu2);
+
+        jbarramenu.add(jMenu1);
 
         setJMenuBar(jbarramenu);
 
@@ -298,6 +334,36 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+            try{
+            Map<String, Object> params = new HashMap<String, Object>();
+                String reporteLocation ="src/formularios/report1.jrxml";
+                params.put("serie","0000001");
+                JasperReport reporte=   JasperCompileManager.compileReport(reporteLocation);
+                JasperPrint print = JasperFillManager.fillReport(reporte,params,new JREmptyDataSource());
+                JasperViewer.viewReport(print);
+        }catch(Exception e   ){
+        System.out.print(e.getMessage());
+        }
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+         FUATM13i formulario = new FUATM13i();
+        try {
+            this.jpprincipal.add(formulario);
+            formulario.setSelected(true);
+            formulario.toFront();
+            formulario.setVisible(true);            
+        }
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");                        
+            e.printStackTrace();
+        }       
+        
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -333,10 +399,14 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuBar jbarramenu;
     private javax.swing.JMenu jmarchivo;
     private javax.swing.JMenuItem jmcontribuyente;

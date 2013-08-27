@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc9ead6e-2459-4533-b810-d8a0273f6463">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuarioid" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from usuarios where id = id ;]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="roles_id" class="java.lang.Integer"/>
+	<field name="estados_id" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="alias" class="java.lang.String"/>
+	<field name="password" class="java.lang.String">
+		<fieldDescription><![CDATA[encrypted MD5]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String"/>
+	<field name="telefonofijo" class="java.lang.String"/>
+	<field name="telefonocelular" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<variable name="nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement uuid="b3c3c8ab-365c-4750-8e92-145db9fedc83" x="492" y="16" width="62" height="60"/>
+				<imageExpression><![CDATA["/home/lazo/Escritorio/alcaldia proyect/perAlcaldia/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="f702df3b-bcdb-458e-896e-2a879dfcf8d3" x="118" y="10" width="313" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="3dc3febe-de81-4816-a59c-cd63c794e880" mode="Transparent" x="10" y="16" width="90" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["/home/lazo/Escritorio/alcaldia proyect/Reportes/imagenes/San lorenzo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement uuid="0813aabc-aa6a-4e3f-9d6b-edcfcf2d1a0f" x="30" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="559ce41c-a11a-4fa5-84ce-956162209509" x="472" y="10" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
