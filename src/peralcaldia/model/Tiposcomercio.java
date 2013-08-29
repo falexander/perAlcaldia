@@ -30,14 +30,18 @@ public class Tiposcomercio {
     private int id;
     private String actividadeconomica;
     private Set<Negocios> negocioses = new HashSet<Negocios>(0);
+    private Estados estados;
+    private Giros giros;
 
     public Tiposcomercio() {
     }
 
-    public Tiposcomercio(int id, String actividadeconomica, Set negocioses) {
+    public Tiposcomercio(int id, String actividadeconomica, Set negocioses, Estados estados, Giros giros) {
         this.id = id;
         this.actividadeconomica = actividadeconomica;
         this.negocioses = negocioses;
+        this.estados = estados;
+        this.giros = giros;
     }
     
     @Id 
@@ -68,4 +72,25 @@ public class Tiposcomercio {
     public void setNegocioses(Set<Negocios> negocioses) {
         this.negocioses = negocioses;
     }
+    
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="estados_id")
+    public Estados getEstados() {
+        return estados;
+    }
+
+    public void setEstados(Estados estados) {
+        this.estados = estados;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="giros_id")
+    public Giros getGiros() {
+        return giros;
+    }
+
+    public void setGiros(Giros giros) {
+        this.giros = giros;
+    }
+
 }

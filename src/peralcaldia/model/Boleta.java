@@ -5,6 +5,7 @@
 package peralcaldia.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,11 +40,12 @@ public class Boleta {
     private BigDecimal montototal;
     private Date fechacancelacion;
     private Set<Pagos> pagoes = new HashSet<Pagos>(0);
+    private String recibo;
 
     public Boleta() {
     }
     
-    public Boleta(int id, Inmuebles inmuebles, Negocios negocios, Estados estados, int mesesapagar, BigDecimal montototal, Date fechacancelacion, Set pagoes) {
+    public Boleta(int id, Inmuebles inmuebles, Negocios negocios, Estados estados, int mesesapagar, BigDecimal montototal, Date fechacancelacion, Set pagoes, String recibo) {
         this.id = id;
         this.inmuebles = inmuebles;
         this.negocios = negocios;
@@ -52,6 +54,7 @@ public class Boleta {
         this.montototal = montototal;
         this.fechacancelacion = fechacancelacion;
         this.pagoes = pagoes;
+        this.recibo = recibo;
     }
     
     @Id 
@@ -107,7 +110,7 @@ public class Boleta {
     
     @Column(name="montototal")    
     public BigDecimal getMontototal() {
-        return montototal;
+        return montototal.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public void setMontototal(BigDecimal montototal) {
@@ -131,6 +134,15 @@ public class Boleta {
 
     public void setPagoes(Set<Pagos> pagoes) {
         this.pagoes = pagoes;
+    }
+    
+    @Column(name="recibo")        
+    public String getRecibo() {
+        return recibo;
+    }
+
+    public void setRecibo(String recibo) {
+        this.recibo = recibo;
     }
 
 }

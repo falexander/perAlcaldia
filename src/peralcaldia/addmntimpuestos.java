@@ -207,8 +207,6 @@ public class addmntimpuestos extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
 
         jLabel1.setText("Impuesto:");
 

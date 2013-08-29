@@ -31,15 +31,17 @@ public class Giros {
     private Estados estados;
     private String descripcion;
     private Set<Negocios> negocioses = new HashSet<Negocios>(0);
+    private Set<Tiposcomercio> tipocomercioes = new HashSet<Tiposcomercio>(0);
 
     public Giros() {
     }
 
-    public Giros(int id, Estados estados, String descripcion, Set negocioses) {
+    public Giros(int id, Estados estados, String descripcion, Set negocioses, Set tipocomercioes) {
         this.id = id;
         this.estados = estados;
         this.descripcion = descripcion;
         this.negocioses = negocioses;
+        this.tipocomercioes = tipocomercioes;
     }
     
     @Id 
@@ -80,6 +82,15 @@ public class Giros {
 
     public void setNegocioses(Set<Negocios> negocioses) {
         this.negocioses = negocioses;
+    }
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="giros")
+    public Set<Tiposcomercio> getTipocomercioes() {
+        return tipocomercioes;
+    }
+
+    public void setTipocomercioes(Set<Tiposcomercio> tipocomercioes) {
+        this.tipocomercioes = tipocomercioes;
     }
 
 }

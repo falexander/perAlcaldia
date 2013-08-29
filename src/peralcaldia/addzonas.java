@@ -159,8 +159,6 @@ public class addzonas extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
-        setMaximizable(true);
-        setResizable(true);
 
         jPanel1.setAutoscrolls(true);
 

@@ -35,6 +35,8 @@ public class Estados  implements java.io.Serializable {
      private Set<Montosimpuestosnegocios> mntimpuestoes = new HashSet<Montosimpuestosnegocios>(0);
      private Set<Boleta> boletaes =  new HashSet<Boleta>(0);
      private Set<Formulas> formulaes = new HashSet<Formulas>(0);
+     private Set<Tiposcomercio> tiposcomercioes = new HashSet<Tiposcomercio>(0);
+     private Set<Giros> giroes = new HashSet<Giros>(0);
 
     public Estados() {
     }
@@ -43,7 +45,7 @@ public class Estados  implements java.io.Serializable {
     public Estados(int id) {
         this.id = id;
     }
-    public Estados(int id, String estado, Set usuarioses, Set montosimpuestoses, Set estadoses, Set pagoes, Set negocioses, Set mntimpuestoes, Set boletaes, Set formulaes) {
+    public Estados(int id, String estado, Set usuarioses, Set montosimpuestoses, Set estadoses, Set pagoes, Set negocioses, Set mntimpuestoes, Set boletaes, Set formulaes, Set tiposcomercioes, Set giroes) {
        this.id = id;
        this.estado = estado;
        this.usuarioses = usuarioses;
@@ -54,6 +56,8 @@ public class Estados  implements java.io.Serializable {
        this.mntimpuestoes = mntimpuestoes;
        this.boletaes =  boletaes;
        this.formulaes = formulaes;
+       this.tiposcomercioes = tiposcomercioes;
+       this.giroes = giroes;
     }
    
     @Id 
@@ -147,7 +151,24 @@ public class Estados  implements java.io.Serializable {
         this.formulaes = formulaes;
     }
 
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")
+    public Set<Giros> getGiroes() {
+        return giroes;
+    }
 
+    public void setGiroes(Set<Giros> giroes) {
+        this.giroes = giroes;
+    }
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")    
+    public Set<Tiposcomercio> getTiposcomercioes() {
+        return tiposcomercioes;
+    }
+
+    public void setTiposcomercioes(Set<Tiposcomercio> tiposcomercioes) {
+        this.tiposcomercioes = tiposcomercioes;
+    }
+    
 }
 
 
