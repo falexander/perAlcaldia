@@ -13,11 +13,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import javax.swing.JOptionPane;
-import org.omg.CORBA.TCKind;
 import peralcaldia.model.Boleta;
 import peralcaldia.model.Pagos;
 import peralcaldia.model.Inmuebles;
 import peralcaldia.model.Estados;
+import peralcaldia.model.Pagosadelantados;
 import peralcaldia.model.Usuarios;
 /**
  *
@@ -42,6 +42,7 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
     
     public void buscar(int id){        
         try {
+            txtconcepto.setText("");
             tck =  (Boleta) dao.findByWhereStatementoneobj(Boleta.class, "id =" + id);
             if (tck != null) {
                 user = tck.getInmuebles().getContribuyentes().getUsuarios();
@@ -59,7 +60,9 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
                 lbdirinmueble.setText(inm.getDireccion());
                 lbnmeses.setText(Integer.toString(tck.getMesesapagar()));
                 lbtotal.setText(tck.getMontototal().toString());
-                lbestado.setText(tck.getEstados().getEstado());                
+                lbestado.setText(tck.getEstados().getEstado());
+                txtnorecibo.setText(tck.getRecibo());
+                
             }
             else{
                 JOptionPane.showMessageDialog(this, "El numero de ticket todavia no ha sido emitido");
@@ -75,8 +78,13 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
         Calendar fact;
         Date fecha;
         Boleta tmptck = new Boleta();
+        Pagosadelantados adelantado = new Pagosadelantados();                    
+        Set<Pagosadelantados> ladelantados = null;
+        BigDecimal res, val;
+        String screcibo;
         Estados est= new Estados();
         est = (Estados) dao.findByWhereStatementoneobj(Estados.class, "id = 5");
+        
         comment= txtconcepto.getText();
         if (!txtnorecibo.getText().isEmpty()) {
             tmptck = (Boleta) dao.findByWhereStatementoneobj(Boleta.class, "recibo = '" + txtnorecibo.getText() + "'");
@@ -87,15 +95,52 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
                 Iterator it = tck.getPagoes().iterator();
                 while (it.hasNext()) {                    
                     Pagos tmppago = new Pagos();
+                    //obteniendo el pago
                     tmppago = (Pagos) it.next();
-                    tmppago.setMontopagado(tck.getMontototal().divide(new BigDecimal(tck.getMesesapagar()),2,RoundingMode.HALF_EVEN));
+                    //verificando que solo haya un ultimo pago adelantado, obteniendo saldo y actualizando a cero el pago adelantado
+                    res = BigDecimal.ZERO;
+                    screcibo = "";
+                    try {
+                        ladelantados = inm.getPadelantados();
+                        if (!ladelantados.isEmpty()) {
+                            Iterator tp = ladelantados.iterator();
+                            while (tp.hasNext()) {                                
+                                adelantado = (Pagosadelantados) tp.next();
+                                if (adelantado.getSaldo() != BigDecimal.ZERO && adelantado.getEstados().getId() == 1) {
+                                    Estados nst = new Estados();
+                                    nst = (Estados) dao.findByWhereStatementoneobj(Estados.class, "id = 4");
+                                    res = adelantado.getSaldo();
+                                    val = adelantado.getSaldo().subtract(res);
+                                    screcibo = adelantado.getNorecibo();
+                                    adelantado.setSaldo(val);
+                                    adelantado.setEstados(nst);
+                                    try {
+                                        dao.update(adelantado);
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(this, "Error al actualizar pagos adelantados");
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Error verificando pagos adelantados");
+                        e.printStackTrace();
+                    }
+                    res = res.add(tck.getMontototal().divide(new BigDecimal(tck.getMesesapagar()),2,RoundingMode.HALF_EVEN));
+                    tmppago.setMontopagado(res.setScale(2,RoundingMode.HALF_EVEN));
                     tmppago.setBoletas(tck);
                     tmppago.setEstadosid(est);
                     tmppago.setFechapago(fecha);
                     if (!comment.isEmpty()) {
                         tmppago.setComentario(comment);
                     }
-                    tmppago.setNorecibo(recibo);
+                    if (!screcibo.isEmpty()) {
+                        tmppago.setNorecibo(recibo + "/" + screcibo);                        
+                    }
+                    else{                        
+                        tmppago.setNorecibo(recibo);   
+                    }
                     dao.update(tmppago);
                 }
                 tck.setEstados(est);
@@ -104,6 +149,7 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
                 dao.update(tck);
                 buscar(tid);
                 limpiar();
+            JOptionPane.showMessageDialog(this, "Los Pagos se han aplicado con exito");
             }
             else{
                 JOptionPane.showMessageDialog(this, "El número de recibo ya ha sido asignado, por favor verifique");

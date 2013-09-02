@@ -41,11 +41,12 @@ public class Boleta {
     private Date fechacancelacion;
     private Set<Pagos> pagoes = new HashSet<Pagos>(0);
     private String recibo;
+    private Set<Pagosadelantados> pagosadelantadoses = new HashSet<Pagosadelantados>(0);
 
     public Boleta() {
     }
     
-    public Boleta(int id, Inmuebles inmuebles, Negocios negocios, Estados estados, int mesesapagar, BigDecimal montototal, Date fechacancelacion, Set pagoes, String recibo) {
+    public Boleta(int id, Inmuebles inmuebles, Negocios negocios, Estados estados, int mesesapagar, BigDecimal montototal, Date fechacancelacion, Set pagoes, String recibo, Set pagosadelantadoses) {
         this.id = id;
         this.inmuebles = inmuebles;
         this.negocios = negocios;
@@ -55,6 +56,7 @@ public class Boleta {
         this.fechacancelacion = fechacancelacion;
         this.pagoes = pagoes;
         this.recibo = recibo;
+        this.pagosadelantadoses = pagosadelantadoses;
     }
     
     @Id 
@@ -143,6 +145,15 @@ public class Boleta {
 
     public void setRecibo(String recibo) {
         this.recibo = recibo;
+    }
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="boleta")
+    public Set<Pagosadelantados> getPagosadelantadoses() {
+        return pagosadelantadoses;
+    }
+
+    public void setPagosadelantadoses(Set<Pagosadelantados> pagosadelantadoses) {
+        this.pagosadelantadoses = pagosadelantadoses;
     }
 
 }

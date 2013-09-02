@@ -42,6 +42,7 @@ public class Negocios {
     private Set<Montosimpuestosnegocios> mntimpuestoes = new HashSet<Montosimpuestosnegocios>(0);
     private Set<Pagosadelantados> padelantados = new HashSet<Pagosadelantados>(0);
     private Set<Boleta> boletaes = new HashSet<Boleta>(0);
+    private String direccion;
 
     public Negocios() {
     }
@@ -104,7 +105,7 @@ public class Negocios {
     }
     
 @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="tipos_id")                        
+    @JoinColumn(name="tiposcomercio_id")                        
     public Tiposcomercio getTipos() {
         return tipos;
     }
@@ -177,4 +178,12 @@ public class Negocios {
         this.boletaes = boletaes;
     }
 
+    @Column(name="direccion")
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }    
 }

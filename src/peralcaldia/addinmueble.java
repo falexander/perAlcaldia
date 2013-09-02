@@ -124,7 +124,7 @@ public class addinmueble extends javax.swing.JInternalFrame {
         
         try {
             Inmuebles tmpinm= new Inmuebles();
-            tmpinm = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion = '"+ txtdirinm.getText().toUpperCase() +"'" );
+            tmpinm = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion like '%"+ txtdirinm.getText().toUpperCase() +"%' and estados_id =1" );
             if (tmpinm == null) {
                 tmpinm = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "cuentacorriente = '"+ txtctacorriente.getText().toUpperCase() +"'" );
                 if (tmpinm == null) {

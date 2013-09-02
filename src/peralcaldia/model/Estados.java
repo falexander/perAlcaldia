@@ -37,6 +37,7 @@ public class Estados  implements java.io.Serializable {
      private Set<Formulas> formulaes = new HashSet<Formulas>(0);
      private Set<Tiposcomercio> tiposcomercioes = new HashSet<Tiposcomercio>(0);
      private Set<Giros> giroes = new HashSet<Giros>(0);
+     private Set<Pagosadelantados> pagosadelantadoses = new HashSet<Pagosadelantados>(0);
 
     public Estados() {
     }
@@ -45,7 +46,7 @@ public class Estados  implements java.io.Serializable {
     public Estados(int id) {
         this.id = id;
     }
-    public Estados(int id, String estado, Set usuarioses, Set montosimpuestoses, Set estadoses, Set pagoes, Set negocioses, Set mntimpuestoes, Set boletaes, Set formulaes, Set tiposcomercioes, Set giroes) {
+    public Estados(int id, String estado, Set usuarioses, Set montosimpuestoses, Set estadoses, Set pagoes, Set negocioses, Set mntimpuestoes, Set boletaes, Set formulaes, Set tiposcomercioes, Set giroes, Set pagosadelantadoses) {
        this.id = id;
        this.estado = estado;
        this.usuarioses = usuarioses;
@@ -58,6 +59,7 @@ public class Estados  implements java.io.Serializable {
        this.formulaes = formulaes;
        this.tiposcomercioes = tiposcomercioes;
        this.giroes = giroes;
+       this.pagosadelantadoses = pagosadelantadoses;
     }
    
     @Id 
@@ -168,7 +170,16 @@ public class Estados  implements java.io.Serializable {
     public void setTiposcomercioes(Set<Tiposcomercio> tiposcomercioes) {
         this.tiposcomercioes = tiposcomercioes;
     }
-    
+
+@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy="estados")    
+    public Set<Pagosadelantados> getPagosadelantadoses() {
+        return pagosadelantadoses;
+    }
+
+    public void setPagosadelantadoses(Set<Pagosadelantados> pagosadelantadoses) {
+        this.pagosadelantadoses = pagosadelantadoses;
+    }
+
 }
 
 

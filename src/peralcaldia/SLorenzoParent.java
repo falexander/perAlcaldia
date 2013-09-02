@@ -54,6 +54,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -191,7 +192,20 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmtrans.add(jMenuItem8);
 
         jMenuItem9.setText("Aplicar Pagos Negocios");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jmtrans.add(jMenuItem9);
+
+        jMenuItem11.setText("Aplicar Pagos Clesa");
+        jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem11ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem11);
 
         jbarramenu.add(jmtrans);
 
@@ -216,7 +230,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         try {
             this.jpprincipal.add(addc);
             addc.setSelected(true);
-            addc.toFront();
+            addc.toFront();            
             addc.setVisible(true);            
         }
         catch (Exception e) {
@@ -358,6 +372,34 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        pagosnegocios pgneg = new pagosnegocios();
+        try {
+            this.jpprincipal.add(pgneg);
+            pgneg.setSelected(true);
+            pgneg.toFront();
+            pgneg.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();            
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
+        // TODO add your handling code here:
+        clesapagos clpagos = new clesapagos();
+        try {
+            this.jpprincipal.add(clpagos);
+            clpagos.setSelected(true);
+            clpagos.toFront();
+            clpagos.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem11ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -395,6 +437,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

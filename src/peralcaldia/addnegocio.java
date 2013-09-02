@@ -124,8 +124,8 @@ public class addnegocio extends javax.swing.JInternalFrame {
         Contribuyentes cont = new Contribuyentes();
         Estados est = new Estados();        
         Negocios negocio = new Negocios();
-        
-        
+        Negocios tneg = new Negocios();        
+                
         try {
             est = (Estados) dao.findByWhereStatementoneobj(Estados.class, "id = 1");
             users = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, " (nombres || ' ' || apellidos) = '"+ cmbcontribuyente.getSelectedItem().toString() +"'");
@@ -140,16 +140,33 @@ public class addnegocio extends javax.swing.JInternalFrame {
             
             negocio.setContribuyentes(cont);
             negocio.setEstados(est);
-            negocio.setGiros(giro);
-            negocio.setNombreempresa(txtnempresa.getText().toUpperCase());
+            negocio.setGiros(giro);            
             negocio.setTelefono(txttelefono.getText());
             negocio.setTipos(tipo);
-            negocio.setFecha_registro(jdfecharegistro.getDate());
+            negocio.setFecha_registro(jdfecharegistro.getDate());                        
             
             try {
-                dao.save(negocio);
-                JOptionPane.showMessageDialog(this, "Guardado Completo");
-                limpiar();
+                tneg = (Negocios) dao.findByWhereStatementoneobj(Negocios.class, "direccion like '%" + txtdireccion.getText().toUpperCase() + "%' and estados_id =1");
+                if (tneg == null) {
+                    negocio.setDireccion(txtdireccion.getText().toUpperCase());
+                    tneg = (Negocios) dao.findByWhereStatementoneobj(Negocios.class, "nombreempresa like '%" + txtnempresa.getText().toUpperCase() + "%' and estados_id =1");                                
+                    if (tneg == null) {
+                        negocio.setNombreempresa(txtnempresa.getText().toUpperCase());                                        
+                            dao.save(negocio);
+                            JOptionPane.showMessageDialog(this, "Guardado Completo");
+                            try {
+                                limpiar();
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(this, "Error durante limpieza de los datos");
+                            }                        
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, "El nombre de la empresa ya se encuentra registrado");                        
+                    }                    
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Esta direccion ya se encuentra registrada para un negocio activo, favor verificar");
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Hubo un error en el guardado de los datos");
             }
@@ -165,6 +182,7 @@ public class addnegocio extends javax.swing.JInternalFrame {
         txtbuscarcnt.setText("");
         txtnempresa.setText("");
         txttelefono.setText("");
+        txtdireccion.setText("");
         cmbgiro.setSelectedIndex(0);
     }
     @SuppressWarnings("unchecked")
@@ -172,6 +190,7 @@ public class addnegocio extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtbuscarcnt = new javax.swing.JTextField();
@@ -181,6 +200,8 @@ public class addnegocio extends javax.swing.JInternalFrame {
         rbtnapellidos = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         txtnempresa = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtdireccion = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         cmbgiro = new javax.swing.JComboBox();
@@ -193,6 +214,8 @@ public class addnegocio extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         btnguardar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
 
         setClosable(true);
         setIconifiable(true);
@@ -215,6 +238,8 @@ public class addnegocio extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nombre Empresa:");
 
+        jLabel7.setText("Dirección:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -229,10 +254,6 @@ public class addnegocio extends javax.swing.JInternalFrame {
                         .addGap(233, 233, 233))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtnempresa))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -240,7 +261,15 @@ public class addnegocio extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtbuscarcnt, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtbuscarcnt, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtnempresa)
+                                    .addComponent(txtdireccion))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -262,7 +291,11 @@ public class addnegocio extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtnempresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel3.setText("Giro:");
@@ -417,13 +450,16 @@ public class addnegocio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField jTextField1;
     private com.toedter.calendar.JDateChooser jdfecharegistro;
     private javax.swing.JRadioButton rbtnapellidos;
     private javax.swing.JRadioButton rbtnnombres;
     private javax.swing.JTextField txtbuscarcnt;
+    private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtnempresa;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables

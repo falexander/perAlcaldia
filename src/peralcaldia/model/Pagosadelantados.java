@@ -37,17 +37,24 @@ public class Pagosadelantados {
     private BigDecimal saldo;
     private String norecibo;
     private Date fechapago;
+    private BigDecimal montodelpago;
+    private Estados estados;
+    private Boleta boleta;
 
     public Pagosadelantados() {
     }
 
-    public Pagosadelantados(int id, Inmuebles inmuebles, Negocios negocios, BigDecimal saldo, String norecibo, Date fechapago) {
+    public Pagosadelantados(int id, Inmuebles inmuebles, Negocios negocios, BigDecimal saldo, String norecibo, Date fechapago, BigDecimal montodelpago, Estados estados,
+            Boleta boleta) {
         this.id = id;
         this.inmuebles = inmuebles;
         this.negocios = negocios;
         this.saldo = saldo;
         this.norecibo = norecibo;
         this.fechapago = fechapago;
+        this.montodelpago = montodelpago;
+        this.estados = estados;
+        this.boleta = boleta;
     }
     
     @Id 
@@ -109,5 +116,34 @@ public class Pagosadelantados {
     public void setFechapago(Date fechapago) {
         this.fechapago = fechapago;
     }
-        
+ 
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="estados_id")
+    public Estados getEstados() {
+        return estados;
+    }
+
+    public void setEstados(Estados estados) {
+        this.estados = estados;
+    }
+
+@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="boleta_id")
+    public Boleta getBoleta() {
+        return boleta;
+    }
+
+    public void setBoleta(Boleta boleta) {
+        this.boleta = boleta;
+    }
+
+    @Column(name="montodelpago")        
+    public BigDecimal getMontodelpago() {
+        return montodelpago;
+    }
+
+    public void setMontodelpago(BigDecimal montodelpago) {
+        this.montodelpago = montodelpago;
+    }
+
 }
