@@ -5,6 +5,7 @@
 package util;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
@@ -12,14 +13,18 @@ import java.math.BigDecimal;
  */
 public class totalesimpuestosinmuebles {
     private String NImpuesto;
-    private BigDecimal TImpuesto;
+    private BigDecimal totalimpuesto;
+    private String fechainicio;
+    private String fechafin;
 
     public totalesimpuestosinmuebles() {
     }
 
-    public totalesimpuestosinmuebles(String NImpuesto, BigDecimal TImpuesto) {
+    public totalesimpuestosinmuebles(String NImpuesto, BigDecimal totalimpuesto, String fechainicio, String fechafin) {
         this.NImpuesto = NImpuesto;
-        this.TImpuesto = TImpuesto;
+        this.totalimpuesto = totalimpuesto;
+        this.fechainicio = fechainicio;
+        this.fechafin = fechafin;
     }
 
     public String getNImpuesto() {
@@ -30,14 +35,29 @@ public class totalesimpuestosinmuebles {
         this.NImpuesto = NImpuesto;
     }
 
-    public BigDecimal getTImpuesto() {
-        return TImpuesto;
+    public BigDecimal getTotalimpuesto() {
+        return totalimpuesto;
     }
 
-    public void setTImpuesto(BigDecimal TImpuesto) {
-        this.TImpuesto = TImpuesto;
+    public void setTotalimpuesto(BigDecimal totalimpuesto) {
+        this.totalimpuesto = totalimpuesto;
     }
-    
-    
-    
+
+    public String getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(String fechainicio) {
+        this.fechainicio = fechainicio;
+    }
+
+    public String getFechafin() {
+        return fechafin;
+    }
+
+    public void setFechafin(String fechafin) {
+        this.fechafin = fechafin;
+    }
+
+          
 }

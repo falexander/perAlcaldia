@@ -6,6 +6,7 @@ package peralcaldia;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import util.cobrosiniciales;
 
 /**
  *
@@ -55,6 +56,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem12 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -181,6 +183,11 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmtrans.add(jMenuItem4);
 
         jMenuItem5.setText("Carga Inicial");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jmtrans.add(jMenuItem5);
 
         jMenuItem8.setText("Aplicar Pagos Inmuebles");
@@ -206,6 +213,14 @@ public class SLorenzoParent extends javax.swing.JFrame {
             }
         });
         jmtrans.add(jMenuItem11);
+
+        jMenuItem12.setText("Cargar Pago Adelantado");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem12);
 
         jbarramenu.add(jmtrans);
 
@@ -400,6 +415,34 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        // TODO add your handling code here:
+        EfectuarPagosAdelantados pgadel = new EfectuarPagosAdelantados();
+        try {
+            this.jpprincipal.add(pgadel);
+            pgadel.setSelected(true);
+            pgadel.toFront();
+            pgadel.setVisible(true);            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();            
+        }
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        gencobrosini cbini = new gencobrosini();
+        try {
+            this.jpprincipal.add(cbini);
+            cbini.setSelected(true);
+            cbini.toFront();
+            cbini.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -438,6 +481,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

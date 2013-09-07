@@ -5,6 +5,9 @@
 package util;
 
 import java.math.BigDecimal;
+import peralcaldia.model.Estados;
+import peralcaldia.model.Inmuebles;
+import peralcaldia.model.Negocios;
 
 /**
  *
@@ -13,15 +16,20 @@ import java.math.BigDecimal;
 public class verpagos {
     private String mespagado;
     private BigDecimal monto;
-    private boolean estapagado;
+    private Estados estapagado;
+    private Inmuebles inmueble;
+    private Negocios negocio;
+    
 
     public verpagos() {
     }
 
-    public verpagos(String mespagado, BigDecimal monto, boolean estapagado) {
+    public verpagos(String mespagado, BigDecimal monto, Estados estapagado, Inmuebles inmueble, Negocios negocio) {
         this.mespagado = mespagado;
         this.monto = monto;
         this.estapagado = estapagado;        
+        this.inmueble = inmueble;
+        this.negocio = negocio;
     }
 
     public String getMespagado() {
@@ -40,12 +48,27 @@ public class verpagos {
         this.monto = monto;
     }
 
-    public boolean isEstapagado() {
+    public Estados getEstapagado() {
         return estapagado;
     }
 
-    public void setEstapagado(boolean estapagado) {
+    public void setEstapagado(Estados estapagado) {
         this.estapagado = estapagado;
-    }      
-    
+    }
+
+    public Inmuebles getInmueble() {
+        return inmueble;
+    }
+
+    public void setInmueble(Inmuebles inmueble) {
+        this.inmueble = inmueble;
+    }
+
+    public Negocios getNegocio() {
+        return negocio;
+    }
+
+    public void setNegocio(Negocios negocio) {
+        this.negocio = negocio;
+    }        
 }

@@ -169,10 +169,10 @@ public class generarpagos extends javax.swing.JInternalFrame {
                                 while (littot.hasNext()) {                                    
                                     totalesimpuestosinmuebles a = new totalesimpuestosinmuebles();
                                     a = (totalesimpuestosinmuebles) littot.next();
-                                    total = total.add(a.getTImpuesto());
+                                    total = total.add(a.getTotalimpuesto());
                                 } 
                                     vpg = new verpagos();
-                                    vpg.setEstapagado(false);
+//                                    vpg.setEstapagado(false);
                                     vpg.setMespagado(compruebames);
                                     vpg.setMonto(total);
                                     lvpag.add(vpg);
@@ -184,7 +184,7 @@ public class generarpagos extends javax.swing.JInternalFrame {
                                     if (tmppagos.getMespagado() == compruebames) {
                                         //Si existen los pagos se agregan los datos directamente
                                         vpg = new verpagos();
-                                        vpg.setEstapagado(true);
+//                                        vpg.setEstapagado(true);
                                         vpg.setMespagado(tmppagos.getMespagado());
                                         vpg.setMonto(tmppagos.getMontopagado());
                                         lvpag.add(vpg);
@@ -198,10 +198,10 @@ public class generarpagos extends javax.swing.JInternalFrame {
                                         while (littot.hasNext()) {
                                             totalesimpuestosinmuebles a = new totalesimpuestosinmuebles();
                                             a = (totalesimpuestosinmuebles) littot.next();
-                                            total = total.add(a.getTImpuesto());
+                                            total = total.add(a.getTotalimpuesto());
                                         }
                                         vpg = new verpagos();
-                                        vpg.setEstapagado(false);
+//                                        vpg.setEstapagado(false);
                                         vpg.setMespagado(compruebames);
                                         vpg.setMonto(total);
                                         lvpag.add(vpg);
@@ -219,12 +219,12 @@ public class generarpagos extends javax.swing.JInternalFrame {
                             vpg = (verpagos) v.next();
                             datos[0]=vpg.getMespagado();
                             datos[1]=vpg.getMonto().setScale(2, RoundingMode.HALF_EVEN).toString();
-                            if (vpg.isEstapagado()==true) {
-                                datos[2]="Pagado";
-                            }
-                            else{
-                                datos[2]="En Mora";
-                            }
+//                            if (vpg.isEstapagado()==true) {
+//                                datos[2]="Pagado";
+//                            }
+//                            else{
+//                                datos[2]="En Mora";
+//                            }
                             tablam.addRow(datos);
                         }
                         jtpagos.setModel(tablam);
@@ -273,7 +273,7 @@ public class generarpagos extends javax.swing.JInternalFrame {
                     if (formula.equals("0")) {
                         adding = new totalesimpuestosinmuebles();
                         adding.setNImpuesto(tmpimpuesto.getNombre());
-                        adding.setTImpuesto(tmpmntimp.getMonto());
+                        adding.setTotalimpuesto(tmpmntimp.getMonto());
                         objects.add(adding);
                     }
                     else{                        
@@ -284,7 +284,7 @@ public class generarpagos extends javax.swing.JInternalFrame {
                         adding = new totalesimpuestosinmuebles();
                         adding.setNImpuesto(tmpimpuesto.getNombre());
                         res=interprete.eval(formula);
-                        adding.setTImpuesto(new BigDecimal(res.toString()));
+                        adding.setTotalimpuesto(new BigDecimal(res.toString()));
                         objects.add(adding);                                                                                                
                     }
                     

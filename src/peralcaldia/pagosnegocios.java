@@ -129,7 +129,7 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
                     }
                     res = res.add(tck.getMontototal().divide(new BigDecimal(tck.getMesesapagar()),2,RoundingMode.HALF_EVEN));                    
                     tmppago.setMontopagado(res.setScale(2,RoundingMode.HALF_EVEN));
-                    tmppago.setBoletas(tck);
+//                    tmppago.setBoletas(tck);
                     tmppago.setEstadosid(est);
                     tmppago.setFechapago(fecha);
                     if (!comment.isEmpty()) {
