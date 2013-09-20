@@ -11,12 +11,12 @@ import util.cobrosiniciales;
  *
  * @author alex
  */
-public class gencobrosini extends javax.swing.JInternalFrame {
+public class gencobrosmensuales extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form gencobrosini
+     * Creates new form gencobrosmensuales
      */
-    public gencobrosini() {
+    public gencobrosmensuales() {
         initComponents();
     }
 
@@ -30,15 +30,15 @@ public class gencobrosini extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btncobrosmensuales = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
 
-        jButton1.setText("Generar Cobros Iniciales");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btncobrosmensuales.setText("Generar Cobros Mensuales");
+        btncobrosmensuales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btncobrosmensualesActionPerformed(evt);
             }
         });
 
@@ -47,16 +47,16 @@ public class gencobrosini extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addGap(62, 62, 62)
+                .addComponent(btncobrosmensuales, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(33, 33, 33))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(btncobrosmensuales)
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -67,47 +67,46 @@ public class gencobrosini extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btncobrosmensualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncobrosmensualesActionPerformed
         // TODO add your handling code here:
+        cobrosiniciales cobro = new cobrosiniciales();
         int contador = 0;
         String salida = "";
-        cobrosiniciales cobros = new cobrosiniciales();
         try {
-            //uno
-            if (cobros.cargainicialinmuebles()) {
+            if (cobro.generarcobrosmensualesinmuebles()) {
                 contador = contador + 1;
             } else {
-                salida = "La carga inicial para los inmuebles ya ha sido generada. ";
+                salida = "No se generaron los cobros para los inmuebles";
             }
-            //dos
-            if (cobros.cargainicialnegocios()) {
+
+            if (cobro.generarcobrosmensualesnegocios()) {
                 contador = contador + 1;
             } else if (contador == 1) {
-                salida = "La carga inicial para los negocios ya ha sido generada";
+                salida = "No se generaron los cobros para los negocios";
             } else {
-                salida = salida + ("De igual forma para los negocios");
+                salida = salida + ("Tampoco para los negocios");
             }
-            //tres
+
             if (contador == 2) {
                 JOptionPane.showMessageDialog(this, "PROCESO TERMINADO ");
             } else {
                 JOptionPane.showMessageDialog(this, "PROCESO TERMINADO. " + salida);
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Hubo un error en el proceso contacte al administrador de su red");
-        }       
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }
+        
+    }//GEN-LAST:event_btncobrosmensualesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btncobrosmensuales;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

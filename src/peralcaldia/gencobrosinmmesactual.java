@@ -11,12 +11,12 @@ import util.cobrosiniciales;
  *
  * @author alex
  */
-public class gencobrosini extends javax.swing.JInternalFrame {
+public class gencobrosinmmesactual extends javax.swing.JInternalFrame {
 
     /**
-     * Creates new form gencobrosini
+     * Creates new form gencobrosinmmesactual
      */
-    public gencobrosini() {
+    public gencobrosinmmesactual() {
         initComponents();
     }
 
@@ -30,15 +30,15 @@ public class gencobrosini extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btncobrosninm = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
 
-        jButton1.setText("Generar Cobros Iniciales");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btncobrosninm.setText("Generar Cobros Inmuebles y Negocios Ingresados en el Periodo Actual");
+        btncobrosninm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btncobrosninmActionPerformed(evt);
             }
         });
 
@@ -47,15 +47,15 @@ public class gencobrosini extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(btncobrosninm)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(35, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btncobrosninm)
                 .addGap(33, 33, 33))
         );
 
@@ -73,41 +73,39 @@ public class gencobrosini extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btncobrosninmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncobrosninmActionPerformed
         // TODO add your handling code here:
         int contador = 0;
         String salida = "";
         cobrosiniciales cobros = new cobrosiniciales();
         try {
-            //uno
-            if (cobros.cargainicialinmuebles()) {
+            if (cobros.gencbnuevosinmuebles()) {
                 contador = contador + 1;
             } else {
-                salida = "La carga inicial para los inmuebles ya ha sido generada. ";
+                salida = "No se encontraron nuevos inmuebles. ";
             }
-            //dos
-            if (cobros.cargainicialnegocios()) {
+
+            if (cobros.gencbnuevosnegocios()) {
                 contador = contador + 1;
             } else if (contador == 1) {
-                salida = "La carga inicial para los negocios ya ha sido generada";
+                salida = "No se encontraron nuevos negocios";
             } else {
-                salida = salida + ("De igual forma para los negocios");
+                salida = salida + ("Tampoco nuevos negocios");
             }
-            //tres
+
             if (contador == 2) {
                 JOptionPane.showMessageDialog(this, "PROCESO TERMINADO ");
             } else {
                 JOptionPane.showMessageDialog(this, "PROCESO TERMINADO. " + salida);
             }
-            
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Hubo un error en el proceso contacte al administrador de su red");
-        }       
-    }//GEN-LAST:event_jButton1ActionPerformed
+        }
 
+    }//GEN-LAST:event_btncobrosninmActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btncobrosninm;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

@@ -102,5 +102,22 @@ public class AbstractDAO {
         }
         return objects;
     }
+    
+    public Object findByWhereStatementmaximoobjeto(Class clazz, String whereStatement) {
+        Object objects = null;
+        List lista=null;
+        try {
+            sessionFactory.getCurrentSession().beginTransaction();
+            Query query = sessionFactory.getCurrentSession().createQuery("from " + clazz.getName() + " where " + whereStatement + " ORDER BY id ASC LIMIT 1");
+            lista = query.list();            
+            Iterator it = lista.iterator();            
+                while(it.hasNext()){
+                    objects = (Object) it.next();
+                }                    
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return objects;
+    }
 
 }

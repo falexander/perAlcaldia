@@ -146,7 +146,7 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
                     //actualizando el pago
                     pago.setMontopagado(tck.getMontototal().setScale(2,RoundingMode.HALF_EVEN));
                     pago.setEstadosid(est);
-                    pago.setMespagado("Varios Adelantado");
+                    pago.setMespagado("VARIOS ADELANTADOS");
                     pago.setFechapago(fecha);
                     if (!comment.isEmpty()) {
                         pago.setComentario(comment);

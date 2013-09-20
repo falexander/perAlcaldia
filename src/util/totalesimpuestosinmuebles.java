@@ -14,13 +14,13 @@ import java.util.Date;
 public class totalesimpuestosinmuebles {
     private String NImpuesto;
     private BigDecimal totalimpuesto;
-    private String fechainicio;
-    private String fechafin;
+    private Date fechainicio;
+    private Date fechafin;
 
     public totalesimpuestosinmuebles() {
     }
 
-    public totalesimpuestosinmuebles(String NImpuesto, BigDecimal totalimpuesto, String fechainicio, String fechafin) {
+    public totalesimpuestosinmuebles(String NImpuesto, BigDecimal totalimpuesto, Date fechainicio, Date fechafin) {
         this.NImpuesto = NImpuesto;
         this.totalimpuesto = totalimpuesto;
         this.fechainicio = fechainicio;
@@ -43,19 +43,19 @@ public class totalesimpuestosinmuebles {
         this.totalimpuesto = totalimpuesto;
     }
 
-    public String getFechainicio() {
+    public Date getFechainicio() {
         return fechainicio;
     }
 
-    public void setFechainicio(String fechainicio) {
+    public void setFechainicio(Date fechainicio) {
         this.fechainicio = fechainicio;
     }
 
-    public String getFechafin() {
+    public Date getFechafin() {
         return fechafin;
     }
 
-    public void setFechafin(String fechafin) {
+    public void setFechafin(Date fechafin) {
         this.fechafin = fechafin;
     }
 

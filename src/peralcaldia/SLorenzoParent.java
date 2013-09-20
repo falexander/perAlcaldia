@@ -53,6 +53,8 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jmtrans = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
@@ -189,6 +191,22 @@ public class SLorenzoParent extends javax.swing.JFrame {
             }
         });
         jmtrans.add(jMenuItem5);
+
+        jMenuItem14.setText("Generar Cobros Mensuales");
+        jMenuItem14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem14ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem14);
+
+        jMenuItem13.setText("Generar Cobros Nuevos Inmuebles");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem13);
 
         jMenuItem8.setText("Aplicar Pagos Inmuebles");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -443,6 +461,34 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        // TODO add your handling code here:
+        gencobrosinmmesactual cbmesactual = new gencobrosinmmesactual();
+        try {
+            this.jpprincipal.add(cbmesactual);
+            cbmesactual.setSelected(true);
+            cbmesactual.toFront();
+            cbmesactual.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
+    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
+        // TODO add your handling code here:
+        gencobrosmensuales cbmensuales = new gencobrosmensuales();
+        try {
+            this.jpprincipal.add(cbmensuales);
+            cbmensuales.setSelected(true);
+            cbmensuales.toFront();
+            cbmensuales.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem14ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -482,6 +528,8 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

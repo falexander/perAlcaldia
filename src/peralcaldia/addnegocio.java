@@ -45,7 +45,7 @@ public class addnegocio extends javax.swing.JInternalFrame {
         
         try { 
             if (rbtnnombres.isSelected()) {
-                luser = dao.findByWhereStatement(Usuarios.class, "nombres like '%" + txtbuscarcnt.getText().toUpperCase() + "%' and roles_id= 3");                
+                luser = dao.findByWhereStatement(Usuarios.class, "nombres || ' '||apellidos like '%" + txtbuscarcnt.getText().toUpperCase() + "%' and roles_id= 3");                
             }
             else if(rbtnapellidos.isSelected()){
                 luser = dao.findByWhereStatement(Usuarios.class, "apellidos like '%" + txtbuscarcnt.getText().toUpperCase() + "%' and roles_id=3");

@@ -14,6 +14,7 @@ import peralcaldia.model.Negocios;
  * @author alex
  */
 public class verpagos {
+    private String bandera;
     private String mespagado;
     private BigDecimal monto;
     private Estados estapagado;
@@ -24,12 +25,13 @@ public class verpagos {
     public verpagos() {
     }
 
-    public verpagos(String mespagado, BigDecimal monto, Estados estapagado, Inmuebles inmueble, Negocios negocio) {
+    public verpagos(String mespagado, BigDecimal monto, Estados estapagado, Inmuebles inmueble, Negocios negocio, String bandera) {
         this.mespagado = mespagado;
         this.monto = monto;
         this.estapagado = estapagado;        
         this.inmueble = inmueble;
         this.negocio = negocio;
+        this.bandera = bandera;
     }
 
     public String getMespagado() {
@@ -70,5 +72,13 @@ public class verpagos {
 
     public void setNegocio(Negocios negocio) {
         this.negocio = negocio;
-    }        
+    }
+
+    public String getBandera() {
+        return bandera;
+    }
+
+    public void setBandera(String bandera) {
+        this.bandera = bandera;
+    }    
 }
