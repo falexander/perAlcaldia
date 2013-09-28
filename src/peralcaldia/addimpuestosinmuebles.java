@@ -117,7 +117,7 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
                     Iterator it = limp.iterator();
                     while(it.hasNext()){
                         otrim=(Impuestos) it.next();
-                        impinm = (Impuestosinmuebles) dao.findByWhereStatementoneobj(Impuestosinmuebles.class, "inmuebles_id =" + tmpinm.getId() + " " +"and" +" "+ "impuestos_id ="+ otrim.getId());
+                        impinm = (Impuestosinmuebles) dao.findByWhereStatementoneobj(Impuestosinmuebles.class, "inmuebles_id =" + tmpinm.getId() + " and " + "impuestos_id ="+ otrim.getId());
                         try {
                             if (impinm != null) {
                                 Object[] datos = new Object[1];                    

@@ -26,7 +26,7 @@ public class codemd5 {
         	byte[] output = md.digest();
         	outputString=bytesToHex(output);
     	}catch(Exception e){
-    		
+    		System.out.println(e.toString());
     	}
     	return outputString;
     }
@@ -47,6 +47,7 @@ public class codemd5 {
             }
             return strbCadenaMD5.toString();            
         } catch (Exception e) {
+            System.out.println(e.toString());
             return null;
         }
 //        return buf.toString();
@@ -73,8 +74,8 @@ public class codemd5 {
             c1.set(Calendar.MILLISECOND, 0);
             nuevafecha = c1.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Error en el formateo de la fecha");
+            System.out.println(e.toString());
         }
         return nuevafecha;
     }
@@ -91,8 +92,8 @@ public class codemd5 {
             c1.set(Calendar.MILLISECOND, 59);
             nuevafecha = c1.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Error en el formateo de la fecha");
+            System.out.println(e.toString());
         }
         return nuevafecha;        
     }
@@ -107,8 +108,8 @@ public class codemd5 {
             c1.set(Calendar.MILLISECOND, 0);
             nuevafecha = c1.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Error en el formateo de la fecha");
+            System.out.println(e.toString());
         }
         return nuevafecha;
     }
@@ -123,8 +124,8 @@ public class codemd5 {
             c1.set(Calendar.MILLISECOND, 59);
             nuevafecha = c1.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Error en el formateo de la fecha");
+            System.out.println(e.toString());
         }
         return nuevafecha;        
     }
@@ -168,8 +169,8 @@ public class codemd5 {
             c1.set(c1.get(c1.YEAR), c1.get(c1.MONTH), c1.getActualMaximum(c1.DAY_OF_MONTH));
             nuevafecha = c1.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Error en el formateo de la fecha");
+            System.out.println(e.toString());
         }
         return nuevafecha;        
     }
@@ -182,8 +183,8 @@ public class codemd5 {
             c1.set(c1.get(c1.YEAR), c1.get(c1.MONTH), c1.getActualMinimum(c1.DAY_OF_MONTH));
             nuevafecha = c1.getTime();
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Error en el formateo de la fecha");
+            System.out.println(e.toString());
         }
         return nuevafecha;        
     }

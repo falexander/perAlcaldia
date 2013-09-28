@@ -58,6 +58,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
@@ -232,6 +233,14 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmtrans.add(jMenuItem11);
 
+        jMenuItem15.setText("Aplicar Pagos Manuales");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem15);
+
         jMenuItem12.setText("Cargar Pago Adelantado");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,15 +374,15 @@ public class SLorenzoParent extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        generarpagos boleta = new generarpagos();
+        GenerarBoleta gb = new GenerarBoleta();
         try {
-            this.jpprincipal.add(boleta);
-            boleta.setSelected(true);
-            boleta.toFront();
-            boleta.setVisible(true);
+            this.jpprincipal.add(gb);
+            gb.setSelected(true);
+            gb.toFront();
+            gb.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();            
+            e.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -489,6 +498,20 @@ public class SLorenzoParent extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
+        // TODO add your handling code here:
+        applicarpagomanual pgm = new applicarpagomanual();
+        try {
+            this.jpprincipal.add(pgm);
+            pgm.setSelected(true);
+            pgm.toFront();
+            pgm.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -530,6 +553,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
