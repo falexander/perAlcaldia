@@ -39,4 +39,16 @@ public class PgDAO extends AbstractDAO{
         return objects;        
     }
     
+        public List fin_pagos_whereStatement(String whereStatement){
+        List objects = null;
+        try {
+            sessionFactory.getCurrentSession().beginTransaction();
+            Query query = sessionFactory.getCurrentSession().createQuery("select mespagado as PERIODO, monto as MONTO_IMPUESTOS, CASE when estados_id = 5 THEN 'CANCELADO' WHEN estados_id = 6 THEN 'PENDIENTE DE CANCELACIÓN' ELSE '' END as ESTADO_DEL_COBRO from Pagos where " + whereStatement + " order by id");
+            objects = query.list();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        return objects;        
+    }
+    
 }

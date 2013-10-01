@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package componentesheredados;
 
 import java.io.Serializable;
 import java.util.Vector;

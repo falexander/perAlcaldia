@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package util;
+package componentesheredados;
 
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -23,7 +23,7 @@ public class DynaTableModel extends DefaultTableModel {
     
     @Override
     public boolean isCellEditable(int row, int col) {
-        if (col == 0)    
+        if (col == 0 && getValueAt(0, col).getClass() == Boolean.class )    
         {
             return true;
         } else {
@@ -35,5 +35,10 @@ public class DynaTableModel extends DefaultTableModel {
     public void setValueAt(Object value, int row, int column) {
         super.setValueAt(value, row, column);
     }    
+    
+    @Override
+    public Class getColumnClass(int col) {
+        return getValueAt(0, col).getClass();
+    }
 
 }

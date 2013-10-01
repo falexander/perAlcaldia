@@ -11,8 +11,8 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import interfaces.IModelTable;
-import util.DynaTableBean;
-import util.DynaTableModel;
+import componentesheredados.DynaTableBean;
+import componentesheredados.DynaTableModel;
 
 /**
  *

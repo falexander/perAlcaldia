@@ -26,9 +26,10 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import util.CheckCell;
-import util.CheckRender;
+import componentesheredados.CheckCell;
+import componentesheredados.CheckRender;
 import util.GCMPNativos;
+import util.Value;
 import util.verpagos;
 
 /**
@@ -169,6 +170,8 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                         jtpagos.setModel(componentes.llenartabla(tablam, otls, Verpagosnocancelados.class));
                         jtpagos.getColumnModel().getColumn(0).setCellEditor(new CheckCell());
                         jtpagos.getColumnModel().getColumn(0).setCellRenderer(new CheckRender());
+                        componentes.centrarcabeceras(jtpagos);
+                        componentes.centrarcolumnasdesde2(jtpagos, 3);                        
                     }
                 } else if (jbtnnegocios.isSelected()) {
                     inmueble = null;
@@ -205,6 +208,8 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                         jtpagos.setModel(componentes.llenartabla(tablam, otls, Verpagosnocancelados.class));
                         jtpagos.getColumnModel().getColumn(0).setCellEditor(new CheckCell());
                         jtpagos.getColumnModel().getColumn(0).setCellRenderer(new CheckRender());
+                        componentes.centrarcabeceras(jtpagos);
+                        componentes.centrarcolumnasdesde2(jtpagos, 3);
                     }
                     
                 } else {
@@ -264,7 +269,7 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                             pago.setMontopagado(new BigDecimal(txtmnt.getText()).divide(new BigDecimal(seleccion.size())));
                             pago.setFechapago(jdfecha.getDate());
                             if (!txtcomentario.getText().isEmpty()) {
-                                pago.setComentario(txtcomentario.getText());
+                                pago.setComentario(txtcomentario.getText().toUpperCase());
                             }
                             pago.setNorecibo(txtrecibo.getText());
                             pago.setEstadosid(estcancel);
@@ -281,7 +286,15 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
             tablam = componentes.limpiartabla(tablam);
             jtpagos.setModel(tablam);
             llenargrid();
+            limpiar();
         }//Fin de la lista de pagos                
+    }
+    
+    public void limpiar(){
+        txtcomentario.setText("");
+        txtmnt.setText("");
+        txtrecibo.setText("");
+        jdfecha.setDate(new Date());
     }
 
     /**
@@ -309,13 +322,13 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         jtpagos = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtmnt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jdfecha = new com.toedter.calendar.JDateChooser();
         jLabel6 = new javax.swing.JLabel();
         txtcomentario = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtrecibo = new javax.swing.JTextField();
+        txtmnt = new componentesheredados.DecimalJTextField();
         jPanel4 = new javax.swing.JPanel();
         btnaplicar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
@@ -376,7 +389,7 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtcontribuyente, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnbuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnbuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -453,8 +466,8 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtmnt, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                    .addComponent(txtrecibo))
+                    .addComponent(txtrecibo, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(txtmnt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -475,8 +488,8 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                     .addComponent(jdfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(txtmnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5)))
+                        .addComponent(jLabel5)
+                        .addComponent(txtmnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -613,7 +626,7 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtpagos;
     private javax.swing.JTextField txtcomentario;
     private javax.swing.JTextField txtcontribuyente;
-    private javax.swing.JTextField txtmnt;
+    private componentesheredados.DecimalJTextField txtmnt;
     private javax.swing.JTextField txtrecibo;
     // End of variables declaration//GEN-END:variables
 }

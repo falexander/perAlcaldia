@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
+<Form version="1.5" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -73,7 +73,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txtcontribuyente" min="-2" pref="381" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="btnbuscar" max="32767" attributes="0"/>
+                          <Component id="btnbuscar" pref="68" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
@@ -228,8 +228,8 @@
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="txtmnt" pref="111" max="32767" attributes="0"/>
-                      <Component id="txtrecibo" max="32767" attributes="0"/>
+                      <Component id="txtrecibo" pref="111" max="32767" attributes="0"/>
+                      <Component id="txtmnt" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -256,8 +256,8 @@
                       <Component id="jdfecha" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtmnt" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtmnt" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -277,8 +277,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Monto Total:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="txtmnt">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
@@ -300,6 +298,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtrecibo">
+        </Component>
+        <Component class="componentesheredados.DecimalJTextField" name="txtmnt">
         </Component>
       </SubComponents>
     </Container>

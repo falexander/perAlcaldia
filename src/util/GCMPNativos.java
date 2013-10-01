@@ -49,8 +49,27 @@ public class GCMPNativos {
         DefaultTableCellRenderer alinearCentro = new DefaultTableCellRenderer();
         alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
         mitabla.getColumnModel().getColumn(0).setHeaderRenderer(alinearCentro);
-        
         return mitabla;
+    }
+    
+    public JTable centrarcolumnas(JTable tabla, int ncolumnas){
+        JTable mitabla = tabla;
+        DefaultTableCellRenderer alinearCentro = new DefaultTableCellRenderer();
+        alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 0; i < ncolumnas; i++) {
+            mitabla.getColumnModel().getColumn(i).setCellRenderer(alinearCentro);
+        }                        
+        return mitabla;        
+    }
+    
+        public JTable centrarcolumnasdesde2(JTable tabla, int ncolumnas){
+        JTable mitabla = tabla;
+        DefaultTableCellRenderer alinearCentro = new DefaultTableCellRenderer();
+        alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
+        for (int i = 1; i < ncolumnas; i++) {
+            mitabla.getColumnModel().getColumn(i).setCellRenderer(alinearCentro);
+        }                        
+        return mitabla;        
     }
     
     public DefaultTableModel limpiartabla(DefaultTableModel modelo){
