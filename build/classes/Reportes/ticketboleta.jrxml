@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketboleta" language="groovy" pageWidth="300" pageHeight="550" columnWidth="240" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="44a79b58-eab9-42a1-af6f-61f8d919871e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="156"/>
+	<parameter name="BoletaMap" class="java.util.Map"/>
+	<detail>
+		<band height="460" splitType="Stretch">
+			<textField>
+				<reportElement uuid="23cd0c29-1d88-4c93-8038-ca164a5466f5" x="2" y="150" width="203" height="67"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{BoletaMap}.get("contribuyente")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a8063e0f-c775-4f2f-b2e7-c4b7ef024923" x="2" y="26" width="203" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{BoletaMap}.get("fechageneracion")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="afa535b1-604d-477b-b82d-dfbaa5b750d7" x="2" y="87" width="203" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{BoletaMap}.get("idboleta")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9353337b-7898-4ea9-8803-9fd762af8f2e" x="2" y="257" width="203" height="51"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{BoletaMap}.get("inmneg")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2c9a9572-e62b-4f5b-acc9-d9e3d2b18845" x="0" y="350" width="205" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{BoletaMap}.get("mesepg")]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f024c886-dae1-4dcf-b9b3-82a9b0931e8c" x="2" y="419" width="203" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{BoletaMap}.get("total")]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0b6e1393-a269-4026-b1d2-7f80ae3ec0e1" x="0" y="0" width="205" height="20"/>
+				<textElement/>
+				<text><![CDATA[Fecha de Generación:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="254a0de8-c16d-4022-9d1c-5be29b9148fe" x="2" y="57" width="203" height="20"/>
+				<textElement/>
+				<text><![CDATA[Boleta No,:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bda80dd-83f8-46c4-961c-3ff199d5b485" x="2" y="119" width="203" height="20"/>
+				<textElement/>
+				<text><![CDATA[Contribuyente:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d37e896a-7710-4c29-8ad6-7ff0adcfacb8" x="2" y="227" width="203" height="20"/>
+				<textElement/>
+				<text><![CDATA[Inmueble o Negocio:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="614b8a8b-7297-47d9-b898-d3b86c40f91a" x="2" y="320" width="203" height="20"/>
+				<textElement/>
+				<text><![CDATA[Meses a Pagar:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1ee1fb9f-8b82-4899-ac2a-2ca74ae77d21" x="2" y="388" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Monto a Cancelar:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

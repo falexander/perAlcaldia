@@ -6,6 +6,7 @@ package peralcaldia;
 
 import beans.Verpagosnocancelados;
 import beans.Vpgnocansincheckbox;
+import beans.boletamap;
 import controller.AbstractDAO;
 import controller.InmDAO;
 import controller.NegDAO;
@@ -26,6 +27,11 @@ import peralcaldia.model.Negocios;
 import peralcaldia.model.Usuarios;
 import componentesheredados.CheckCell;
 import componentesheredados.CheckRender;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import net.sf.jasperreports.engine.JasperPrint;
+import peralcaldia.model.Boleta;
 import util.GCMPNativos;
 import util.GenerarBoletaRepository;
 
@@ -165,6 +171,9 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
                         componentes.centrarcolumnas(jtpagos, 2);
                         llenarcombomesesapagar(lista.size());
                     }
+                    if (lista.isEmpty() || lista.size() <= 0) {
+                        llenarcombomesesapagar(0);
+                    }                    
                 } else if (jbtnnegocios.isSelected()) {
                     inmueble = null;
                     negocio = new Negocios();
@@ -199,7 +208,9 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
                         componentes.centrarcolumnas(jtpagos, 2);
                         llenarcombomesesapagar(lista.size());
                     }
-                    
+                    if (lista.isEmpty() || lista.size() <= 0) {
+                        llenarcombomesesapagar(0);
+                    }                    
                 } else {
                     System.out.println("Error en la carga");
                 }
@@ -208,11 +219,49 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
     }
     
     public void llenarcombomesesapagar(int total) {
-        List objects = new ArrayList();        
-        for (int i = 1; i <= total; i++) {
-            objects.add(i);
+        if (total != 0) {
+            List objects = new ArrayList();
+            for (int i = 1; i <= total; i++) {
+                objects.add(i);
+            }
+            componentes.llenarmodelo(modelonmeses, objects);
         }
-        componentes.llenarmodelo(modelonmeses, objects);
+        else{
+            componentes.limpiarmodelo(modelonmeses);
+            modelonmeses.addElement("-");
+            cmbnmeses.setModel(modelonmeses);            
+        }
+    }
+    
+    public void generarboletapago() {
+        GenerarBoletaRepository genboletas = new GenerarBoletaRepository();
+        Boleta miboleta = new Boleta();
+        boletamap blrep = new boletamap();
+        Map data = new HashMap();
+        InputStream reportStream;
+        JasperPrint jasperprint = new JasperPrint();
+
+        if (jbtninmuebles.isSelected() && inmueble != null) {
+            miboleta = genboletas.BoletaInmueble(inmueble, Integer.parseInt(cmbnmeses.getSelectedItem().toString()), jchxmora.isSelected());
+            blrep.setContribuyente(cmbcontrib.getSelectedItem().toString());
+            blrep.setFechageneracion(new Date());
+            blrep.setIdboleta(miboleta.getId());
+            blrep.setInmneg(cmbinmneg.getSelectedItem().toString());
+            blrep.setMesespg(miboleta.getMesesapagar());
+            blrep.setTotal(miboleta.getMontototal());
+            data = blrep.getParameters();
+            reportStream = SLorenzoParent.class.getResourceAsStream("/Reportes/ticketboleta.jasper");
+            
+        } else if (jbtnnegocios.isSelected() && negocio != null) {
+            miboleta = genboletas.BoletaNegocio(negocio, Integer.parseInt(cmbnmeses.getSelectedItem().toString()), jchxmora.isSelected());
+            blrep.setContribuyente(cmbcontrib.getSelectedItem().toString());
+            blrep.setFechageneracion(new Date());
+            blrep.setIdboleta(miboleta.getId());
+            blrep.setInmneg(cmbinmneg.getSelectedItem().toString());
+            blrep.setMesespg(miboleta.getMesesapagar());
+            blrep.setTotal(miboleta.getMontototal());
+            
+        }
     }
 
     /**
@@ -240,7 +289,7 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         cmbnmeses = new javax.swing.JComboBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jchxmora = new javax.swing.JCheckBox();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         btnaplicar = new javax.swing.JButton();
@@ -278,6 +327,12 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
         });
 
         jLabel4.setText("Contribuyente:");
+
+        cmbcontrib.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbcontribActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -351,7 +406,7 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Meses a Pagar:");
 
-        jCheckBox1.setText("Aplicar / Dispensar Mora");
+        jchxmora.setText("Aplicar / Dispensar Mora");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel1.setText("Datos del Cobro a Generar :");
@@ -368,7 +423,7 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cmbnmeses, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox1)
+                .addComponent(jchxmora)
                 .addGap(19, 19, 19))
         );
         jPanel3Layout.setVerticalGroup(
@@ -378,7 +433,7 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(cmbnmeses, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCheckBox1)
+                    .addComponent(jchxmora)
                     .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -477,14 +532,24 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_cmbinmnegActionPerformed
 
     private void btnaplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaplicarActionPerformed
-        // TODO add your handling code here:
-
+        // TODO add your handling code here:        
     }//GEN-LAST:event_btnaplicarActionPerformed
 
     private void btnsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_btnsalirActionPerformed
+
+    private void cmbcontribActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbcontribActionPerformed
+        // TODO add your handling code here:
+        componentes.limpiarmodelo(modeloinmneg);
+        modeloinmneg.addElement("-");
+        cmbinmneg.setModel(modeloinmneg);
+        tablam = componentes.limpiartabla(tablam);
+        jtpagos.setModel(tablam);
+        inmueble = null;
+        negocio = null;
+    }//GEN-LAST:event_cmbcontribActionPerformed
 
     
     
@@ -496,7 +561,6 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox cmbcontrib;
     private javax.swing.JComboBox cmbinmneg;
     private javax.swing.JComboBox cmbnmeses;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -507,6 +571,7 @@ public class GenerarBoleta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton jbtninmuebles;
     private javax.swing.JRadioButton jbtnnegocios;
+    private javax.swing.JCheckBox jchxmora;
     private javax.swing.JScrollPane jtablelistpg;
     private javax.swing.JTable jtpagos;
     private javax.swing.JTextField txtcontribuyente;
