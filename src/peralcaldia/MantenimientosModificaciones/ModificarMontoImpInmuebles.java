@@ -124,7 +124,7 @@ public class ModificarMontoImpInmuebles extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Impuesto:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Datos Ultimo Monto");
 
         jLabel3.setText("Monto:");
@@ -186,7 +186,7 @@ public class ModificarMontoImpInmuebles extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Modificaciones");
 
         jLabel6.setText("Monto:");
@@ -280,7 +280,7 @@ public class ModificarMontoImpInmuebles extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();

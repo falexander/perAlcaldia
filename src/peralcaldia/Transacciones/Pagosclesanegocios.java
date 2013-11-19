@@ -195,10 +195,10 @@ public class Pagosclesanegocios extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Niss:");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("Contribuyente:");
 
         btnbuscar.setText("Buscar");
@@ -208,7 +208,7 @@ public class Pagosclesanegocios extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Cuentas Negocios:");
 
         cmbnegocios.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +220,7 @@ public class Pagosclesanegocios extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel16.setText("Criterios de Busqueda");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Cuenta Corriente:");
 
         buttonGroup1.add(jbtnniss);
@@ -304,15 +304,15 @@ public class Pagosclesanegocios extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Ejemplo de periodo a aplicar el pago:");
 
         jLabel6.setText(" 01-2012,  02-2012,  01-2013 etc......");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Periodo:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Direccion del Negocio:");
 
         btncompro.setText("Comprobar");
@@ -322,10 +322,10 @@ public class Pagosclesanegocios extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("Estado:");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Monto:");
 
         try {

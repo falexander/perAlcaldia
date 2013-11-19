@@ -218,28 +218,28 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setPreferredSize(new java.awt.Dimension(527, 385));
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("No. de Ticket:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("Datos del Pago:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Contribuyente:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Empresa:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("No. Meses:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Total a Pagar:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Estado:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("No de Recibo:");
 
         btnbuscar.setText("Buscar");
@@ -249,10 +249,10 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Concepto:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Dirección:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

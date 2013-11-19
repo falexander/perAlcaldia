@@ -218,28 +218,28 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel2.setText("No. de Ticket:");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setText("Datos del Pago:");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel3.setText("Contribuyente:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Inmueble:");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel6.setText("No. Meses:");
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Total a Pagar:");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel8.setText("Estado:");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("No de Recibo:");
 
         btnbuscar.setText("Buscar");
@@ -249,7 +249,7 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel10.setText("Concepto:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -375,7 +375,7 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnapply)
                     .addComponent(btnout))

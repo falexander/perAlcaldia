@@ -378,7 +378,7 @@ public class GenerarBoletaPagosAdelantados extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Meses a Pagar:");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Datos del Cobro a Generar :");
 
         txt_nMeses.setName("txt_nMeses"); // NOI18N

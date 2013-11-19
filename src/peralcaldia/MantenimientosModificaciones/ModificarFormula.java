@@ -150,7 +150,7 @@ public class ModificarFormula extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Fecha Inicio de Aplicación:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Datos Ultima Formula");
 
         cmbimpuestos.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +204,7 @@ public class ModificarFormula extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setText("Modificaciones");
 
         jLabel6.setText("Formula:");

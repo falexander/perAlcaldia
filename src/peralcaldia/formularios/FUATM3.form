@@ -35,7 +35,7 @@
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel2" pref="0" max="32767" attributes="0"/>
+                          <Component id="jPanel2" max="32767" attributes="0"/>
                       </Group>
                       <Component id="jPanel1" alignment="0" min="-2" pref="538" max="-2" attributes="0"/>
                   </Group>
@@ -49,23 +49,15 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
-                      <Component id="jPanel7" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <Component id="jPanel6" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
           </Group>
+          <Component id="jPanel7" alignment="0" pref="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -76,18 +68,12 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="cmbcontrib" pref="403" max="32767" attributes="0"/>
                       <Component id="cmbinmneg" max="32767" attributes="0"/>
@@ -152,15 +138,15 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Component id="jtablelistpg" min="-2" pref="531" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
+              <Component id="jtablelistpg" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jtablelistpg" pref="186" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jtablelistpg" min="-2" pref="206" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -342,56 +328,52 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnsalir2" min="-2" pref="117" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                      <Component id="jLabelMonto1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelDireccion1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelDesde1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelHasta1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelAlumbrado1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelAseo1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelPavimento1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelAgua1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelAlcantarillado1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelFiestas1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelInteres1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabelNombre1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel9" alignment="1" min="-2" pref="149" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabelHasta1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelDesde1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel9" alignment="0" min="-2" pref="149" max="-2" attributes="0"/>
+                              <Component id="jLabelMonto1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelDireccion1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelNombre1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelAlumbrado1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelAseo1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelPavimento1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelAgua1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelAlcantarillado1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelFiestas1" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelInteres1" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jdfini" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
-                              <Component id="jTextPropietario" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextDui" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextEmpresa" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextActivosInventario" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextActivosInvertidos" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextTotalbalance" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextDepreciacion" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextOtros" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextImpuesto" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextFiesta" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextTotaIimpustos" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextInteres" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jTextResolucion" alignment="0" min="-2" pref="455" max="-2" attributes="0"/>
-                              <Component id="jdfini1" alignment="0" min="-2" pref="216" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jTextPropietario" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextDui" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextEmpresa" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextActivosInventario" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextActivosInvertidos" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextTotalbalance" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextDepreciacion" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextOtros" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextImpuesto" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextFiesta" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextTotaIimpustos" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextInteres" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jTextResolucion" alignment="0" pref="455" max="32767" attributes="0"/>
+                              <Component id="jdfini1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jdfini" alignment="0" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" pref="155" max="-2" attributes="0"/>
+                          <EmptySpace pref="178" max="32767" attributes="0"/>
+                          <Component id="btnsalir2" min="-2" pref="153" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -405,8 +387,8 @@
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jdfini" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                      <Component id="jdfini" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -421,14 +403,20 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextEmpresa" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabelMonto1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelMonto1" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="jLabel9" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="jdfini1" alignment="1" min="-2" pref="31" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jdfini1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTextActivosInventario" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelDesde1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -473,7 +461,7 @@
                       <Component id="jTextInteres" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelInteres1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnsalir2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -526,7 +514,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPavimento1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="        Otros:"/>
+            <Property name="text" type="java.lang.String" value="Otros:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelAgua1">
