@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.Transacciones;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import util.cobrosiniciales;
 
@@ -11,6 +13,7 @@ import util.cobrosiniciales;
  *
  * @author alex
  */
+/*Pantalla utilizada para la generacion de cobros mensuales de inmuebles y negocios*/
 public class gencobrosmensuales extends javax.swing.JInternalFrame {
 
     /**
@@ -18,6 +21,9 @@ public class gencobrosmensuales extends javax.swing.JInternalFrame {
      */
     public gencobrosmensuales() {
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
 
     /**
@@ -73,6 +79,7 @@ public class gencobrosmensuales extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*Comprobacion y ejecucion del proceso de generacion de cobros*/
     private void btncobrosmensualesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncobrosmensualesActionPerformed
         // TODO add your handling code here:
         cobrosiniciales cobro = new cobrosiniciales();

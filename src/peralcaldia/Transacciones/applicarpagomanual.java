@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.Transacciones;
 
 import beans.Verpagosnocancelados;
 import controller.InmDAO;
@@ -28,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import componentesheredados.CheckCell;
 import componentesheredados.CheckRender;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import util.GCMPNativos;
 import util.Value;
 import util.verpagos;
@@ -36,6 +38,7 @@ import util.verpagos;
  *
  * @author alex
  */
+/*Pantalla utilizada para la aplicacion de pagos manuales correspondientes a la carga inicial*/
 public class applicarpagomanual extends javax.swing.JInternalFrame {
 
     InmDAO dao = new InmDAO();
@@ -48,6 +51,8 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
     DefaultComboBoxModel modelocnt = new DefaultComboBoxModel();
     DefaultComboBoxModel modeloinmneg = new DefaultComboBoxModel();
     DefaultTableModel tablam = new DefaultTableModel();
+    Contribuyentes contribuyente = new Contribuyentes();
+    Usuarios users = new Usuarios();
 
     /**
      * Creates new form applicarpagomanual
@@ -59,39 +64,85 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         modeloinmneg.addElement("-");
         cmbinmneg.setModel(modeloinmneg);
         jdfecha.setDate(new Date());
+        txtnombres.setEnabled(false);
+        txtnit.setEnabled(false);
+        txtdui.setEnabled(false);
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
-
-    public void buscarcontribuyente() {
-        List luser = null;
+    
+    /*Busqueda de Contribuyentes por Nombres*/
+    public void BuscarContribuyenteNombres() {
+        List lusuarios = null;
         try {
-            luser = daouser.find_usuarios_whereStatement(" nombres || ' '||apellidos like '%" + txtcontribuyente.getText().toUpperCase() + "%' and roles_id= 3");
-            if (!luser.isEmpty()) {
-                componentes.llenarmodelo(modelocnt, luser);
-                cmbcontrib.setModel(modelocnt);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encuentran usuarios registrados con el valor ingresado");
+            /*Buscando Usuarios que coincidan con el nombre o porcion indicada en el Textbox*/
+            if (!txtnombres.getText().isEmpty()) {
+                lusuarios = daouser.find_usuarios_whereStatement(" a.nombres || ' ' || a.apellidos || ' - DUI:' || b.dui like '%" + txtnombres.getText().toUpperCase() + "%' and a.roles = 3");
+                if (lusuarios != null && lusuarios.size() > 0) {
+                    componentes.llenarmodelo(modelocnt, lusuarios);
+                    contribuyente = null;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en la busqueda de usuarios");
+            System.out.println(e.toString());
+        }
+    }
+    
+    /*Busqueda de Contribuyentes por DUI*/
+    public void BuscarContribuyentesDui() {
+        List lusuarios = null;
+        try {
+            if (!txtdui.getText().isEmpty() && !txtdui.getText().equals("-")) {
+                contribuyente = (Contribuyentes) dao.findByWhereStatementoneobj(Contribuyentes.class, "dui = '" + this.txtdui.getText() + "'");
+                if (contribuyente != null) {
+                    lusuarios = new ArrayList();
+                    lusuarios.add(contribuyente.getUsuarios().getNombres() + " " + contribuyente.getUsuarios().getApellidos());
+                    componentes.llenarmodelo(modelocnt, lusuarios);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No Existen Contribuyentes registrados con el DUI ingresado");
+
+                }
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error en la busqueda de usuarios");
             System.out.println(e.toString());
         }
 
-
     }
 
+    /*Busqueda de Contribuyente por NIT*/
+    public void BuscarContribuyenteNit() {
+        List lusuarios = null;
+        try {
+            if (!txtnit.getText().isEmpty() && !txtnit.getText().equals("----")) {
+                contribuyente = (Contribuyentes) dao.findByWhereStatementoneobj(Contribuyentes.class, "nit = '" + this.txtnit.getText() + "'");
+                if (contribuyente != null) {
+                    lusuarios = new ArrayList();
+                    lusuarios.add(contribuyente.getUsuarios().getNombres() + " " + contribuyente.getUsuarios().getApellidos());
+                    componentes.llenarmodelo(modelocnt, lusuarios);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No Existen Contribuyentes registrados con el NIT ingresado");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en la busqueda de usuarios");
+            System.out.println(e.toString());
+        }
+    }    
+
+    /*Carga de negocios de acuerdo al contribuyente seleccionado*/
     public void llenarcomboboxpornegocio() {
         List lista = null;
-        Usuarios users = new Usuarios();
         Set<Contribuyentes> lcont = null;
-        Contribuyentes cont = new Contribuyentes();
         lista = new ArrayList();
         if (!cmbcontrib.getSelectedItem().toString().equals("-")) {
             try {
-
-                users = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, " (nombres || ' ' || apellidos) = '" + cmbcontrib.getSelectedItem().toString() + "'");
-                lcont = users.getContribuyenteses();
-                cont = (Contribuyentes) lcont.iterator().next();
-                lista = daoneg.findnameswhereStatement(" contribuyentes_id = " + cont.getId() + " and estados_id = 1 ");
+                if (contribuyente == null && jbtnnombres.isSelected()) {
+                    contribuyente = (Contribuyentes) dao.findByWhereStatementOneJoinObj(Contribuyentes.class, " as b inner join b.usuarios as a where (a.nombres || ' ' || a.apellidos || ' - DUI:' || b.dui) = '" + cmbcontrib.getSelectedItem().toString() + "'");
+                }
+                lista = daoneg.findnameswhereStatement(" contribuyentes_id = " + contribuyente.getId() + " and estados_id = 1 ");
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
@@ -102,19 +153,16 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         }
     }
 
+    /*Carga de Inmuebles de acuerdo al contribuyente seleccionado*/
     public void llenarcomboboxporinmuebles() {
         List lista = null;
-        Usuarios users = new Usuarios();
-        Set<Contribuyentes> lcont = null;
-        Contribuyentes cont = new Contribuyentes();
         lista = new ArrayList();
         if (!cmbcontrib.getSelectedItem().toString().equals("-")) {
             try {
-
-                users = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, " (nombres || ' ' || apellidos) = '" + cmbcontrib.getSelectedItem().toString() + "'");
-                lcont = users.getContribuyenteses();
-                cont = (Contribuyentes) lcont.iterator().next();
-                lista = dao.find_direcciones_whereStatement(" contribuyentes_id = " + cont.getId() + " and estados_id = 1 ");
+                if (contribuyente == null && jbtnnombres.isSelected()) {
+                    contribuyente = (Contribuyentes) dao.findByWhereStatementOneJoinObj(Contribuyentes.class, " as b inner join b.usuarios as a where (a.nombres || ' ' || a.apellidos || ' - DUI:' || b.dui) = '" + cmbcontrib.getSelectedItem().toString() + "'");
+                }
+                lista = dao.find_direcciones_whereStatement(" contribuyentes_id = " + contribuyente.getId() + " and estados_id = 1 ");
             } catch (Exception e) {
                 System.out.println(e.toString());
             }
@@ -126,6 +174,7 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
 
     }
 
+    /*Carga de los pagos no cancelados de acuerdo al inmueble o negocio seleccionado*/
     public void llenargrid() {
         List<Verpagosnocancelados> lista = null;
         Verpagosnocancelados vpn;
@@ -219,6 +268,7 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         }
     }
     
+    /*Aplicacion de los pagos seleccionados*/
     public void aplicarpagos(){
         List<verpagos> seleccion = new ArrayList<verpagos>();
         verpagos vp;
@@ -290,11 +340,24 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         }//Fin de la lista de pagos                
     }
     
+    /*Limpieza de los datos ingresados del pago*/
     public void limpiar(){
         txtcomentario.setText("");
         txtmnt.setText("");
         txtrecibo.setText("");
         jdfecha.setDate(new Date());
+    }
+    
+    /*Limpieza de la informacion cargada en pantalla*/
+    public void LimpiarPantalla(){
+        txtcomentario.setText("");
+        txtmnt.setText("");
+        txtrecibo.setText("");
+        jdfecha.setDate(new Date());
+        modelocnt.removeAllElements();
+        modelocnt.addElement("-");
+        componentes.limpiarmodelo(modeloinmneg);
+        modeloinmneg.addElement("-");
     }
 
     /**
@@ -308,10 +371,8 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtcontribuyente = new javax.swing.JTextField();
-        btnbuscar = new javax.swing.JButton();
         jbtninmuebles = new javax.swing.JRadioButton();
         jbtnnegocios = new javax.swing.JRadioButton();
         cmbinmneg = new javax.swing.JComboBox();
@@ -332,20 +393,23 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         btnaplicar = new javax.swing.JButton();
         btnsalir = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        txtnombres = new componentesheredados.LettersJTextField();
+        jLabel18 = new javax.swing.JLabel();
+        txtdui = new componentesheredados.DUITextField();
+        jLabel19 = new javax.swing.JLabel();
+        txtnit = new componentesheredados.NitJTextField();
+        btnbuscar = new javax.swing.JButton();
+        jbtnnombres = new javax.swing.JRadioButton();
+        jbtndui = new javax.swing.JRadioButton();
+        jbtnnit = new javax.swing.JRadioButton();
 
         jLabel1.setText("jLabel1");
 
         setClosable(true);
         setIconifiable(true);
-
-        jLabel2.setText("Contribuyente:");
-
-        btnbuscar.setText("Buscar");
-        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnbuscarActionPerformed(evt);
-            }
-        });
 
         buttonGroup1.add(jbtninmuebles);
         jbtninmuebles.setText("Inmuebles");
@@ -371,6 +435,12 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Contribuyente:");
 
+        cmbcontrib.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbcontribActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -382,17 +452,11 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                         .addComponent(jbtninmuebles)
                         .addGap(33, 33, 33)
                         .addComponent(jbtnnegocios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                         .addComponent(cmbinmneg, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtcontribuyente, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnbuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(37, 37, 37)
                         .addComponent(cmbcontrib, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -400,11 +464,6 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtcontribuyente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnbuscar))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(cmbcontrib, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -518,11 +577,11 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(btnaplicar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(122, 122, 122)
-                .addComponent(btnsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(89, 89, 89)
+                .addComponent(btnaplicar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnsalir, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(87, 87, 87))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,6 +593,116 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel16.setText("Criterios de Busqueda");
+
+        jLabel17.setText("Nombres:");
+
+        jLabel18.setText("DUI:");
+
+        try {
+            txtdui.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel19.setText("NIT:");
+
+        try {
+            txtnit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-######-###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(jbtnnombres);
+        jbtnnombres.setText("Nombres y Apellidos");
+        jbtnnombres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnnombresActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(jbtndui);
+        jbtndui.setText("DUI");
+        jbtndui.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnduiActionPerformed(evt);
+            }
+        });
+
+        buttonGroup2.add(jbtnnit);
+        jbtnnit.setText("NIT");
+        jbtnnit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnnitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel17)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtnombres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(42, 42, 42)
+                        .addComponent(txtdui, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel19)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtnit, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jbtnnombres)
+                                .addGap(82, 82, 82)
+                                .addComponent(jbtndui)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbtnnit)
+                                .addGap(61, 61, 61)
+                                .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnbuscar)
+                    .addComponent(jbtnnombres)
+                    .addComponent(jbtndui)
+                    .addComponent(jbtnnit))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18)
+                    .addComponent(txtdui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -542,10 +711,13 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -567,17 +739,6 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         aplicarpagos();
     }//GEN-LAST:event_btnaplicarActionPerformed
-
-    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-        // TODO add your handling code here:
-        componentes.limpiarmodelo(modelocnt);
-        componentes.limpiarmodelo(modeloinmneg);
-        modelocnt.addElement("-");
-        cmbcontrib.setModel(modelocnt);
-        modeloinmneg.addElement("-");
-        cmbinmneg.setModel(modeloinmneg);        
-        buscarcontribuyente();
-    }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void jbtninmueblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtninmueblesActionPerformed
         // TODO add your handling code here:
@@ -601,15 +762,86 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
         jtpagos.setModel(tablam);
         llenargrid();
     }//GEN-LAST:event_cmbinmnegActionPerformed
+
+    private void cmbcontribActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbcontribActionPerformed
+        // TODO add your handling code here:
+        buttonGroup1.clearSelection();
+        componentes.limpiarmodelo(modeloinmneg);
+        modeloinmneg.addElement("-");
+        cmbinmneg.setModel(modeloinmneg);
+        tablam = componentes.limpiartabla(tablam);
+        jtpagos.setModel(tablam);
+        inmueble = null;
+        negocio = null;        
+        if (cmbcontrib.getSelectedItem() != null) {
+            if (!cmbcontrib.getSelectedItem().toString().equals("-")) {
+                if (jbtnnombres.isSelected()) {
+                    contribuyente = (Contribuyentes) dao.findByWhereStatementOneJoinObj(Contribuyentes.class, " as b inner join b.usuarios as a where (a.nombres || ' ' || a.apellidos || ' - DUI:' || b.dui) = '" + cmbcontrib.getSelectedItem().toString() + "'");
+                }
+            }
+            cmbcontrib.setToolTipText(cmbcontrib.getSelectedItem().toString());
+        }        
+    }//GEN-LAST:event_cmbcontribActionPerformed
+
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
+        // TODO add your handling code here:
+        componentes.limpiarmodelo(modelocnt);
+        modelocnt.addElement("-");
+        LimpiarPantalla();
+        if (jbtnnombres.isSelected()) {
+            BuscarContribuyenteNombres();
+        }else if(jbtndui.isSelected()){
+            BuscarContribuyentesDui();
+        }else if(jbtnnit.isSelected()){
+            BuscarContribuyenteNit();
+        }else{
+            JOptionPane.showMessageDialog(this, "Elija un criterio de Busqueda e Ingrese el valor a buscar");
+        }
+    }//GEN-LAST:event_btnbuscarActionPerformed
+
+    private void jbtnnombresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnnombresActionPerformed
+        // TODO add your handling code here:
+        txtnombres.setEnabled(true);
+        txtdui.setEnabled(false);
+        txtnit.setEnabled(false);
+        txtdui.setText("");
+        txtnit.setText("");
+        LimpiarPantalla();
+    }//GEN-LAST:event_jbtnnombresActionPerformed
+
+    private void jbtnduiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnduiActionPerformed
+        // TODO add your handling code here:
+        txtdui.setEnabled(true);
+        txtnit.setEnabled(false);
+        txtnombres.setEnabled(false);
+        txtnit.setText("");
+        txtnombres.setText("");
+        LimpiarPantalla();
+    }//GEN-LAST:event_jbtnduiActionPerformed
+
+    private void jbtnnitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnnitActionPerformed
+        // TODO add your handling code here:
+        txtnit.setEnabled(true);
+        txtnombres.setEnabled(false);
+        txtdui.setEnabled(false);
+        txtnombres.setText("");
+        txtdui.setText("");
+        LimpiarPantalla();
+    }//GEN-LAST:event_jbtnnitActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnaplicar;
     private javax.swing.JButton btnbuscar;
     private javax.swing.JButton btnsalir;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox cmbcontrib;
     private javax.swing.JComboBox cmbinmneg;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -619,14 +851,20 @@ public class applicarpagomanual extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JRadioButton jbtndui;
     private javax.swing.JRadioButton jbtninmuebles;
     private javax.swing.JRadioButton jbtnnegocios;
+    private javax.swing.JRadioButton jbtnnit;
+    private javax.swing.JRadioButton jbtnnombres;
     private com.toedter.calendar.JDateChooser jdfecha;
     private javax.swing.JScrollPane jtablelistpg;
     private javax.swing.JTable jtpagos;
     private javax.swing.JTextField txtcomentario;
-    private javax.swing.JTextField txtcontribuyente;
+    private componentesheredados.DUITextField txtdui;
     private componentesheredados.DecimalJTextField txtmnt;
+    private componentesheredados.NitJTextField txtnit;
+    private componentesheredados.LettersJTextField txtnombres;
     private javax.swing.JTextField txtrecibo;
     // End of variables declaration//GEN-END:variables
 }

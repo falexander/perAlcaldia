@@ -27,6 +27,8 @@ import javax.persistence.TemporalType;
  *
  * @author alex
  */
+/*Clase Boleta que representa a la entidad boleta de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="boleta"
     ,schema="public"

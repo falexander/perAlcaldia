@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report6" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="17881670-1e7d-4438-9cc4-01e5441db05e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="402"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<parameter name="calificado" class="java.lang.String"/>
+	<parameter name="recalificado" class="java.lang.String"/>
+	<parameter name="basealumbrado" class="java.lang.String"/>
+	<parameter name="baseaseo" class="java.lang.String"/>
+	<parameter name="basepavimentacion" class="java.lang.String"/>
+	<parameter name="baseotros" class="java.lang.String"/>
+	<parameter name="tarifaalumbrado" class="java.lang.String"/>
+	<parameter name="tarifaaseo" class="java.lang.String"/>
+	<parameter name="tarifapavimentacion" class="java.lang.String"/>
+	<parameter name="tarifaotros" class="java.lang.String"/>
+	<parameter name="pagoalumbrado" class="java.lang.String"/>
+	<parameter name="pagoaseo" class="java.lang.String"/>
+	<parameter name="pagopavimentacion" class="java.lang.String"/>
+	<parameter name="pagootros" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement uuid="27a4112a-0399-4307-b3ef-2c65c2421fc4" x="483" y="0" width="89" height="79"/>
+				<imageExpression><![CDATA["src/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="8b5f5553-cf13-4108-b659-f2b86149a6a6" mode="Transparent" x="0" y="0" width="115" height="75" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["src/imagenes/San_lorenzo1.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="1e41a03f-c817-4b17-8383-e3a3f58dc089" x="126" y="6" width="331" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5eff3f05-c368-4d6a-9145-cd025ed7b987" x="103" y="8" width="410" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTIFICACIÓN DE TASAS POR PRESTACION DE SERVICIOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="49844583-73b4-46bc-b3ca-b1f8a7cff903" x="2" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F-UATM- 6]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="83" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="d57092ba-ff14-4ea0-b1ea-ab6e054a688b" x="407" y="0" width="165" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="58597894-9971-4d19-b926-83c288350973" x="2" y="20" width="57" height="20"/>
+				<textElement/>
+				<text><![CDATA[Señor (a):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="17d30e27-c2e0-4224-91a6-d65a3e514893" x="2" y="41" width="57" height="20"/>
+				<textElement/>
+				<text><![CDATA[Dirección: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5ed45edf-1e2c-40e9-95ea-01b1c58ea41a" x="59" y="41" width="503" height="40"/>
+				<textElement textAlignment="Justified">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1cb94f5a-19a5-49ac-aec3-136c3b4e7b78" x="59" y="21" width="502" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="405" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2522e1a0-f1bc-403c-89d2-eb869c99e009" x="2" y="0" width="560" height="51"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Estimado(a) señor(a):
+
+La Unidad de Administración Tributaria Municipal, habiendo analizado la información relacionada con el inmueble de su propiedad, le informa que éste ha sido:
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a4de298-f6e0-4bfb-8483-f4019dbbee13" x="162" y="65" width="64" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Calificado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="44b31641-8be5-4d31-93ea-d15bd4d0fbbc" x="339" y="65" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Recalificado]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="4b4ef692-a967-44e0-901c-99d70c49d72e" x="313" y="65" width="22" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="f421462d-0780-426e-bab2-9b8ec2711dfb" x="133" y="65" width="22" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="f51d04f3-98be-48fa-8898-7f84ca90c4b8" x="2" y="107" width="560" height="28"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[de conformidad con el Articulo 1, 2 y 7 de Las reformas a la ordenanza sobre tasas por servicios municipales vigente, según el detalle siguiente:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1b5b2c45-1e2d-471a-bf3f-2f765fa98726" x="2" y="154" width="560" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c2bfca07-1191-43d3-8e2c-7ec1416716d7" x="2" y="155" width="1" height="112"/>
+			</line>
+			<line>
+				<reportElement uuid="adb9ba16-c126-4aff-8778-ce3d34378536" x="561" y="155" width="1" height="112"/>
+			</line>
+			<line>
+				<reportElement uuid="179958db-bbb9-49e1-8cf5-3c6f284cafd7" x="174" y="155" width="1" height="98"/>
+			</line>
+			<staticText>
+				<reportElement uuid="c3cbae13-f358-426b-b6f6-1222a215479d" x="4" y="156" width="27" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="df0f9644-1dfa-4faa-9c38-9f9dd352d7e2" x="31" y="155" width="1" height="112"/>
+			</line>
+			<line>
+				<reportElement uuid="e707c7a7-0273-4044-8a0d-de9918febd2f" x="3" y="169" width="558" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="e639f4cd-d012-4a47-9480-68e6b3a1a291" x="4" y="170" width="27" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b19aa357-ea9a-439d-b8c2-3590b38da064" x="2" y="182" width="559" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8f8ec2e2-cea4-4806-9e8b-0e38463cce12" x="3" y="183" width="27" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[2]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="13ba7527-0780-4c3c-beee-87fe3543ba09" x="3" y="196" width="559" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="150b23ef-f971-4bb5-bd06-260fc4273eef" x="3" y="197" width="27" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[3]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="c3c38328-6b69-4dd0-b361-d304cc660fa5" x="2" y="210" width="559" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="208fb81e-f9b3-4440-9fae-565daf1b752f" x="4" y="211" width="27" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[4]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="c02849de-6df7-411c-80d3-7213a1675048" x="3" y="224" width="559" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="61d36de5-1821-4fbf-bf2a-eaaddef2b2c7" x="33" y="156" width="100" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Servicio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="886ae7a8-9d08-4a36-9017-ca1009b29ca9" x="33" y="169" width="93" height="13"/>
+				<textElement/>
+				<text><![CDATA[Alumbrado Público]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="032b2533-c8c9-45c2-9308-e9f88143a3ed" x="33" y="183" width="93" height="13"/>
+				<textElement/>
+				<text><![CDATA[Aseo público]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="301c6eca-7148-4ef7-9c0b-b5d9b688d34d" x="33" y="197" width="93" height="13"/>
+				<textElement/>
+				<text><![CDATA[Pavimentación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="16e2594d-4158-470e-bab4-aaa40419e369" x="33" y="211" width="93" height="13"/>
+				<textElement/>
+				<text><![CDATA[Otros:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a7f3dd1c-6451-48aa-894f-a021ef10c1e5" x="175" y="156" width="122" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Base Imponible]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="bd18688a-1e27-4b8a-ac9b-22075d15bdad" x="297" y="154" width="1" height="99"/>
+			</line>
+			<staticText>
+				<reportElement uuid="c129d416-083c-4e98-a442-835e3345a0a3" x="279" y="183" width="18" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[m2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="df79a993-51ef-4ea5-9bda-46600c235151" x="279" y="197" width="18" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[m2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18b09292-eade-4a00-8ad8-c6d667e805d9" x="298" y="155" width="78" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tarifa]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aa1304ac-dee4-4919-8a75-94f8ac0b45f4" x="279" y="169" width="18" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[ml.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b6cb29b3-ff84-497c-b72b-c0ba9a0dfc57" x="298" y="197" width="15" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7f16a166-5312-4e65-a6d4-a887c392b31c" x="298" y="183" width="15" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="31a1a281-2e9e-4db6-bfba-8139a5897611" x="298" y="169" width="15" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72c37170-a8f4-4c13-a0bc-794639465178" x="298" y="211" width="15" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5ef8f5d1-acd5-4317-ab9d-d59fd1c8b587" x="298" y="225" width="16" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="53cf0751-37cf-4922-909a-dc95dfecd03d" x="298" y="239" width="16" height="13"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="6583e125-0508-4ab2-b5f1-90bcfb8636a3" x="3" y="238" width="559" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="2e917d2c-5522-48b6-a86b-5899686b1a95" x="3" y="252" width="559" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="b493c8bf-859a-4d0b-adc2-b283cf6e3418" x="428" y="155" width="1" height="112"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2e061014-be38-4a06-ad1d-50b3da87f1ba" x="429" y="197" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79b37263-f92c-4df0-a598-8bb2c99858dc" x="429" y="225" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="595de641-c619-40c0-a874-ec76155f6039" x="429" y="239" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="985f8874-53d5-45ef-b8ea-d01e9266bce3" x="429" y="184" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cd370af1-de0e-4e47-9af2-aaa1f1929fcd" x="429" y="211" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ebd8eef4-77c0-44de-a983-3c5cf80e9e4e" x="429" y="170" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="be5b149d-4879-4d2c-9af6-38f68be6b00b" x="429" y="155" width="78" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Pago Mensual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9bfe5469-1f67-40ff-91f9-78ba17dc28f6" x="33" y="254" width="395" height="13"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Total a pagar]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e2409d89-aeb0-4918-95ce-f2b37a12e23b" x="2" y="267" width="559" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="58b9a1fc-7ba7-42d3-9f86-2a54b971100b" x="429" y="253" width="10" height="13"/>
+				<textElement/>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="db077c35-c367-4bc4-a185-5c57276adfb5" x="3" y="273" width="559" height="37"/>
+				<textElement/>
+				<text><![CDATA[Fuente tomada de base en la calificación o recalificación: _____________________________________________________
+___________________________________________________________________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8bd296f1-64cc-4636-8f0b-8c3d3b393b1b" x="4" y="310" width="557" height="46"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[De existir inconformidad con lo resuelto y de acuerdo  al Art. 123 de la Ley General Tributaria Municipal, usted dispone de tres días hábiles, a partir de la fecha de recibir la presente notificación para interponer por escrito ante el Concejo Municipal,  aceptación de su recurso de apelación sobre lo actuado.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="835906fe-8680-4aff-8429-9d7f5a485677" x="4" y="356" width="557" height="20"/>
+				<textElement/>
+				<text><![CDATA[Sin otro particular, me es grato suscribirme de usted, muy cordialmente.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8a51030f-0929-4e22-b58b-85f44fbdac65" x="133" y="65" width="22" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{calificado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9564a429-e761-4092-abf2-9f47ee53c51b" x="313" y="65" width="22" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{recalificado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b850fdf3-4fe1-4593-9f0a-c52244f2db39" x="178" y="170" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{basealumbrado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="527e9ab4-0fe1-4c16-8faf-e0921730e790" x="178" y="183" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{baseaseo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="60c81132-9b15-4c2e-b354-06b50f6312f9" x="178" y="197" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{basepavimentacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8cf45c8b-f361-4fb0-8c60-706745f7bcfe" x="179" y="213" width="100" height="14"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{baseotros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="821793a5-deea-4302-bb60-b2f9a2fb42cf" x="314" y="169" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tarifaalumbrado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4abff712-8921-45e7-91b0-25767e2d157c" x="314" y="183" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tarifaaseo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="002cc774-c3db-4937-9e5a-67e8aecf3180" x="314" y="196" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tarifapavimentacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a89e0a8e-658b-46b3-b446-fa5e87c17122" x="314" y="211" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{tarifaotros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9fe7454d-2ef2-4b24-88d3-2ddfd3a25d48" x="439" y="169" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pagoalumbrado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f858848a-a87d-481c-95a5-172e55886fc9" x="438" y="183" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pagoaseo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7b381f5a-b21e-4de5-8d1e-d08a0d48588e" x="438" y="197" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pagopavimentacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84bd606e-4570-4498-afa1-1ea33a105596" x="438" y="212" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pagootros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aee2d2e5-9851-48f0-9218-e00fa38ce640" x="446" y="253" width="100" height="14"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="83528073-afb4-4061-b3a1-10545c864a3c" x="115" y="0" width="342" height="45"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[____________________________________________
+Nombre y firma
+ Encargado de Catastro, Registro y Fiscalización
+]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

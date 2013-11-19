@@ -10,6 +10,8 @@ import javax.swing.JTextField;
  *
  * @author alex
  */
+/*Componente Personalizado Dedicado Exclusivamente al Ingreso de Caracteres de Tipo
+  Letras y/o Pertenecientes al Alfabeto excluyendo numeros y caracteres especiales*/
 public class LettersJTextField extends JTextField {
 
     public LettersJTextField() {

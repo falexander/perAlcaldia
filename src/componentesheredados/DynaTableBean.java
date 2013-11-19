@@ -13,6 +13,9 @@ import java.util.Vector;
  *
  * @author alex
  */
+/*Clase Utilizada en la Generalizacion de la Carga de las Tablas (JTable)
+  Es Por Medio de Esta Clase que se Obtienen los valores de las Cabeceras
+  y el Contenido a Ingresar en los respectivos Modelos para los JTable*/
 public class DynaTableBean implements Serializable {
     private Vector headers;
     private Vector content;

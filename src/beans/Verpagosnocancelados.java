@@ -13,6 +13,8 @@ import java.util.Vector;
  *
  * @author alex
  */
+/*Clase Destinada a la Visualizacion  de los Pagos Pendientes de Inmuebles y Negocios para un Determinado Contribuyentes
+  Implementa la Interfaz IModelTable para la Generalizacion de la Carga de Datos de los JTable*/
 public class Verpagosnocancelados implements IModelTable{
     private boolean SELECCIONAR;
     private String PERIODO;

@@ -32,5 +32,6 @@
     <mapping class="peralcaldia.model.Montosimpuestosnegocios"/>
     <mapping class="peralcaldia.model.Pagosadelantados"/>
     <mapping class="peralcaldia.model.Boleta"/>                      
+    <mapping class="peralcaldia.model.Detallepagos"/>
   </session-factory>
 </hibernate-configuration>

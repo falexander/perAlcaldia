@@ -2,11 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.MantenimientosIngreso;
 
+import beans.VerZonas;
 import javax.swing.table.DefaultTableModel;
 import controller.AbstractDAO;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -14,43 +18,49 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.text.StyledEditorKit;
 import peralcaldia.model.Zonas;
+import util.GCMPNativos;
 /**
  *
  * @author alex
  */
+/*Pantalla destinada a la creación de zonas en el sistema*/
 public class addzonas extends javax.swing.JInternalFrame {
     DefaultTableModel tablam = new DefaultTableModel();
     DefaultTableCellRenderer alinearCentro, alinearcentroceldas;    
     AbstractDAO dao = new AbstractDAO();
+    GCMPNativos componentes = new GCMPNativos();
     
     /**
      * Creates new form addzonas
      */
     public addzonas() {
         initComponents();
-        tablam.addColumn("CODIGO ZONA");
-        tablam.addColumn("DESCRIPCIÓN");
-        tablam.addColumn("NUMERO DE INMUEBLES ACTUALES");
         jtaddzonas.setModel(tablam);        
         cargarjtable();
         centrardatos();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
     
+    /*Metodo encargado de la carga de las zonas y sus caracteristicas en pantalla por medio del JTable*/
     public void cargarjtable(){    
         List<Zonas> lzon=null;
         Zonas zonesobj= new Zonas();
-        Object[] datos = new Object[3];
+        List otls = new ArrayList();
+        VerZonas vzn = new VerZonas();
         lzon = dao.findAll(Zonas.class);
         
         Iterator it = lzon.iterator();
         
         while(it.hasNext()){
+            vzn = new VerZonas();
             try {
             zonesobj = (Zonas) it.next();
-            datos[0]= zonesobj.getZonecode();
-            datos[1]= zonesobj.getZona();
-            datos[2]= zonesobj.getCorrelativozona();
-            tablam.addRow(datos);                            
+            vzn.setCODIGO_ZONA(zonesobj.getZonecode());
+            vzn.setDESCRIPCIÓN(zonesobj.getZona());
+            vzn.setNUMERO_DE_INMUEBLES_ACTUALES(zonesobj.getCorrelativozona());
+            otls.add(vzn);                            
             }
             catch (Exception e) 
             {
@@ -58,16 +68,12 @@ public class addzonas extends javax.swing.JInternalFrame {
                 e.printStackTrace();
             }
         }
-        try {
-            jtaddzonas.setModel(tablam);                    
-        } 
-        catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Error en la carga");
-            e.printStackTrace();
-        }        
+        tablam = componentes.limpiartabla(tablam);
+        tablam = componentes.llenartabla(tablam, otls, VerZonas.class);
+        jtaddzonas.setModel(tablam);        
     }
     
+    /*Metodo para Centrar los Datos del Jtable*/
     public void centrardatos(){
         alinearCentro = new DefaultTableCellRenderer();        
         alinearcentroceldas = new DefaultTableCellRenderer();                
@@ -83,18 +89,8 @@ public class addzonas extends javax.swing.JInternalFrame {
 
     }
     
-    public void limpiartabla(){
-        try {
-            for (int i=jtaddzonas.getRowCount()-1; i>=0;i--)
-            {
-            tablam.removeRow(i);
-            }
-        } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error limpiando tabla");
-        }
-        jtaddzonas.setModel(tablam);
-    }
-    
+    /*Metodo utlizado para la verificacion, inicializacion, seteo de las propiedades y 
+     * Guardado de las zonas una vez estas cumplan con los requisitos para ello*/
     public void guardarzona(){
         Zonas nzone = new Zonas();
         
@@ -110,7 +106,7 @@ public class addzonas extends javax.swing.JInternalFrame {
                 if (otz==null) {
                     dao.save(nzone);
                     limpiarpantalla();
-                    limpiartabla();             
+//                    tablam = componentes.limpiartabla(tablam);             
                     cargarjtable();
                     centrardatos();
                     JOptionPane.showMessageDialog(this, "Guardado Completo");                                               
@@ -131,6 +127,7 @@ public class addzonas extends javax.swing.JInternalFrame {
         }
     }
     
+    /*Metodo para Limpiar la informacion en pantalla*/
     public void limpiarpantalla(){
         txtzona.setText("");
         txtcodez.setText("");

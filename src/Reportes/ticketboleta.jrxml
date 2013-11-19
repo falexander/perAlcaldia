@@ -1,71 +1,148 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ticketboleta" language="groovy" pageWidth="300" pageHeight="550" columnWidth="240" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="44a79b58-eab9-42a1-af6f-61f8d919871e">
-	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.zoom" value="2.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="156"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="BoletaMap" class="java.util.Map"/>
+	<parameter name="logo" class="java.io.InputStream"/>
 	<detail>
 		<band height="460" splitType="Stretch">
 			<textField>
-				<reportElement uuid="23cd0c29-1d88-4c93-8038-ca164a5466f5" x="2" y="150" width="203" height="67"/>
-				<textElement/>
+				<reportElement uuid="23cd0c29-1d88-4c93-8038-ca164a5466f5" x="12" y="194" width="247" height="67"/>
+				<textElement>
+					<font fontName="Algerian" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{BoletaMap}.get("contribuyente")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a8063e0f-c775-4f2f-b2e7-c4b7ef024923" x="2" y="26" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="a8063e0f-c775-4f2f-b2e7-c4b7ef024923" x="12" y="87" width="248" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{BoletaMap}.get("fechageneracion")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="afa535b1-604d-477b-b82d-dfbaa5b750d7" x="2" y="87" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="afa535b1-604d-477b-b82d-dfbaa5b750d7" x="12" y="139" width="248" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{BoletaMap}.get("idboleta")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="9353337b-7898-4ea9-8803-9fd762af8f2e" x="2" y="257" width="203" height="51"/>
-				<textElement/>
+				<reportElement uuid="9353337b-7898-4ea9-8803-9fd762af8f2e" x="12" y="293" width="247" height="60"/>
+				<textElement>
+					<font fontName="Algerian" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{BoletaMap}.get("inmneg")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2c9a9572-e62b-4f5b-acc9-d9e3d2b18845" x="0" y="350" width="205" height="20"/>
-				<textElement/>
+				<reportElement uuid="2c9a9572-e62b-4f5b-acc9-d9e3d2b18845" x="12" y="386" width="248" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{BoletaMap}.get("mesepg")]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="f024c886-dae1-4dcf-b9b3-82a9b0931e8c" x="2" y="419" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="f024c886-dae1-4dcf-b9b3-82a9b0931e8c" x="12" y="437" width="247" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="12"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$P{BoletaMap}.get("total")]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0b6e1393-a269-4026-b1d2-7f80ae3ec0e1" x="0" y="0" width="205" height="20"/>
-				<textElement/>
+				<reportElement uuid="0b6e1393-a269-4026-b1d2-7f80ae3ec0e1" x="0" y="60" width="260" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="15" isBold="true" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Fecha de Generación:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="254a0de8-c16d-4022-9d1c-5be29b9148fe" x="2" y="57" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="254a0de8-c16d-4022-9d1c-5be29b9148fe" x="0" y="113" width="260" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="15" isBold="true" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Boleta No,:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="6bda80dd-83f8-46c4-961c-3ff199d5b485" x="2" y="119" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="6bda80dd-83f8-46c4-961c-3ff199d5b485" x="1" y="166" width="258" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="15" isBold="true" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Contribuyente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d37e896a-7710-4c29-8ad6-7ff0adcfacb8" x="2" y="227" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="d37e896a-7710-4c29-8ad6-7ff0adcfacb8" x="2" y="264" width="257" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="15" isBold="true" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Inmueble o Negocio:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="614b8a8b-7297-47d9-b898-d3b86c40f91a" x="2" y="320" width="203" height="20"/>
-				<textElement/>
+				<reportElement uuid="614b8a8b-7297-47d9-b898-d3b86c40f91a" x="1" y="358" width="258" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="15" isBold="true" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Meses a Pagar:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="1ee1fb9f-8b82-4899-ac2a-2ca74ae77d21" x="2" y="388" width="100" height="20"/>
-				<textElement/>
+				<reportElement uuid="1ee1fb9f-8b82-4899-ac2a-2ca74ae77d21" x="2" y="412" width="257" height="20"/>
+				<textElement>
+					<font fontName="Algerian" size="15" isBold="true" isItalic="true"/>
+				</textElement>
 				<text><![CDATA[Monto a Cancelar:]]></text>
 			</staticText>
+			<image>
+				<reportElement uuid="3fd82656-11b1-404e-b13e-fcb88d780db3" x="88" y="0" width="100" height="60"/>
+				<imageExpression><![CDATA[$P{logo}]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="5a39ebe9-8405-4b07-9124-9aabaf45b967" x="0" y="80" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="8ecd4903-2f73-4a9a-bfad-28107e86b723" x="0" y="60" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="2d7f698c-8278-49c5-a657-eb407d5cea88" x="0" y="60" width="100" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="46fcfb3e-2f95-4b27-8fbf-b19ed568c287" x="0" y="61" width="1" height="399"/>
+			</line>
+			<line>
+				<reportElement uuid="ad3ae374-e7a7-451d-9576-46b90b9228f1" x="260" y="60" width="1" height="400"/>
+			</line>
+			<line>
+				<reportElement uuid="9a12a6f9-5bc9-48bd-802d-e7c8ce614333" x="1" y="459" width="259" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="9ac3c6be-3f09-465d-9e91-951a06fb0152" x="1" y="108" width="259" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c0dbd7e9-4292-4395-ade3-15c14d2bc96b" x="1" y="135" width="259" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="555c9b90-2f90-4340-b866-fac5b36587ca" x="1" y="162" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="29f80145-840c-4c6e-b4de-adf1a936c1ca" x="1" y="189" width="259" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="1a1788c7-8c97-478f-889f-681182dfde19" x="0" y="262" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="61535bbc-284e-41b8-a138-609b6d321904" x="1" y="287" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="5ce6d30f-3da0-4fc3-aee4-c2e15525f112" x="0" y="355" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="4ff7bead-98f3-4334-93ed-f664296c1835" x="0" y="382" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="50e17206-8cea-4961-af7e-39d6fa866715" x="1" y="409" width="260" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="e31ad1ee-cb4d-4cd8-9afa-3aca6c669882" x="0" y="434" width="261" height="1"/>
+			</line>
 		</band>
 	</detail>
 </jasperReport>

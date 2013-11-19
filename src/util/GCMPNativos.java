@@ -20,8 +20,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author alex
  */
+/*Clase utilizada para la generalizacion de componentes nativos tales como Jtables, y Jcombobox*/
 public class GCMPNativos {
     
+    /*Metodo para llenar los modelos correspondientes a los Jcombobox*/
     public DefaultComboBoxModel llenarmodelo(DefaultComboBoxModel modelo, List objects){
         DefaultComboBoxModel mimodelo = modelo;        
         Iterator it = objects.iterator();
@@ -34,6 +36,7 @@ public class GCMPNativos {
         return mimodelo;
     }
     
+    /*Metodo para limpiar los modelos correspondientes a los JCombobox, sin dejar ningun item en el modelo*/
     public DefaultComboBoxModel limpiarmodelo (DefaultComboBoxModel modelo){
         DefaultComboBoxModel mimodelo = modelo;        
         if (mimodelo.getSize() > 0) {
@@ -44,6 +47,18 @@ public class GCMPNativos {
         return mimodelo;
     }
     
+    /*Metodo para limpiar los modelos correspondientes a los JCombobox, dejando el item de indice cero*/
+    public DefaultComboBoxModel limpiarmodelo2(DefaultComboBoxModel modelo) {
+        DefaultComboBoxModel mimodelo = modelo;
+        if (mimodelo.getSize() > 0) {
+            for (int i = mimodelo.getSize() - 1; i > 0; i--) {
+                mimodelo.removeElementAt(i);
+            }
+        }
+        return mimodelo;
+    }
+    
+    /*Metodo para centrar las cabeceras o nombres de las columnas de un Jtable*/
     public JTable centrarcabeceras(JTable tabla){
         JTable mitabla = tabla;
         DefaultTableCellRenderer alinearCentro = new DefaultTableCellRenderer();
@@ -52,6 +67,7 @@ public class GCMPNativos {
         return mitabla;
     }
     
+    /*Metodo para centrar las columnas de un Jtable segun las indicaciones durante la Invocacion*/
     public JTable centrarcolumnas(JTable tabla, int ncolumnas){
         JTable mitabla = tabla;
         DefaultTableCellRenderer alinearCentro = new DefaultTableCellRenderer();
@@ -62,16 +78,18 @@ public class GCMPNativos {
         return mitabla;        
     }
     
-        public JTable centrarcolumnasdesde2(JTable tabla, int ncolumnas){
+    /*Metodo para Centrar las Cabeceras de un Jtable dejando libre la primer columna*/
+    public JTable centrarcolumnasdesde2(JTable tabla, int ncolumnas) {
         JTable mitabla = tabla;
         DefaultTableCellRenderer alinearCentro = new DefaultTableCellRenderer();
         alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 1; i < ncolumnas; i++) {
             mitabla.getColumnModel().getColumn(i).setCellRenderer(alinearCentro);
-        }                        
-        return mitabla;        
+        }
+        return mitabla;
     }
     
+    /*Metodo utilizado para limpiar los modelos correspondiente a los JTableModel*/
     public DefaultTableModel limpiartabla(DefaultTableModel modelo){
         DefaultTableModel mimodelo = modelo;
         try {

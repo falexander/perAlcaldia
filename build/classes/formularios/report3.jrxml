@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f0844ef5-83e9-4034-aa76-d743e5e7fd78">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="465"/>
+	<parameter name="nresolucion" class="java.lang.String"/>
+	<parameter name="dia" class="java.lang.String"/>
+	<parameter name="mes" class="java.lang.String"/>
+	<parameter name="anio" class="java.lang.String"/>
+	<parameter name="empresa" class="java.lang.String"/>
+	<parameter name="propietario" class="java.lang.String"/>
+	<parameter name="dui" class="java.lang.String"/>
+	<parameter name="fechabalance" class="java.lang.String"/>
+	<parameter name="activosinventario" class="java.lang.String"/>
+	<parameter name="activosinvertidos" class="java.lang.String"/>
+	<parameter name="totalbalance" class="java.lang.String"/>
+	<parameter name="depreciacion" class="java.lang.String"/>
+	<parameter name="otros" class="java.lang.String"/>
+	<parameter name="impuesto" class="java.lang.String"/>
+	<parameter name="fiestas" class="java.lang.String"/>
+	<parameter name="totalimpuestos" class="java.lang.String"/>
+	<parameter name="multa" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="47191a7b-51a3-4a17-a7c8-ffd7c337ed11" mode="Transparent" x="0" y="0" width="115" height="75" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["src/imagenes/San_lorenzo1.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="c714514e-8f57-4b6f-ab31-4d0964b1368d" x="115" y="6" width="313" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image>
+				<reportElement uuid="920d7065-e546-4dec-bf76-15542a857062" x="466" y="0" width="89" height="79"/>
+				<imageExpression><![CDATA["src/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="69e02508-d99d-4b3a-b11e-3f0e79937925" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[F-UATM- 3]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a585db0-c903-478c-868a-edb8e7e14c60" x="115" y="19" width="374" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[RESOLUCION Y NOTIFICACION DE DETERMINACION DE OFICIO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="22" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="03e56ffb-b554-49d4-9d82-b655f8dac99a" x="0" y="0" width="87" height="20"/>
+				<textElement/>
+				<text><![CDATA[RESOLUCION N°]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="12bc66b5-b4a8-4272-8461-da5062f83fc9" x="87" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{nresolucion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="482" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d6057e63-fe9a-44a2-b9c0-bfd151621566" x="0" y="0" width="527" height="38"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[En la Unidad de Administración Tributaria Municipal, de esta municipalidad, a los _______ días del mes de ________________________ del año  _______, ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="61f062db-0c3d-484b-a5ca-a4b0b8a275a7" x="0" y="38" width="527" height="55"/>
+				<textElement/>
+				<text><![CDATA[1° Habiendo revisado y analizado la información relacionada con la empresa _____________________________________________________________________, propiedad de __________________________________________________________________, con DUI N° _______________________, en fecha  ______________________________________________, y]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="589588d6-ebc7-4306-b6a6-fc8d60207e1b" x="0" y="93" width="555" height="20"/>
+				<textElement/>
+				<text><![CDATA[2° Habiendo realizada la inspección correspondiente para la verificación de los datos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4c684c5d-c892-41f1-a735-59a3e0832c4a" x="0" y="113" width="527" height="29"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Esta Unidad, RESUELVE: Determinar de Oficio su  empresa de acuerdo a su actividad económica y la base imponible siguiente:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="048e0c5c-ffb6-49d6-8fe9-03f91957a39a" x="15" y="156" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="389f2b51-d063-4dc0-a6bb-c8d1d64ff623" x="17" y="157" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Balance General declarado al           ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="6b524eac-c124-4d6f-8092-f8930f94f1ae" x="15" y="157" width="1" height="125"/>
+			</line>
+			<line>
+				<reportElement uuid="d691bdfe-1b78-4548-b50a-efd2fee8aeda" x="294" y="157" width="1" height="125"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2d9958a2-2380-4092-b7fc-6c4cf0542aea" x="17" y="178" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Valor de activos según inventario realizado]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="1ca2a2dc-c542-4dba-bcbd-b8a16d27c83d" x="16" y="177" width="413" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="bb181746-f667-4b95-81dd-18ea2bed9cc5" x="16" y="198" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="d3298ee4-6db1-48dd-b798-24b372870ed2" x="16" y="199" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Menos: Activos invertidos en otra jurisdicción]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="2fb48562-4da1-4cb9-8559-92b4f262036e" x="16" y="219" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="781c4de7-a0e8-4412-ad6a-55c0d8c368f2" x="17" y="220" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8c42cb2b-43f2-479b-9356-1ff0acb8a546" x="16" y="240" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b0a395b7-125f-4ca3-949f-056af1a20f9e" x="17" y="241" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Mas: Depreciación acumulada de edificios]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="dbe232de-8fed-47a4-91c0-eaada441fa70" x="16" y="261" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="88405d2f-37a0-4d7b-a0e3-65ea41994712" x="17" y="262" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[        Otros(Especifique):]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="64dd2621-e0d6-4384-83b5-a8eba588097b" x="16" y="281" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="11fa100b-c9e6-484a-9ce1-c63bf35c7f9a" x="297" y="179" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="99c08761-743a-43bc-85a5-f50002412f36" x="297" y="198" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d0415cdc-bf6b-4f30-bb05-f5f256cc96a5" x="297" y="220" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="05631228-f495-4037-81e5-4bb29624c03d" x="297" y="240" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e9106c7e-bd9e-463d-9b98-dec1602e29f8" x="297" y="261" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="a14265a1-5c1a-497c-90d0-94cf00d7d892" x="427" y="156" width="1" height="125"/>
+			</line>
+			<staticText>
+				<reportElement uuid="28b2a4cd-be5b-436a-84b5-2dec7e0b4751" x="121" y="288" width="220" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE IMPUESTO A PAGAR:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e573ff29-a2ce-47a7-a89e-6c12580bc605" x="14" y="333" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2551cb00-c8ba-4f82-8fb4-e10fbb098c3f" x="295" y="335" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="60f8eaaf-e873-4191-9536-d2dec1700dae" x="295" y="312" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1a1383fd-5ec8-4369-bddb-8f637ed7ccd5" x="295" y="354" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="9efe2be1-d421-4d66-84ae-e58c37737abc" x="13" y="313" width="1" height="84"/>
+			</line>
+			<staticText>
+				<reportElement uuid="c3225df6-1d5b-435f-b6f2-cde1fcb881bf" x="15" y="334" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Mas: 5% de fiestas patronales]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="fc8030a5-e2bf-48d7-bd8d-9cb46d4a22de" x="14" y="396" width="413" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="5d3361d1-5996-42a1-8660-6df6fd783e00" x="292" y="313" width="1" height="83"/>
+			</line>
+			<staticText>
+				<reportElement uuid="d44d2380-38bd-496a-a927-78c7b827755d" x="295" y="376" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[$ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5dddfbb0-0cfd-47c8-a936-99d01b0dc8a0" x="15" y="313" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Impuesto mensual a pagar:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8e038fc2-dd96-4eaf-ab2c-0b762df1680f" x="14" y="375" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="7af5d759-6af3-429d-9288-8a344cc74168" x="15" y="376" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Más: Multa por extemporaneidad]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="e254a60e-9597-4697-b40d-30c49709b6d1" x="13" y="312" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8fd01f65-4486-49dd-8891-b7e7ff41cb1f" x="14" y="355" width="274" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total del impuesto mensual a pagar]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="b29b2252-7e85-42c8-bbf5-8b5c9d6e9b6f" x="425" y="312" width="1" height="84"/>
+			</line>
+			<line>
+				<reportElement uuid="2b3b0f24-453c-422b-a33f-ce6fea30cb91" x="14" y="354" width="413" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="e88999ea-5383-4afd-b80a-59bdc5da6567" x="16" y="410" width="511" height="30"/>
+				<textElement/>
+				<text><![CDATA[NOTIFIQUESE al (la) interesado(a) que a partir de esta fecha, cuenta con tres días hábiles para apelar por escrito contra la presente, de lo contrario se dará por aceptado lo establecido.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ea4d93bf-58a6-4629-b6f6-a7576db1d3bf" x="68" y="448" width="329" height="31"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[F. ____________________________________________
+Nombre y firma del Jefe de la Unidad de ATM (Sello)
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ff3d1ac4-068c-4d91-a003-e37c2d5717ac" x="419" y="0" width="49" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{dia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cada6be7-dc0b-4e27-8e29-25a8fe92f36e" x="20" y="10" width="86" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{mes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="da2866a7-203c-4583-9c68-a1566a1713fc" x="172" y="11" width="86" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1dd4bc53-eac3-470a-a919-207c2cff03f9" x="5" y="49" width="363" height="13"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="87fda5cd-a27a-49ba-bf69-1b39ef3698bf" x="4" y="61" width="348" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{propietario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="aeecb323-7de2-4941-a7e8-1fc11f81a406" x="424" y="62" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{dui}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="04efa492-9ded-4d6d-bbac-60bb713ba424" x="14" y="69" width="165" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c42e84c2-622b-470b-88cd-20891aa5cbd0" x="167" y="157" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechabalance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2319bc7c-a4c3-4ba3-9003-5bda4b6c15f2" x="309" y="179" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{activosinventario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bd03d372-f18d-4c96-946a-ba524abb8b54" x="309" y="199" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{activosinvertidos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8f7bbeb3-2fa9-4a42-a527-28710c393d5d" x="309" y="219" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{totalbalance}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9729baec-62ae-4d70-9e73-8ebf8ef43847" x="309" y="240" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{depreciacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="143a967c-15da-4360-835d-91398b9451aa" x="309" y="261" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{otros}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b04f293c-181e-4b0a-921e-95bf5193449c" x="307" y="312" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{impuesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="673f3a00-a418-4388-bc20-9fed45d41262" x="308" y="333" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{fiestas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1a1da5e9-1d81-4bae-8825-56dfb2655bc7" x="308" y="354" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{totalimpuestos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="775f5c17-8151-4fd5-909e-ec543cf38216" x="308" y="374" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{multa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ffc0c6e2-e2e9-4f02-8150-02c04857a328" x="172" y="2" width="225" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTIFICACION DE RESOLUCION]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="bad4c4e8-e7fe-446c-9765-47854ba02f44" x="0" y="0" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="0c42e457-654d-402b-aef3-05b58956e6c2" x="0" y="2" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="0a49b2e2-0eb5-4a53-ba2c-3a4b0ae14db5" x="0" y="2" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement uuid="8634dedb-885c-4f8e-86ee-9d952fe6c679" x="554" y="2" width="1" height="23"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4ccce7b9-d3c1-4aff-86ec-aec6dd17ff4e" x="13" y="0" width="514" height="41"/>
+				<textElement/>
+				<text><![CDATA[Recibida a las _____ horas, del día _____ del mes de __________ del año _____,
+En la dirección que detallo: ____________________________________________
+__________________________________________________________________
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0d773bf3-9023-4370-beb9-efc6705be65f" x="16" y="46" width="510" height="39"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[______________________________ 		____________________________
+    Nombre y firma de quien entrega	               Nombre y firma de quien recibe
+]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="2b4dee5a-207c-43ef-b1ba-353fdfd8330b" x="0" y="0" width="1" height="96"/>
+			</line>
+			<line>
+				<reportElement uuid="6b08dea2-b978-4a4f-a229-7c3fb6c2aa20" x="554" y="0" width="1" height="96"/>
+			</line>
+			<line>
+				<reportElement uuid="be1390f5-67d7-4eb5-92d1-b75878c25352" x="1" y="95" width="553" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

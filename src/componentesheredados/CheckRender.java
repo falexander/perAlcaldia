@@ -15,6 +15,8 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author alex
  */
+/*Clase Destinada a la Renderización (Dibujo) de los Componenete Jchecbox Incrustado en las columnas de las Tablas de 
+  Presentacion de Datos.*/
 public class CheckRender extends JCheckBox implements TableCellRenderer {
     
     private JComponent component = new JCheckBox();

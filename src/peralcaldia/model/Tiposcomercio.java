@@ -22,6 +22,8 @@ import javax.persistence.Table;
  *
  * @author alex
  */
+/*Clase Tiposcomercio que representa a la entidad tiposcomercio de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="tiposcomercio"
     ,schema="public"

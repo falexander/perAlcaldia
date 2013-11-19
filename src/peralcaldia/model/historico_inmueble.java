@@ -25,6 +25,8 @@ import javax.persistence.TemporalType;
  *
  * @author alex
  */
+/*Clase historico_inmueble que representa a la entidad historico_inmueble de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="historico_inmueble"
     ,schema="public"

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecaudacionMensual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" isFloatColumnFooter="true" uuid="aa41fe0c-4ffb-41e7-8c81-d2b59b69e46c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="291"/>
+	<parameter name="TotalDeuda" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select distinct count (res.contribuyenteid) as Total, res.estado from
+(select count (c.id), c.id as contribuyenteid, e.estado
+from pagos p inner join inmuebles i
+on p.inmuebles_id = i.id
+inner join contribuyentes c
+on i.contribuyentes_id = c.id
+inner join estados e
+on p.estados_id = e.id
+group by e.estado, c.id) as res
+group by res.estado]]>
+	</queryString>
+	<field name="total" class="java.lang.Long"/>
+	<field name="estado" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="805553bd-6058-4573-b6e9-8b5a3fbf745f" mode="Opaque" x="-21" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="1aeb3805-07c8-4b0a-bfcd-dbbda87545b2" x="18" y="0" width="334" height="92" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Resumen de balances]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="524">
+			<pieChart>
+				<chart>
+					<reportElement uuid="82d69a35-92fb-421e-991b-4cc69a78f4f1" x="55" y="0" width="434" height="245"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{estado}]]></keyExpression>
+					<valueExpression><![CDATA[$F{total}]]></valueExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" labelFormat="{0} {1} - {2} ">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<staticText>
+				<reportElement uuid="ca213da4-c895-45ed-9724-e12291fa1269" x="9" y="324" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Valor de deuda:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="8090587e-c694-4b76-8558-533fd72a966e" x="123" y="324" width="127" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{TotalDeuda}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="35"/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

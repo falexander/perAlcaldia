@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fc9ead6e-2459-4533-b810-d8a0273f6463">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="221"/>
+	<property name="ireport.y" value="192"/>
+	<parameter name="fechavence" class="java.lang.String"/>
+	<parameter name="fechabalance" class="java.lang.String"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from usuarios where id = id ;]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="roles_id" class="java.lang.Integer"/>
+	<field name="estados_id" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="alias" class="java.lang.String"/>
+	<field name="password" class="java.lang.String">
+		<fieldDescription><![CDATA[encrypted MD5]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String"/>
+	<field name="telefonofijo" class="java.lang.String"/>
+	<field name="telefonocelular" class="java.lang.String"/>
+	<field name="direccion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement uuid="b3c3c8ab-365c-4750-8e92-145db9fedc83" x="492" y="16" width="62" height="60"/>
+				<imageExpression><![CDATA["src/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="f702df3b-bcdb-458e-896e-2a879dfcf8d3" x="118" y="10" width="313" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="3dc3febe-de81-4816-a59c-cd63c794e880" mode="Transparent" x="10" y="16" width="90" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["src/imagenes/San_lorenzo1.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="88942183-6260-476d-a595-fdf987eb9c6e" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[F-UATM- 2]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7a4a78b5-312e-4536-86ef-22971a3aaede" x="118" y="15" width="374" height="20"/>
+				<textElement verticalAlignment="Bottom"/>
+				<text><![CDATA[RECORDATORIO PARA PRESENTAR DECLARACION ANUAL JURADA]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="f23ce1c6-f82a-40f4-9018-8e7c14128cc0" x="407" y="0" width="165" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="022a0760-8024-4e9b-bb27-aabdb04b935f" x="8" y="8" width="56" height="13"/>
+				<textElement/>
+				<text><![CDATA[Señor (a):
+::]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bf37e718-085d-4b6b-be18-7c6692d57b1b" x="8" y="21" width="56" height="13"/>
+				<textElement/>
+				<text><![CDATA[Dirección:
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f311326-abda-42a0-a8d3-6374717c3e80" x="8" y="48" width="110" height="13"/>
+				<textElement/>
+				<text><![CDATA[Estimado(a) señor(a):
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f490cc4b-a74a-45a1-a6ce-139c95c89663" x="64" y="8" width="360" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="94f61dd8-6e0b-492e-9572-2757f515a818" x="64" y="21" width="508" height="27"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="316" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="e1edb25e-c41a-4bfe-93cb-9d73fbcdac99" x="0" y="0" width="240" height="13"/>
+				<textElement/>
+				<text><![CDATA[El motivo de la presente es para recordarle(s) que el]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0e3444c8-4ceb-4c05-bd1a-26f2f2e6a063" x="240" y="0" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechavence}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="cdfe91a1-7228-4c85-88cd-799c486a5363" x="340" y="0" width="232" height="13"/>
+				<textElement/>
+				<text><![CDATA[, vence el plazo para la presentación del Balance General al 31 de diciembre del año 2xxx.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="805439c9-3ab3-4dc9-8925-5a3fd1feb673" x="0" y="13" width="55" height="13"/>
+				<textElement/>
+				<text><![CDATA[General al ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4967eed9-9b84-4b34-9ec2-8748cb14c737" x="55" y="13" width="285" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{fechabalance}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="de353603-d6a0-4f42-ac87-45914acc179d" x="0" y="38" width="572" height="28"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Esta información se solicita para establecer el activo imponible y calcular el impuesto a pagar a la Municipalidad de conformidad al artículo 90 Numerales 5 y 9 de la Ley General Tributaria Municipal, que a la letra dice:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f38ff0cd-6bf5-4316-9bd4-6c309433b7c5" x="18" y="66" width="520" height="42"/>
+				<textElement textAlignment="Justified">
+					<font isItalic="true"/>
+				</textElement>
+				<text><![CDATA[“…los contribuyentes, responsables y terceros, estarán obligados al cumplimiento de los deberes formales que se establezcan en esta Ley, en Leyes u Ordenanzas de creación de Tributos Municipales sus reglamentos y otras disposiciones normativas que dicten las administraciones tributarias municipales:…”
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d18470ad-a516-4ba6-8e34-5bf5a602f5b3" x="0" y="118" width="572" height="164"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[Me permito informarle(s) además, que de acuerdo al artículo 15 de la Ley General Tributaria Municipal:
+“Cuando una empresa estuviere gravada en esta Ley sobre el activo, será deducible de este para efectos de la determinación del impuesto correspondiente, los activos gravados en otro municipio. Les será deducible además, los títulos valores garantizados por el estado y la depreciación del activo fijo a excepción de los inmuebles.”
+
+
+Las empresas o negocios con activos en otros municipios deberán presentar, además, solvencia de los bienes declarados en otros municipios y un detalle de activos por agencia y/o sucursal especificando la depreciación por cada cuenta a depreciar debidamente firmado y sellado por el Representante Legal, Contador General y Auditor Externo.
+
+Deseo expresar la voluntad y disposición del Concejo Municipal, para colaborar en todo momento con su empresa a fin de contar cuanto antes con la información financiera solicitada y evitarles contratiempos con el pago de multas e intereses moratorios.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="98a648aa-a5d9-4f56-885f-483433dcf15f" x="0" y="295" width="431" height="13"/>
+				<textElement/>
+				<text><![CDATA[Agradeciendo su atención a la presente nos suscribimos de usted, muy cordialmente.]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="150" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2c1a3abd-41c7-4148-8b96-7efe6c374a02" x="7" y="77" width="238" height="41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre y firma de Jefe de la Unidad
+de Administración Tributaria Municipal
+Sello]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="76621d0a-420a-408f-b5f4-28c26968d672" x="7" y="68" width="238" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="f7c5fcf5-016a-45be-948c-ff113968962f" x="352" y="77" width="156" height="41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre y firma del Encargado de Catastro, Registro y Fiscalización.]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="57043d97-59d5-4ba7-b5eb-c5ff73b491c7" x="0" y="0" width="1" height="149"/>
+			</line>
+			<line>
+				<reportElement uuid="c6060ef1-433e-41e2-a2c6-7ad2f105c575" x="0" y="148" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="2130f46f-0adf-4ae4-b97f-0cc0eac04189" x="1" y="0" width="571" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="a373ad8d-738c-408c-a533-3e8fdc57761a" x="307" y="68" width="256" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="2f8c22e9-54a8-4e5c-8b69-b1012f6e5b3d" x="572" y="0" width="1" height="150"/>
+			</line>
+			<line>
+				<reportElement uuid="9d95f26c-f0e8-491d-aaa0-addd0311f9e7" x="290" y="0" width="1" height="148"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="6faeffcb-3fb1-42cc-bce2-17cc4de91a1d" x="1" y="0" width="239" height="13"/>
+				<textElement/>
+				<text><![CDATA[Nota: Adjunto la información de requisitos solicitados.
+
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8f8e64a8-f6d3-4012-9c78-82513c3c19f9">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="beginDate" class="java.lang.String"/>
+	<parameter name="endDate" class="java.lang.String"/>
+	<parameter name="Nombre" class="java.lang.String"/>
+	<parameter name="NegocioId" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select coalesce(n.nombreempresa,' ')inmueble, p.mespagado,p.monto, e.estado,p.fechapago,coalesce(p.montopagado,0)montopagado
+from pagos p inner join estados e
+     on p.estados_id = e.id
+     inner join negocios n
+     on n.id = p.negocios_id
+where  p.mespagado <> 'VARIOS ADELANTADO'
+        And n.id = $P!{NegocioId}
+	And to_date(mespagado,'MM-yyyy')between  to_date('$P!{beginDate}','dd-MM-yyyy') and to_date('$P!{endDate}','dd-MM-yyyy')
+order by p.mespagado, p.negocios_id;]]>
+	</queryString>
+	<field name="inmueble" class="java.lang.String"/>
+	<field name="mespagado" class="java.lang.String"/>
+	<field name="monto" class="java.lang.Float"/>
+	<field name="estado" class="java.lang.String"/>
+	<field name="fechapago" class="java.lang.String"/>
+	<field name="montopagado" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="a59aacb3-ba11-4597-ae7a-b46b9bc7b8a1" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="069701f1-ad45-408a-a5be-d881f8bd80e9" x="20" y="0" width="296" height="92" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Estado de cuenta por inmueble]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="a93aadb1-e952-4424-b620-0c78ae0d5b41" x="326" y="10" width="116" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Inmueble:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="b7cc60ec-0923-44d1-ba47-5534f7bcba45" x="326" y="30" width="199" height="34"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{Nombre}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement uuid="ae936620-6c1d-415f-85b0-9d562da86f7a" x="-20" y="20" width="575" height="1" forecolor="#666666"/>
+			</line>
+			<staticText>
+				<reportElement uuid="f9814023-4b66-41db-9eef-e626c73c0a22" x="4" y="1" width="81" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Mes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cd3a46a0-cf47-4806-948d-33e650948bb0" x="109" y="1" width="76" height="20"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="735e99fd-1c9a-4f21-b5d4-e1698b4f2abf" x="226" y="1" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement uuid="cef2310c-7864-4427-9460-209419b73171" positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="b879ed24-6ef6-4772-8951-adaa10bf5cd3" x="4" y="0" width="81" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{mespagado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;-#,##0.00">
+				<reportElement uuid="8ecba12e-cbf3-4c31-bf6a-22a4dc72a861" x="100" y="0" width="66" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d9f8165c-7ead-43e2-bdc4-f6841d68ed8b" x="226" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement uuid="898c81a0-dd75-44af-9120-b99576d2f9b6" mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="d8e124b2-54fd-4b08-94b1-4ea7ef38c9e2" mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="a21b439d-7b1d-4012-bfc7-1df7d3cd6a83" x="0" y="4" width="100" height="13"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

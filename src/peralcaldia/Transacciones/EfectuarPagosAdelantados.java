@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.Transacciones;
 
 import controller.AbstractDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +26,8 @@ import peralcaldia.model.Usuarios;
  *
  * @author alex
  */
+/*Pantalla utilizada para la cancelacion de pagos adelantados de acuerdo a las
+ * boletas generadas*/
 public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
 
     //declaración e inicialización de variables para carga de datos del pago.
@@ -40,8 +44,12 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
      */
     public EfectuarPagosAdelantados() {
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
 
+    /*Busqueda de la boleta generada para pago adelantado*/
     public void buscar(int id){        
         try {
             txtconcepto.setText("");
@@ -98,6 +106,7 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
 
     }
     
+    /*Aplicando el pago en caso de no estar cancelado*/
     public void aplicarpago(){
         String recibo;
         Calendar fact;
@@ -146,7 +155,7 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
                     //actualizando el pago
                     pago.setMontopagado(tck.getMontototal().setScale(2,RoundingMode.HALF_EVEN));
                     pago.setEstadosid(est);
-                    pago.setMespagado("VARIOS ADELANTADOS");
+                    pago.setMespagado("VARIOS ADELANTADO");
                     pago.setFechapago(fecha);
                     if (!comment.isEmpty()) {
                         pago.setComentario(comment);
@@ -183,6 +192,7 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
         }                
     }
     
+    /*Limpiando Informacion en pantalla*/
     public void limpiar(){
         txtboleta.setText("");
         txtnorecibo.setText(tck.getRecibo());
@@ -225,6 +235,9 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         btnapply = new javax.swing.JButton();
         btnout = new javax.swing.JButton();
+
+        setClosable(true);
+        setIconifiable(true);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jLabel2.setText("No. de Ticket:");
@@ -335,7 +348,7 @@ public class EfectuarPagosAdelantados extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbdirinmueble, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbnegocio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))

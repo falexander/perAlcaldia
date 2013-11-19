@@ -22,6 +22,8 @@ import javax.persistence.Table;
  *
  * @author alex
  */
+/*Clase Giros que representa a la entidad giros de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="giros"
     ,schema="public"

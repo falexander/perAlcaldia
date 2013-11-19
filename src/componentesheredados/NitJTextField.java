@@ -4,12 +4,18 @@
  */
 package componentesheredados;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author alex
  */
+/*Componente Personalizado, Destinado al Ingreso y Verificacion del Formato
+  Para los NIT de tipo Natural y Juridico para las pantallas en las que este
+  sea necesario*/
 public class NitJTextField extends JFormattedTextField {
 
     public NitJTextField() {
@@ -31,5 +37,24 @@ public class NitJTextField extends JFormattedTextField {
                 }
             }
         });
+        
+        addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                JFormattedTextField tf = (JFormattedTextField) e.getComponent();
+                if (tf.getText().length() > 0) {
+                    if (tf.getText().length() == 17) {
+                        tf.transferFocus();
+                    } else {
+                        tf.requestFocus();
+                    }
+                }
+
+            }
+        });        
     }
 }

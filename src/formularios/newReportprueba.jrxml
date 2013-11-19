@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="55546e84-5a79-4859-9fd4-5effc52d4cca">
+	<property name="ireport.zoom" value="1.4019755979255695"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="numero" class="java.lang.String"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+     usuarios."id" AS usuarios_id,
+     usuarios."roles_id" AS usuarios_roles_id,
+     usuarios."estados_id" AS usuarios_estados_id,
+     usuarios."nombres" AS usuarios_nombres,
+     usuarios."apellidos" AS usuarios_apellidos,
+     usuarios."alias" AS usuarios_alias,
+     usuarios."password" AS usuarios_password,
+     usuarios."email" AS usuarios_email,
+     usuarios."telefonofijo" AS usuarios_telefonofijo,
+     usuarios."telefonocelular" AS usuarios_telefonocelular,
+     usuarios."direccion" AS usuarios_direccion
+FROM
+     "public"."usuarios" usuarios]]>
+	</queryString>
+	<field name="usuarios_id" class="java.lang.Integer"/>
+	<field name="usuarios_roles_id" class="java.lang.Integer"/>
+	<field name="usuarios_estados_id" class="java.lang.Integer"/>
+	<field name="usuarios_nombres" class="java.lang.String"/>
+	<field name="usuarios_apellidos" class="java.lang.String"/>
+	<field name="usuarios_alias" class="java.lang.String"/>
+	<field name="usuarios_password" class="java.lang.String"/>
+	<field name="usuarios_email" class="java.lang.String"/>
+	<field name="usuarios_telefonofijo" class="java.lang.String"/>
+	<field name="usuarios_telefonocelular" class="java.lang.String"/>
+	<field name="usuarios_direccion" class="java.lang.String"/>
+	<variable name="usuarios_id_1" class="java.lang.Integer" calculation="Highest">
+		<variableExpression><![CDATA[$F{usuarios_id}]]></variableExpression>
+	</variable>
+	<variable name="usuarios_apellidos_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{usuarios_apellidos}]]></variableExpression>
+	</variable>
+	<variable name="nombre" class="java.lang.String"/>
+	<variable name="numero" class="java.lang.String"/>
+	<variable name="usuarios_id_2" class="java.lang.Integer" calculation="First">
+		<variableExpression><![CDATA[$F{usuarios_id}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d42fa8b0-ea6d-43ad-b8a3-51be0bcfba45" x="52" y="52" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="173474d6-0952-4d35-98e0-dbe99f1b03e6" x="52" y="32" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{numero}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement uuid="f2f0156e-0e1e-4239-814e-ce7c8b68585c" x="177" y="36" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{usuarios_id_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -24,4 +24,5 @@
   <table-filter match-name="Montosimpuestosnegocios"/>
   <table-filter match-name="Pagosadelantados"/>
   <table-filter match-name="Boleta"/>
+  <table-filter match-name="Detallepagos"/>
 </hibernate-reverse-engineering>

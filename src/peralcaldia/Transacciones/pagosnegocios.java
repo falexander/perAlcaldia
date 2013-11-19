@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.Transacciones;
 
 import controller.AbstractDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
@@ -25,6 +27,8 @@ import peralcaldia.model.Usuarios;
  *
  * @author alex
  */
+/*Pantalla utilizada para la aplicacion de pagos de negocios generados por el departamento
+ * de cuentas corrientes.*/
 public class pagosnegocios extends javax.swing.JInternalFrame {
 
     //declaración e inicialización de variables para carga de datos del pago.
@@ -40,8 +44,12 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
      */    
     public pagosnegocios() {
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
     
+    /*Busqueda de la boleta que se desea cancelar*/
     public void buscar(int id){
         try {
             txtconcepto.setText("");
@@ -74,6 +82,7 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
     
     }
     
+    /*Aplicacion del pago*/
     public void aplicarpago(){
         String recibo;
         Calendar fact;
@@ -161,6 +170,7 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
         }        
     } 
     
+    /*Limpiar la informacion cargada en pantalla*/
     public void limpiar(){
         txtboleta.setText("");
         txtnorecibo.setText(tck.getRecibo());
@@ -273,7 +283,7 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(lbtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 20, Short.MAX_VALUE))
+                                .addGap(0, 3, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,7 +334,7 @@ public class pagosnegocios extends javax.swing.JInternalFrame {
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(lbdireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lbdireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbnegocio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RecaudacionMensual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" isFloatColumnFooter="true" uuid="aa41fe0c-4ffb-41e7-8c81-d2b59b69e46c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BeginYear" class="java.lang.String"/>
+	<parameter name="EndYear" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select sum(p.monto) as Total, (Extract(year  from p.fechapago)) as Fecha
+from pagos p
+where p.estados_id = 5
+   And (Extract(year  from p.fechapago)) >= $P!{BeginYear} and (Extract(year  from p.fechapago))<= $P!{EndYear}
+group by Fecha
+order by Fecha]]>
+	</queryString>
+	<field name="total" class="java.lang.Double"/>
+	<field name="fecha" class="java.lang.Double"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement uuid="805553bd-6058-4573-b6e9-8b5a3fbf745f" mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699"/>
+				<staticText>
+					<reportElement uuid="1aeb3805-07c8-4b0a-bfcd-dbbda87545b2" x="20" y="0" width="334" height="92" forecolor="#FFFFFF"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Recaudacion Anual]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="2d4e415f-e2b7-469f-9079-7c274d3287ab" x="354" y="0" width="37" height="20"/>
+					<textElement/>
+					<text><![CDATA[Desde;]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="8871166b-1180-4e17-9c26-208ef1c0b4c4" x="354" y="20" width="32" height="20"/>
+					<textElement/>
+					<text><![CDATA[Hasta:]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="9cc9ea86-d5a7-4b5e-a1f8-eaae8d5fe348" x="406" y="0" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{BeginYear}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="7f3f0067-9374-4a59-9ead-ec9951510e48" x="406" y="20" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$P{EndYear}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<detail>
+		<band height="16" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="524">
+			<barChart>
+				<chart>
+					<reportElement uuid="32df5eec-7115-4da2-b01f-00e308d65af7" stretchType="RelativeToBandHeight" x="0" y="13" width="555" height="485"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{fecha}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{fecha}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot labelRotation="75.0"/>
+					<itemLabel/>
+					<categoryAxisFormat labelRotation="75.0">
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="35"/>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

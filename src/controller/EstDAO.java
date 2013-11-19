@@ -11,9 +11,12 @@ import org.hibernate.Query;
  *
  * @author alex
  */
+/*Repositorio General de Datos que Extiende del Repositorio Principal, Pero que permite a su Vez la Obtencion de Datos
+  Especificos de las Entidades Mapeadas de la BD sin necesidad de Recuperar la Instancia Completa*/
 public class EstDAO extends AbstractDAO {
-    //Estados
-
+    
+    /*Metodo que Permite la Recuperación de la Descripcion de Todos los Estados desde la Entidad Mapeada de la Base de 
+      Datos*/
     public List find_all_estados() {
         List objects = null;
         try {
@@ -25,7 +28,8 @@ public class EstDAO extends AbstractDAO {
         }
         return objects;
     }
-
+    /*Metodo que Permite la Recuperación de la Descripcion de Todos los Estados desde la Entidad Mapeada de la Base de
+      Datos, de Acuerdo a Una condición en Especifico*/
     public List find_estados_whereStatement(String whereStatement) {
         List objects = null;
         try {

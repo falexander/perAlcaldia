@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report13" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b92bf9cc-332e-45b4-90b9-ec1a5806b5f0">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="432"/>
+	<parameter name="noti1" class="java.lang.String"/>
+	<parameter name="noti2" class="java.lang.String"/>
+	<parameter name="noti3" class="java.lang.String"/>
+	<parameter name="monto" class="java.lang.String"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="direccion" class="java.lang.String"/>
+	<parameter name="desde" class="java.lang.String"/>
+	<parameter name="hasta" class="java.lang.String"/>
+	<parameter name="comercio" class="java.lang.String"/>
+	<parameter name="fiestas" class="java.lang.String"/>
+	<parameter name="mora" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ac4b9aa9-f13d-46ae-bdc5-7a719699203b" x="128" y="0" width="313" height="60"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="fdc696e2-ebab-424a-870a-106c64578bb0" mode="Transparent" x="23" y="0" width="90" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["src/imagenes/San_lorenzo1.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="9ca53bf9-3d74-442e-909e-cc89df7cc711" x="481" y="0" width="76" height="79"/>
+				<imageExpression><![CDATA["src/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="6166401c-501d-44f3-9626-f76913ca29f2" x="0" y="66" width="100" height="13"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[F-UATM-13]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="9ca3d570-309c-4483-9158-1c9f253f1fdc" x="0" y="0" width="572" height="13"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO DE CUENTA Y NOTIFICACION]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="76" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2f778a71-b4cf-434c-a9b0-d3cbe4dd8bec" x="10" y="6" width="518" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[1ra. Notificación   ……………………………………………………………………......................]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="8c7fdb8f-75ee-4ee9-b9ae-45852bba0e5a" x="528" y="4" width="29" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="b7c02c23-12e3-4a4d-867a-e0621f6745b8" x="528" y="6" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{noti1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="7a009170-1e33-42d9-aa3b-0bbace0b8991" x="10" y="28" width="518" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[2da. Notificación   ……………………………………………………………………......................]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="aa75a97e-74b3-484a-9ce9-d883e222c5fb" x="528" y="28" width="29" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="6dd397ac-38d4-475c-810c-e4ee6e67b129" x="528" y="28" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{noti2}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="09a4dd61-3f6d-4ac2-9e95-600cdfdedec4" x="528" y="50" width="29" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="58c2bd07-c9ba-48af-ae88-feb15ba36ad5" x="528" y="50" width="29" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{noti3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="95442f64-907a-497c-8065-9a67a7b9fce0" x="10" y="50" width="518" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[3ra. y última notificación con prevención (Art. 118 de la LGTM)……….……..........................]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="343" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="e891fb86-d96b-447a-95ec-f8120df7d063" x="407" y="0" width="165" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="39967b5a-f0cd-46b7-a2a6-4c99323ab34d" x="12" y="8" width="55" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Señor (a):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d92e832c-03b5-4e1b-9fe6-16fd04803cf5" x="11" y="30" width="56" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Dirección: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="07fa0f8b-4f3f-4496-829f-cff082a94216" x="0" y="52" width="572" height="47"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Estimado(a) señor(a):
+En nombre del Concejo Municipal, reciba un afectuoso saludo y deseos de éxito. El motivo de la presente es para manifestarle que su estado de cuenta en esta Municipalidad es de:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="fbd85f5b-084e-4ad7-954f-ca4a68c353ba" x="407" y="79" width="86" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{monto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="92556e8b-d0d9-4c78-8a8d-db7836e06751" x="0" y="99" width="53" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[desde el ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b4757522-8ac3-43e8-9b02-440b23e114f4" x="53" y="99" width="75" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{desde}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="9f14318c-3252-4e57-a0fa-b2bfd5461af1" x="128" y="99" width="15" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[al]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cd4a77d4-c46c-4a20-b675-281b90c37af9" x="143" y="99" width="75" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{hasta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bb83d241-6fef-4a73-b4ee-a8d9ce2fe928" x="218" y="99" width="354" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ por lo que le solicitamos hacerse presente a esta Unidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fdfca6ab-4a5d-4a6c-bf79-a337e610afd3" x="0" y="118" width="354" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[a fin de verificar y ponerse al día en sus pagos. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="70086985-0fb4-4647-8f3f-c825ab181f3b" x="10" y="149" width="303" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[A esta fecha su cuenta refleja el siguiente estado:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="36c23f96-965c-464d-a596-6c934e583071" x="37" y="173" width="159" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Impuestos Municipales]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="24f41a7f-7e98-41d7-ad92-4f6e73159ae2" x="11" y="173" width="272" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="c5109a3a-a583-478f-9525-9e2aadf66dc5" x="11" y="174" width="1" height="126"/>
+			</line>
+			<line>
+				<reportElement uuid="6b0a5ea8-90bd-4827-994e-24170643382b" x="12" y="194" width="272" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="a132c0de-e4a2-4d84-990e-0d0976f63dbe" x="14" y="195" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Comercio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f9a39746-eab0-42d9-8fbd-7716703e813f" x="14" y="258" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Interés moratorio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3bc9722b-0969-4a26-a753-d28c2defa5d8" x="14" y="237" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[5 % (fiestas)]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="ea97aca2-bb35-4fb2-8ced-c523a47b65ae" x="12" y="215" width="272" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="cc271212-c773-4d03-8934-4ba3879826b4" x="12" y="236" width="272" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="ab5bc602-2336-48d3-9dbc-614364d0c4c7" x="12" y="257" width="272" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="a52d5a5c-46c0-4d0e-b661-588b6fde7116" x="12" y="278" width="272" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="2bd97ca6-ea5b-4203-9703-c77f8db33dfc" x="12" y="299" width="272" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b6cdce72-4d30-4bc5-944e-152fe4ddcede" x="14" y="279" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Tasas]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="8aa676f9-c5d6-4540-91e5-f31efec8e4a8" x="132" y="195" width="1" height="105"/>
+			</line>
+			<line>
+				<reportElement uuid="2e25eeb8-e181-4f2f-84d7-3339035ac19f" x="158" y="195" width="1" height="105"/>
+			</line>
+			<staticText>
+				<reportElement uuid="6bbd6e31-be0b-42f7-a915-88cb75282e6f" x="132" y="196" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="50aafb15-cac3-4c14-98df-0426a8535542" x="133" y="217" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="39030ab6-24ae-400e-8d7b-216b2968e861" x="132" y="279" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="57b39188-4e39-4db8-9391-1e513a4c8944" x="133" y="258" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7cd2dfe5-5872-4845-a621-590ef27d0164" x="133" y="237" width="26" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[$]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="dc40e1f1-42b6-4009-ac3e-ac47e5351e52" x="282" y="174" width="1" height="126"/>
+			</line>
+			<staticText>
+				<reportElement uuid="205883ee-1dce-47d5-9170-1758c62ab2e6" x="10" y="311" width="557" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Agradeciendo su comprensión y atención a este aviso me suscribo de usted, muy cordialmente.]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b8898f61-f203-40d5-9634-6e4dbca8d8a3" x="67" y="30" width="500" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b40796a1-8af3-4eee-9ed6-f6f1d39a9da2" x="67" y="9" width="340" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4c5e52a2-7b98-49e6-8891-437eff3872df" x="159" y="195" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{comercio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ede89b56-2a89-4052-a0aa-690094a7f1dd" x="161" y="237" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fiestas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="22bf9beb-270c-4fd4-9d84-d00865e5af92" x="159" y="258" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{mora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bafec2e1-ed3a-415d-933b-4e778a691b64" x="160" y="279" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{total}
+]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="150" splitType="Stretch">
+			<line>
+				<reportElement uuid="e3dc0681-42d1-4ad8-aebc-9d1e238d8098" x="0" y="0" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="17b15662-5970-41d2-8203-021f05d678c6" x="0" y="1" width="1" height="149"/>
+			</line>
+			<line>
+				<reportElement uuid="a654b6f3-fd03-4674-984b-e0e94d815427" x="572" y="0" width="1" height="150"/>
+			</line>
+			<line>
+				<reportElement uuid="f33215c0-83d5-4bb9-b3c2-b0f5aff182c5" x="1" y="70" width="571" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="bda355af-7914-4eb0-860c-63f2456fb5bf" x="234" y="1" width="100" height="18"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOTIFICACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d55fa400-0c83-477e-b1cb-ceef9213fc23" x="14" y="30" width="543" height="15"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de recibido:__________________________________ Hora: _________________________________________]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f84d094e-e20d-4407-b912-953931e5fd48" x="13" y="56" width="515" height="14"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIONES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96ff6abc-94a2-48b9-9786-cc6c4b07fbf0" x="23" y="109" width="173" height="41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jennifer Cadenas
+Encargado de Cuentas Corrientes Cobro y Recuperación de Mora.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="14c814f3-413e-4e20-b4ab-bb59c50eff8c" x="335" y="109" width="156" height="41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nombre y firma
+De quien recibe la notificación]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="d9cae39a-9605-4c36-b1bc-35ff07d78558" x="23" y="102" width="173" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="95415668-a5d9-4580-a2ba-07e5583bf8b3" x="284" y="103" width="256" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement uuid="d9d0a397-ef64-49d4-bd48-fa2f54d612d2" x="1" y="0" width="571" height="1"/>
+			</line>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

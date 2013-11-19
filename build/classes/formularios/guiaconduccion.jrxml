@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guiaconduccion" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="507d5301-e983-4f71-a493-dde30da61b9e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="437"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="motorista" class="java.lang.String"/>
+	<parameter name="placa" class="java.lang.String"/>
+	<parameter name="color" class="java.lang.String"/>
+	<parameter name="cantidad" class="java.lang.String"/>
+	<parameter name="cartas" class="java.lang.String"/>
+	<parameter name="destino" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image>
+				<reportElement uuid="9a3f618c-d6b8-4fc8-9151-eef62d79edb5" x="476" y="0" width="89" height="79"/>
+				<imageExpression><![CDATA["src/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="c802cd6e-0f3e-4535-b8e6-47654ca41c39" x="122" y="6" width="313" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="508db628-ffcf-4de1-a1b8-bf5217f99212" mode="Transparent" x="3" y="4" width="115" height="75" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["src/imagenes/San_lorenzo1.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b3769571-33ba-4c04-8af1-df12d14124f6" x="6" y="0" width="562" height="35"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[De conformidad a los artículos 71 y 73 del reglamento general de Marcas y traslado de semovientes.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3a3fa9ee-8105-434b-b84d-66a214b2d36d" x="6" y="0" width="186" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[SE CONCEDE GUIA AL SEÑOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7503b44e-a714-4707-8e08-c713f8101c19" x="6" y="33" width="186" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CONDUCTOR O MOTORISTA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="92f9d6db-45a5-40dc-a947-3a9919dd62cb" x="192" y="0" width="373" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1be7aeb4-31ef-4dcf-9d61-0b3c0269f2ba" x="192" y="32" width="373" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{motorista}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="266" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="d965e5ce-7c64-4b62-b3d9-e127e1297904" x="6" y="0" width="102" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CAMION PLACA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8d482b4b-22de-4f94-b4e8-d9f36e1a0980" x="6" y="27" width="55" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[COLOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8ef5698-8a70-42c7-8854-2b2e2cb588cf" x="6" y="56" width="186" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD DE SEMOVIENTES:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5173b65f-66f6-48d0-8f95-4ac31c187aae" x="6" y="148" width="65" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[DESTINO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="362004ac-b111-48c0-a592-0738187fcf6d" x="6" y="115" width="196" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CON CARTAS DE VENTA SERIE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="33edfc5e-4b56-403e-b724-2c11c14bc4ea" x="6" y="168" width="562" height="31"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Se extiende la presente en la Alcaldía Municipal: San Lorenzo, departamento de Ahuachapán,]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="9e2857d0-4d99-4ffe-b5f9-550758f70524" x="6" y="199" width="559" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="072ec4ca-c65d-42d9-96d0-5fd158e9b853" x="196" y="226" width="193" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[__________________________
+Encargada de Ventas.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d7751961-5d81-4b59-ac2e-f0f963730245" x="6" y="242" width="100" height="24"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fiero (s):]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a5b4a070-e6be-4519-a2d6-861af0b0f4c0" x="106" y="0" width="124" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{placa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a42a0711-e298-4d44-a383-03e93792ce5b" x="61" y="27" width="124" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{color}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1044cfde-b00f-4c2e-85a1-982ad44d298d" x="6" y="76" width="559" height="39"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="83a82655-2d89-4e78-a3cf-ca02ef39b06b" x="202" y="115" width="124" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cartas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3bc568c5-e125-48b1-ae98-ad1b97e9bbda" x="68" y="148" width="124" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{destino}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

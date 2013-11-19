@@ -20,6 +20,7 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author alex
  */
+/*Clase Destinada a la Revision y Dibujo de componentes tipo checkbox en los Jtable (tablas)*/
 public class CheckCell extends DefaultCellEditor implements TableCellRenderer, TableCellEditor, ItemListener{
     
     private JComponent component = new JCheckBox();    

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prueba" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b85a2499-ac2f-47cd-a464-507ee65ffde0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     usuarios."id" AS usuarios_id,
+     usuarios."roles_id" AS usuarios_roles_id,
+     usuarios."estados_id" AS usuarios_estados_id,
+     usuarios."nombres" AS usuarios_nombres,
+     usuarios."apellidos" AS usuarios_apellidos,
+     usuarios."alias" AS usuarios_alias,
+     usuarios."password" AS usuarios_password,
+     usuarios."email" AS usuarios_email,
+     usuarios."telefonofijo" AS usuarios_telefonofijo,
+     usuarios."telefonocelular" AS usuarios_telefonocelular,
+     usuarios."direccion" AS usuarios_direccion
+FROM
+     "public"."usuarios" usuarios]]>
+	</queryString>
+	<field name="usuarios_id" class="java.lang.Integer"/>
+	<field name="usuarios_roles_id" class="java.lang.Integer"/>
+	<field name="usuarios_estados_id" class="java.lang.Integer"/>
+	<field name="usuarios_nombres" class="java.lang.String"/>
+	<field name="usuarios_apellidos" class="java.lang.String"/>
+	<field name="usuarios_alias" class="java.lang.String"/>
+	<field name="usuarios_password" class="java.lang.String"/>
+	<field name="usuarios_email" class="java.lang.String"/>
+	<field name="usuarios_telefonofijo" class="java.lang.String"/>
+	<field name="usuarios_telefonocelular" class="java.lang.String"/>
+	<field name="usuarios_direccion" class="java.lang.String"/>
+	<variable name="nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement uuid="bcb83512-2c59-4b95-8a8e-afdd04c6adaa" x="25" y="19" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$V{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

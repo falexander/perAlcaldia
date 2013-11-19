@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9324db9f-88fa-4b48-94a7-0af3653c38d6">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select count(n.id)as meses,sum (p.monto)total,n.id,n.nombreempresa,c.dui,(u.nombres ||' '|| u.apellidos) as nombre,c.niss
+from negocios n inner join pagos p
+     on n.id = p.negocios_id
+     inner join contribuyentes c
+     on c.id = n.contribuyentes_id
+     inner join usuarios u
+     on u.id = c.usuarios_id
+where p.estados_id = 6
+group by n.id,n.nombreempresa,c.dui,nombre,c.niss
+order by total desc;]]>
+	</queryString>
+	<field name="meses" class="java.lang.Long"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="nombreempresa" class="java.lang.String"/>
+	<field name="dui" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="niss" class="java.lang.String"/>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="822" height="92" backcolor="#006699" uuid="3cdb72a5-9550-4ca1-8d61-423b4b473988"/>
+				<staticText>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="6833b41a-00cb-43ac-b04b-ad97010cfeba"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Negocios en mora detallado]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="2bbc4981-f5e2-4fd4-8bd2-cde1344acafb"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Add a description here]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="822" height="1" forecolor="#666666" uuid="3d6cd86c-af3f-40ea-bc27-00970bb85fcd"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="236" y="0" width="85" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7fc20274-6240-4128-9d0a-2508110efd7c"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dui]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="0" width="234" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1fdd042a-b283-43af-913c-97b1dcd8a527"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Negocio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="321" y="0" width="121" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d73e489b-8a0f-428b-a823-431f256b3263"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Niss]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="712" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7dac6c77-7c3b-4c44-a0ea-fdd7ee7d46ec"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="671" y="0" width="59" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0f16b786-ba16-4593-a7e1-57e17a5648c0"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meses]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="442" y="0" width="229" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7b0f5d87-0f54-4e9b-82f1-f12cd8657f43"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="802" height="1" uuid="98659319-f064-42b1-adf0-b1bf307cd820"/>
+			</line>
+			<textField>
+				<reportElement x="2" y="0" width="232" height="20" uuid="37019cd8-d4db-4fa3-beda-8bfe37c1d546"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreempresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="0" width="100" height="20" uuid="41351a69-60fb-4d87-882b-34f1bb1ca7c0"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dui}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="0" width="123" height="20" uuid="ddad83b4-2e9b-4508-a230-47325c34e036"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{niss}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="471" y="0" width="200" height="20" uuid="b03dac84-2025-4d1b-a3eb-a2ec5c192d96"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="671" y="0" width="59" height="20" uuid="f9844695-023d-42a9-a4a7-f99e20dd3ced"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{meses}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="730" y="0" width="72" height="20" uuid="630e3882-f522-4160-b416-ea2ecc0ed4e9"/>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="fdb63c08-c85f-4e3f-91f2-3bcc9a9f5195"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="d21875ad-e0cf-469b-bb21-0000a07ed280"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="1b29633d-d773-43e1-b7f4-ad2493120a6f"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

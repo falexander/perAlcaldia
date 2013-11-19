@@ -25,6 +25,8 @@ import javax.persistence.TemporalType;
  *
  * @author alex
  */
+/*Clase Negocios que representa a la entidad negocios de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="negocios"
     ,schema="public"
@@ -43,11 +45,13 @@ public class Negocios {
     private Set<Pagosadelantados> padelantados = new HashSet<Pagosadelantados>(0);
     private Set<Boleta> boletaes = new HashSet<Boleta>(0);
     private String direccion;
+    private String nis;
+    private String cuentacorriente;
 
     public Negocios() {
     }
 
-    public Negocios(int id, Contribuyentes contribuyentes, Estados estados, Giros giros, Tiposcomercio tipos, String nombreempresa, String telefono, Date fecha_registro, Set pagoes, Set mntimpuestoes, Set padelantados, Set boletaes) {
+    public Negocios(int id, Contribuyentes contribuyentes, Estados estados, Giros giros, Tiposcomercio tipos, String nombreempresa, String telefono, Date fecha_registro, Set pagoes, Set mntimpuestoes, Set padelantados, Set boletaes, String nis, String cuentacorriente) {
         this.id = id;
         this.contribuyentes = contribuyentes;
         this.estados = estados;
@@ -60,6 +64,8 @@ public class Negocios {
         this.mntimpuestoes = mntimpuestoes;
         this.padelantados= padelantados;
         this.boletaes = boletaes;
+        this.nis = nis;
+        this.cuentacorriente = cuentacorriente;
     }
     
     @Id 
@@ -186,4 +192,23 @@ public class Negocios {
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }    
+    
+    @Column(name="nis")
+    public String getNis() {
+        return nis;
+    }
+
+    public void setNis(String nis) {
+        this.nis = nis;
+    }
+    
+    @Column(name="cuentacorriente")
+    public String getCuentacorriente() {
+        return cuentacorriente;
+    }
+
+    public void setCuentacorriente(String cuentacorriente) {
+        this.cuentacorriente = cuentacorriente;
+    }
+    
 }

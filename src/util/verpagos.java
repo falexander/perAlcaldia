@@ -13,6 +13,8 @@ import peralcaldia.model.Negocios;
  *
  * @author alex
  */
+/*Clase utilizada para el almacenaje de los pagos totales desde el sistema hacia la 
+ * Base de Datos*/
 public class verpagos {
     private String bandera;
     private String mespagado;
@@ -21,7 +23,7 @@ public class verpagos {
     private Inmuebles inmueble;
     private Negocios negocio;
     
-
+    /*Constructores*/
     public verpagos() {
     }
 
@@ -34,6 +36,7 @@ public class verpagos {
         this.bandera = bandera;
     }
 
+    /*Getters y Setters*/
     public String getMespagado() {
         return mespagado;
     }

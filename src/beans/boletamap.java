@@ -13,6 +13,9 @@ import java.util.Map;
  *
  * @author alex
  */
+/*Clase Destinada Para la Generacion de los Reportes Relacionados a las Boletas de Pagos Emitidas por el 
+  Departamento de Cuentas Corrientes y que Posteriormente Serviran Para su Cancelacion en el Departamento de
+  Tesoreria*/
 public class boletamap {
     private String contribuyente;
     private int idboleta;
@@ -51,8 +54,8 @@ public class boletamap {
         this.idboleta = idboleta;
     }
 
-    public Date getFechageneracion() {
-        return fechageneracion;
+    public String getFechageneracion() {
+        return fechageneracion.toLocaleString();
     }
 
     public void setFechageneracion(Date fechageneracion) {

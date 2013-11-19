@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.Transacciones;
 
 import controller.AbstractDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
@@ -23,6 +25,8 @@ import peralcaldia.model.Usuarios;
  *
  * @author alex
  */
+/*Pantalla utilizada para aplicar pagos de inmuebles a partir de las boletas generadas
+ *  en el depto. de cuentas corrientes*/
 public class aplicarpagos extends javax.swing.JInternalFrame {
 
     //declaración e inicialización de variables para carga de datos del pago.
@@ -38,8 +42,11 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
      */
     public aplicarpagos() {
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
-    
+    /*Busqueda de la boleta de pago*/
     public void buscar(int id){        
         try {
             txtconcepto.setText("");
@@ -73,6 +80,7 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
 
     }
     
+    /*Aplicacion del Pago*/
     public void aplicarpago(){
         String recibo;
         Calendar fact;
@@ -129,7 +137,6 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
                     }
                     res = res.add(tck.getMontototal().divide(new BigDecimal(tck.getMesesapagar()),2,RoundingMode.HALF_EVEN));
                     tmppago.setMontopagado(res.setScale(2,RoundingMode.HALF_EVEN));
-//                    tmppago.setBoletas(tck);
                     tmppago.setEstadosid(est);
                     tmppago.setFechapago(fecha);
                     if (!comment.isEmpty()) {
@@ -154,13 +161,13 @@ public class aplicarpagos extends javax.swing.JInternalFrame {
             else{
                 JOptionPane.showMessageDialog(this, "El número de recibo ya ha sido asignado, por favor verifique");
             }
-            
         }
         else{
             JOptionPane.showMessageDialog(this, "Ingrese el numero de recibo para el ticket");
         }
     }
     
+    /*Limpiar Informacion Cargada en Pantalla*/
     public void limpiar(){
         txtboleta.setText("");
         txtnorecibo.setText(tck.getRecibo());

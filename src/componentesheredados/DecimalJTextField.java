@@ -10,6 +10,7 @@ import javax.swing.JTextField;
  *
  * @author alex
  */
+/*Clase Destinada a la Personalizacion de JTextField Permitiendo ingresar unicamente valores de Tipo Numerico (Decimales)*/
 public class DecimalJTextField extends JTextField {
 
     public DecimalJTextField() {

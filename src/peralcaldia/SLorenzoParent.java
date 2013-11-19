@@ -4,16 +4,71 @@
  */
 package peralcaldia;
 
+import peralcaldia.MantenimientosModificaciones.ModificarUsuarios;
+import peralcaldia.MantenimientosModificaciones.ModificarMontoImpInmuebles;
+import peralcaldia.MantenimientosModificaciones.ModificarFormula;
+import peralcaldia.MantenimientosModificaciones.ModificarContribuyente;
+import peralcaldia.Transacciones.pagosnegocios;
+import peralcaldia.Transacciones.gencobrosinmmesactual;
+import peralcaldia.Transacciones.gencobrosini;
+import peralcaldia.Transacciones.gencobrosmensuales;
+import peralcaldia.Transacciones.applicarpagomanual;
+import peralcaldia.Transacciones.clesapagos;
+import peralcaldia.Transacciones.Pagosclesanegocios;
+import peralcaldia.Transacciones.aplicarpagos;
+import peralcaldia.Transacciones.GenerarBoletaPagosAdelantados;
+import peralcaldia.Transacciones.GenerarSolvencias;
+import peralcaldia.Transacciones.GenerarBoleta;
+import peralcaldia.Transacciones.EfectuarPagosAdelantados;
+import peralcaldia.MantenimientosIngreso.addzonas;
+import peralcaldia.MantenimientosIngreso.addusuario;
+import peralcaldia.MantenimientosIngreso.addnegocio;
+import peralcaldia.MantenimientosIngreso.addinmueble;
+import peralcaldia.MantenimientosIngreso.addimpuestosinmuebles;
+import peralcaldia.MantenimientosIngreso.addimpuestos;
+import peralcaldia.MantenimientosIngreso.addcontribuyente;
+import peralcaldia.MantenimientosIngreso.EstablecerNForm;
+import peralcaldia.MantenimientosIngreso.EstablecerNMontoImp;
+import peralcaldia.MantenimientosIngreso.AplicarCalificacionNegocio;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import peralcaldia.MantenimientosIngreso.AgregarGiros;
+import peralcaldia.MantenimientosIngreso.AgregarTiposComercio;
+import peralcaldia.MantenimientosModificaciones.ModificarCalificacionNegocio;
+import peralcaldia.MantenimientosModificaciones.ModificarGiros;
+import peralcaldia.MantenimientosModificaciones.ModificarInmueble;
+import peralcaldia.MantenimientosModificaciones.ModificarNegocio;
+import peralcaldia.MantenimientosModificaciones.ModificarTiposComercio;
+import peralcaldia.MantenimientosModificaciones.ModificarZonas;
+import peralcaldia.Reportes.IgresosImpuestos;
+import peralcaldia.Reportes.RecaudacionAnual;
+import peralcaldia.Reportes.RecaudacionMensual;
+import peralcaldia.Transacciones.ChancePassword;
+import peralcaldia.Transacciones.EstadosDeCuenta;
+import peralcaldia.Transacciones.PagosAdelantadoReporte;
+import peralcaldia.formularios.FUATM1;
+import peralcaldia.formularios.FUATM13i;
+import peralcaldia.formularios.FUATM2;
+import peralcaldia.formularios.FUATM3;
+import peralcaldia.formularios.FUATM4;
+import peralcaldia.formularios.FUATM5;
+import peralcaldia.formularios.FUATM6;
+import peralcaldia.formularios.FUATM7;
+import peralcaldia.formularios.guia;
+import util.GenericRepository;
+import util.ReportsRepository;
 import util.cobrosiniciales;
 
 /**
  *
  * @author alex
  */
-public class SLorenzoParent extends javax.swing.JFrame {
-
+/*Formulario Principal por medio del cual se les proporcionara acceso a las diferentes actividades dentro del sisteme a los
+ * Distintos Usuarios y Roles*/
+public class SLorenzoParent extends javax.swing.JFrame {    
+    /*Recuperando el Rol del Usuario Logueado*/
+    GenericRepository gr = new GenericRepository();
+    int rol = gr.GetRole();
     /**
      * Creates new form SLorenzoParent
      */
@@ -35,6 +90,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem30 = new javax.swing.JMenuItem();
         jpprincipal = new javax.swing.JPanel();
         jbarramenu = new javax.swing.JMenuBar();
         jmarchivo = new javax.swing.JMenu();
@@ -45,21 +101,60 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jminm = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jmzona = new javax.swing.JMenuItem();
+        jMenuItem32 = new javax.swing.JMenuItem();
+        jMenuItem33 = new javax.swing.JMenuItem();
         jmdf = new javax.swing.JMenu();
+        jMenuItem20 = new javax.swing.JMenuItem();
         jmmnt = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem24 = new javax.swing.JMenuItem();
+        jMenuItem31 = new javax.swing.JMenuItem();
+        jMenuItem49 = new javax.swing.JMenuItem();
         jmpsalir = new javax.swing.JMenuItem();
-        jmeditar = new javax.swing.JMenu();
+        jmmantenimientos = new javax.swing.JMenu();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem25 = new javax.swing.JMenuItem();
+        jMenuItem34 = new javax.swing.JMenuItem();
+        jMenuItem35 = new javax.swing.JMenuItem();
+        jMenuItem36 = new javax.swing.JMenuItem();
+        jMenuItem37 = new javax.swing.JMenuItem();
+        jMenuItem38 = new javax.swing.JMenuItem();
         jmtrans = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem48 = new javax.swing.JMenuItem();
+        jMenuItem50 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem41 = new javax.swing.JMenuItem();
+        jMenuItem42 = new javax.swing.JMenuItem();
+        jMenuItem43 = new javax.swing.JMenuItem();
+        jMenuItem44 = new javax.swing.JMenuItem();
+        jMenuItem45 = new javax.swing.JMenuItem();
+        jMenuItem51 = new javax.swing.JMenuItem();
+        jMenuItem52 = new javax.swing.JMenuItem();
+        jMenuItem46 = new javax.swing.JMenuItem();
+        jMenuItem53 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem26 = new javax.swing.JMenuItem();
+        jMenuItem28 = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
+        jMenuItem39 = new javax.swing.JMenuItem();
+        jMenuItem27 = new javax.swing.JMenuItem();
+        jMenuItem47 = new javax.swing.JMenuItem();
+        jMenuItem40 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -68,6 +163,8 @@ public class SLorenzoParent extends javax.swing.JFrame {
         jMenuItem6.setText("jMenuItem6");
 
         jMenuItem7.setText("jMenuItem7");
+
+        jMenuItem30.setText("jMenuItem30");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -140,9 +237,33 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jnuevo.add(jmzona);
 
+        jMenuItem32.setText("Giro Comercial");
+        jMenuItem32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem32ActionPerformed(evt);
+            }
+        });
+        jnuevo.add(jMenuItem32);
+
+        jMenuItem33.setText("Tipo de Comercio");
+        jMenuItem33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem33ActionPerformed(evt);
+            }
+        });
+        jnuevo.add(jMenuItem33);
+
         jmarchivo.add(jnuevo);
 
         jmdf.setText("Establecer");
+
+        jMenuItem20.setText("Formulas Impuestos");
+        jMenuItem20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem20ActionPerformed(evt);
+            }
+        });
+        jmdf.add(jMenuItem20);
 
         jmmnt.setText("Monto Impuesto");
         jmmnt.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +281,31 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmdf.add(jMenuItem2);
 
+        jMenuItem24.setText("Calificación Negocios");
+        jMenuItem24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem24ActionPerformed(evt);
+            }
+        });
+        jmdf.add(jMenuItem24);
+
         jmarchivo.add(jmdf);
+
+        jMenuItem31.setText("Cambiar Sesión");
+        jMenuItem31.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem31ActionPerformed(evt);
+            }
+        });
+        jmarchivo.add(jMenuItem31);
+
+        jMenuItem49.setText("Cambiar Contraseña");
+        jMenuItem49.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem49ActionPerformed(evt);
+            }
+        });
+        jmarchivo.add(jMenuItem49);
 
         jmpsalir.setText("Salir");
         jmpsalir.addActionListener(new java.awt.event.ActionListener() {
@@ -172,18 +317,91 @@ public class SLorenzoParent extends javax.swing.JFrame {
 
         jbarramenu.add(jmarchivo);
 
-        jmeditar.setText("Editar");
-        jbarramenu.add(jmeditar);
+        jmmantenimientos.setLabel("Mantenimientos");
 
-        jmtrans.setText("Transacciones");
-
-        jMenuItem4.setText("Generar Boleta de Pago");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem16.setText("Modificar Contribuyente");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                jMenuItem16ActionPerformed(evt);
             }
         });
-        jmtrans.add(jMenuItem4);
+        jmmantenimientos.add(jMenuItem16);
+
+        jMenuItem17.setText("Modificar Usuario");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem17);
+
+        jMenuItem18.setText("Modificar Formula Impuesto");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem18);
+
+        jMenuItem21.setText("Modificar Monto Impuesto");
+        jMenuItem21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem21ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem21);
+
+        jMenuItem25.setText("Modificar Calificación Negocio");
+        jMenuItem25.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem25ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem25);
+
+        jMenuItem34.setText("Modificar Inmueble");
+        jMenuItem34.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem34ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem34);
+
+        jMenuItem35.setText("Modificar Negocio");
+        jMenuItem35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem35ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem35);
+
+        jMenuItem36.setText("Modificar Giros Comerciales");
+        jMenuItem36.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem36ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem36);
+
+        jMenuItem37.setText("Modificar Tipos de Comercio");
+        jMenuItem37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem37ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem37);
+
+        jMenuItem38.setText("Modificar Zonas");
+        jMenuItem38.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem38ActionPerformed(evt);
+            }
+        });
+        jmmantenimientos.add(jMenuItem38);
+
+        jbarramenu.add(jmmantenimientos);
+
+        jmtrans.setText("Transacciones");
 
         jMenuItem5.setText("Carga Inicial");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -201,13 +419,29 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmtrans.add(jMenuItem14);
 
-        jMenuItem13.setText("Generar Cobros Nuevos Inmuebles");
+        jMenuItem13.setText("Generar Cobros Nuevos Inm./Neg.");
         jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem13ActionPerformed(evt);
             }
         });
         jmtrans.add(jMenuItem13);
+
+        jMenuItem4.setText("Generar Boleta de Pago");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem4);
+
+        jMenuItem22.setText("Generar Boleta Pago Adelantado");
+        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem22ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem22);
 
         jMenuItem8.setText("Aplicar Pagos Inmuebles");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -225,13 +459,21 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmtrans.add(jMenuItem9);
 
-        jMenuItem11.setText("Aplicar Pagos Clesa");
+        jMenuItem11.setText("Aplicar Pagos Inmuebles Clesa");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem11ActionPerformed(evt);
             }
         });
         jmtrans.add(jMenuItem11);
+
+        jMenuItem19.setText("Aplicar Pagos Negocios Clesa");
+        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem19ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem19);
 
         jMenuItem15.setText("Aplicar Pagos Manuales");
         jMenuItem15.addActionListener(new java.awt.event.ActionListener() {
@@ -241,7 +483,7 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmtrans.add(jMenuItem15);
 
-        jMenuItem12.setText("Cargar Pago Adelantado");
+        jMenuItem12.setText("Aplicar Pago Adelantado");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -249,7 +491,167 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
         jmtrans.add(jMenuItem12);
 
+        jMenuItem48.setText("Verificar Saldos a Favor");
+        jMenuItem48.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem48ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem48);
+
+        jMenuItem50.setText("Estado de Cuenta Detallado");
+        jMenuItem50.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem50ActionPerformed(evt);
+            }
+        });
+        jmtrans.add(jMenuItem50);
+
         jbarramenu.add(jmtrans);
+
+        jMenu2.setText("Formularios");
+
+        jMenuItem41.setText("F-UATM-1 Declaracion Anual Jurada");
+        jMenuItem41.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem41ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem41);
+
+        jMenuItem42.setText("F-UATM-2 Recordatorio de Declaracion Anual Jurada");
+        jMenuItem42.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem42ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem42);
+
+        jMenuItem43.setText("F-UATM-3 Resolucion y Notificacion de Determinacion de Oficio");
+        jMenuItem43.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem43ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem43);
+
+        jMenuItem44.setText("F-UATM-4 Notificacion por Omision de Informacion");
+        jMenuItem44.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem44ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem44);
+
+        jMenuItem45.setText("F-UATM-5 Calificacion y Recalificacion de Inmuebles");
+        jMenuItem45.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem45ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem45);
+
+        jMenuItem51.setText("F-UATM-6 Notificacion de tasas por prestacion de servicos");
+        jMenuItem51.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem51ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem51);
+
+        jMenuItem52.setText("F-UATM-7 Solicitud de Inspección");
+        jMenuItem52.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem52ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem52);
+
+        jMenuItem46.setText("F-UATM-13 Estado de Cuenta y Notificacion");
+        jMenuItem46.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem46ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem46);
+
+        jMenuItem53.setText("Extensión de Guías de Conducción");
+        jMenuItem53.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem53ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem53);
+
+        jMenuItem23.setText("Solvencias");
+        jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem23ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem23);
+
+        jbarramenu.add(jMenu2);
+
+        jMenu1.setText("Reportes");
+
+        jMenuItem26.setText("Contribuyentes en Mora");
+        jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem26ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem26);
+
+        jMenuItem28.setText("Inmuebles en Mora Detallado");
+        jMenuItem28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem28ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem28);
+
+        jMenuItem29.setText("Negocios en Mora Detallado");
+        jMenuItem29.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem29ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem29);
+
+        jMenuItem39.setText("Recaudacion Mensual");
+        jMenuItem39.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem39ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem39);
+
+        jMenuItem27.setText("Recaudacion Anual");
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem27);
+
+        jMenuItem47.setText("Detalle de Ingreso por Impuesto");
+        jMenuItem47.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem47ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem47);
+
+        jMenuItem40.setText("Resumen de Estado Contribuyentes");
+        jMenuItem40.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem40ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem40);
+
+        jbarramenu.add(jMenu1);
 
         setJMenuBar(jbarramenu);
 
@@ -267,250 +669,1124 @@ public class SLorenzoParent extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*Menu Para el Registro de Nuevos Contribuyentes en el sistema, estando habilitados
+     * Para ello Unicamente el Administrador y los Usuarios del Departamento de Cuentas
+     * Coorrientes*/
     private void jmcontribuyenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmcontribuyenteActionPerformed
-        addcontribuyente addc = new addcontribuyente();
-        try {
-            this.jpprincipal.add(addc);
-            addc.setSelected(true);
-            addc.toFront();            
-            addc.setVisible(true);            
+        if(rol== 2 || rol==5)
+        {
+            addcontribuyente addc = new addcontribuyente();
+            try {
+                this.jpprincipal.add(addc);
+                addc.setSelected(true);
+                addc.toFront();            
+                addc.setVisible(true);            
+            }
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");                        
+                e.printStackTrace();
+            }  
         }
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");                        
-            e.printStackTrace();
-        }        // TODO add your handling code here:
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No tienes permisos para usar este modulo");
+        }
     }//GEN-LAST:event_jmcontribuyenteActionPerformed
 
+    /*Menú Para Registrar Nuevos Usuarios del Sistema, Según los Diferentes Roles Posibles
+     * En el Aplicativo, Teniendo Acceso a este Menú Unicamente los Usuarios de Tipo
+     * Administrador*/
     private void jmusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmusuarioActionPerformed
-        // TODO add your handling code here:
-        addusuario aduser = new addusuario();
-        try {
-            this.jpprincipal.add(aduser);
-            aduser.setSelected(true);
-            aduser.toFront();
-            aduser.setVisible(true);
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");            
-            e.printStackTrace();
+        if(rol==2)
+        {
+            addusuario aduser = new addusuario();
+            try {
+                this.jpprincipal.add(aduser);
+                aduser.setSelected(true);
+                aduser.toFront();
+                aduser.setVisible(true);
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");            
+                e.printStackTrace();
+            }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No tienes permisos para usar este modulo");
+        }
+        
     }//GEN-LAST:event_jmusuarioActionPerformed
 
+    /*Menu Utilizado para Abandonar el Aplicativo.*/
     private void jmpsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmpsalirActionPerformed
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_jmpsalirActionPerformed
 
+    /*Menu Designado Para el Ingreso de Nuevas Zonas en el Sistema Según Surga la necesidad
+     *  Los Usuarios con Permisos Para Realizar estas Acciones son los de tipo Administrador 
+     * y los del Depto. de Catastro*/
     private void jmzonaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmzonaActionPerformed
-        // TODO add your handling code here:
-        addzonas adzon = new addzonas();
-        try {
-            this.jpprincipal.add(adzon);
-            adzon.setSelected(true);
-            adzon.toFront();
-            adzon.setVisible(true);
-        } 
-        catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol== 4 || rol == 2)
+        {
+            addzonas adzon = new addzonas();
+            try {
+                this.jpprincipal.add(adzon);
+                adzon.setSelected(true);
+                adzon.toFront();
+                adzon.setVisible(true);
+            } 
+            catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No tienes permisos para usar este modulo");    
         }
     }//GEN-LAST:event_jmzonaActionPerformed
 
+    /*Menú Para el Registro de Nuevos Impuestos en el Sistema junto con el Monto y Formula Respectiva
+     * en el caso de usarse, Los Usuarios Habilitados para estas actividades son los Usuarios de Tipo
+     * Administrador*/
     private void jmimpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmimpuestoActionPerformed
-        // TODO add your handling code here:
-        addimpuestos adimp = new addimpuestos();
-        try {
-            this.jpprincipal.add(adimp);
-            adimp.setSelected(true);
-            adimp.toFront();
-            adimp.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol==2)
+        {
+            addimpuestos adimp = new addimpuestos();
+            try {
+                this.jpprincipal.add(adimp);
+                adimp.setSelected(true);
+                adimp.toFront();
+                adimp.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No tienes permisos para usar este modulo");
+        }
+        
     }//GEN-LAST:event_jmimpuestoActionPerformed
 
+    /*Menú Para Ingresar Nuevos Inmuebles al Sistema, Registrado Bajo un Determinado Contribuyente
+      * los Usuarios con Privilegios para Realizar este tipo de Ingresos son los Usuarios de Tipo Administrador
+      * y los Usuarios del Depto. de Catastro.*/
     private void jminmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jminmActionPerformed
-        // TODO add your handling code here:
-        addinmueble adinm = new addinmueble();
-        try {
-            this.jpprincipal.add(adinm);
-            adinm.setSelected(true);
-            adinm.toFront();
-            adinm.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol==2 || rol == 4)
+        {
+            addinmueble adinm = new addinmueble();
+            try {
+                this.jpprincipal.add(adinm);
+                adinm.setSelected(true);
+                adinm.toFront();
+                adinm.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
         }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "No tienes permisos para usar este modulo");            
+        }        
     }//GEN-LAST:event_jminmActionPerformed
 
-    private void jmmntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmmntActionPerformed
-        // TODO add your handling code here:
-        addmntimpuestos admnti = new addmntimpuestos();
-        try {
-            this.jpprincipal.add(admnti);
-            admnti.setSelected(true);
-            admnti.toFront();
-            admnti.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jmmntActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        addimpuestosinmuebles adiminm = new addimpuestosinmuebles();
-        try {
-            this.jpprincipal.add(adiminm);
-            adiminm.setSelected(true);
-            adiminm.toFront();
-            adiminm.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
+    /*Menu utilizado para la generacion de las boletas de pagos de los contribuyentes en el departamento
+     * de cuentas corrientes. Los usuarios con permisos para realizar este tipo de transaccion son los usuarios
+     * de tipo administrador y los del Depto. de Cuentas Corrientes.*/
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-        GenerarBoleta gb = new GenerarBoleta();
-        try {
-            this.jpprincipal.add(gb);
-            gb.setSelected(true);
-            gb.toFront();
-            gb.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol == 2 || rol == 5)
+        {
+            GenerarBoleta gb = new GenerarBoleta();
+            try {
+                
+                this.jpprincipal.add(gb);
+                
+                gb.setSelected(true);
+                gb.toFront();
+                gb.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    /*Menu utilizado para lanzar la pantalla de pago de las boletas relacionadas a los inmuebles.
+     * Los usuarios con permisos para realizar este tipo de transaccion son los usuarios de tipo
+     * administrador y los del Depto. de Tesoreria.*/
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        // TODO add your handling code here:
-        aplicarpagos pg = new aplicarpagos();
-        try {
-            this.jpprincipal.add(pg);
-            pg.setSelected(true);
-            pg.toFront();
-            pg.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol == 2 || rol == 6)
+        {
+            aplicarpagos pg = new aplicarpagos();
+            try {
+                this.jpprincipal.add(pg);
+                pg.setSelected(true);
+                pg.toFront();
+                pg.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    /*Menu Para el Ingreso de Nuevos Negocios Bajo un Contribuyente Determinado,
+     Los Usuarios con Permisos Para Realizar Este tipo de Acciones son los Usuarios
+     de Tipo Administrador y los Usuarios del Depto. de Catastro.*/
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        // TODO add your handling code here:
-        addnegocio ngc = new addnegocio();
-        try {
-            this.jpprincipal.add(ngc);
-            ngc.setSelected(true);
-            ngc.toFront();
-            ngc.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol==2 || rol==4)
+        {        
+            addnegocio ngc = new addnegocio();
+            try {
+                this.jpprincipal.add(ngc);
+                ngc.setSelected(true);
+                ngc.toFront();
+                ngc.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
         }
+            else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    /*Menu utilizado para lanzar la pantalla de pago de boletas relacionadas a negocios.
+     * Los usuarios con permisos para realizar este tipo de transacciones son los usuarios
+     * de tipo administrativo y los usuarios del depto. de Tesoreria.*/
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
-        // TODO add your handling code here:
-        pagosnegocios pgneg = new pagosnegocios();
-        try {
-            this.jpprincipal.add(pgneg);
-            pgneg.setSelected(true);
-            pgneg.toFront();
-            pgneg.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();            
+        if(rol==2 || rol ==6)
+        {
+            pagosnegocios pgneg = new pagosnegocios();
+            try {
+                this.jpprincipal.add(pgneg);
+                pgneg.setSelected(true);
+                pgneg.toFront();
+                pgneg.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();            
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    /*Menu utilizado para la aplicacion de pagos provenientes de clesa relacionados a Inmuebles.
+     * Los usuarios con permisos para realizar este tipo de transacciones son los usuarios
+     * de tipo administrativo y los usuarios del depto. de Tesoreria.*/
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
-        // TODO add your handling code here:
-        clesapagos clpagos = new clesapagos();
-        try {
-            this.jpprincipal.add(clpagos);
-            clpagos.setSelected(true);
-            clpagos.toFront();
-            clpagos.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol == 2 || rol == 6)
+        {
+            clesapagos clpagos = new clesapagos();
+            try {
+                this.jpprincipal.add(clpagos);
+                clpagos.setSelected(true);
+                clpagos.toFront();
+                clpagos.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    /*Menu utilizado para el lanzamiento de la pantalla para aplicar los pagos adelantados generados
+     * en el depto. de cuentas corrientes. Los usuarios con permisos para realizar este tipo de transacciones
+     * son los usuarios de tipo administrativo y los usuarios del depto. de tesoreria.*/
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
-        // TODO add your handling code here:
-        EfectuarPagosAdelantados pgadel = new EfectuarPagosAdelantados();
-        try {
-            this.jpprincipal.add(pgadel);
-            pgadel.setSelected(true);
-            pgadel.toFront();
-            pgadel.setVisible(true);            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();            
+        if(rol == 2 || rol == 6)        
+        {
+            EfectuarPagosAdelantados pgadel = new EfectuarPagosAdelantados();
+            try {
+                this.jpprincipal.add(pgadel);
+                pgadel.setSelected(true);
+                pgadel.toFront();
+                pgadel.setVisible(true);            
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();            
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem12ActionPerformed
 
+    /*Menu utilizado para Generar la Carga Inicial de los Inmuebles y Negocios ingresados en el sistema
+     * en el inicio del uso del aplicativo. Los usuarios con permisos para realizar esta transaccion son
+     * los usuarios de tipo Administrador.*/
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
-        gencobrosini cbini = new gencobrosini();
-        try {
-            this.jpprincipal.add(cbini);
-            cbini.setSelected(true);
-            cbini.toFront();
-            cbini.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol == 2)
+        {
+            gencobrosini cbini = new gencobrosini();
+            try {
+                this.jpprincipal.add(cbini);
+                cbini.setSelected(true);
+                cbini.toFront();
+                cbini.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
+    /*Menu utilizado para generar los cobros de los nuevos inmuebles y negocios ingresados en el sistema
+     * durante el periodo actual. Los usuarios con permisos para realizar este tipo de transaccion son los
+     * usuarios de tipo administrador y los usuarios del Depto. de Cuentas Corrientes.*/
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
-        // TODO add your handling code here:
-        gencobrosinmmesactual cbmesactual = new gencobrosinmmesactual();
-        try {
-            this.jpprincipal.add(cbmesactual);
-            cbmesactual.setSelected(true);
-            cbmesactual.toFront();
-            cbmesactual.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol==2 || rol == 5)
+        {
+            gencobrosinmmesactual cbmesactual = new gencobrosinmmesactual();
+            try {
+                this.jpprincipal.add(cbmesactual);
+                cbmesactual.setSelected(true);
+                cbmesactual.toFront();
+                cbmesactual.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
+    /*Menu utilizado para la generacion de los cobros mensuales de los inmuebles y negocios ingresados
+     * en el sistema. Los usuarios con permisos para realizar este tipo de transacciones son los usuarios
+     * de tipo Administrador y los de Cuentas Corrientes.*/
     private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem14ActionPerformed
-        // TODO add your handling code here:
-        gencobrosmensuales cbmensuales = new gencobrosmensuales();
-        try {
-            this.jpprincipal.add(cbmensuales);
-            cbmensuales.setSelected(true);
-            cbmensuales.toFront();
-            cbmensuales.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            e.printStackTrace();
+        if(rol== 2 || rol == 5)
+        {
+            gencobrosmensuales cbmensuales = new gencobrosmensuales();
+            try {
+                this.jpprincipal.add(cbmensuales);
+                cbmensuales.setSelected(true);
+                cbmensuales.toFront();
+                cbmensuales.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem14ActionPerformed
 
+    /*Menu utilizado para la aplicacion de pagos manuales relacionados a la carga inicial para los cuales
+     * el sistema no puede calcular las cantidades exactas de la mora cobrada en los diferentes periodos.
+     * Los usuarios con permisos para realizar estas transacciones son los usuarios de tipo Administrador
+     * y los del Depto. de Tesoreria.*/
     private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem15ActionPerformed
-        // TODO add your handling code here:
-        applicarpagomanual pgm = new applicarpagomanual();
-        try {
-            this.jpprincipal.add(pgm);
-            pgm.setSelected(true);
-            pgm.toFront();
-            pgm.setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
-            System.out.println(e.toString());
+        if(rol == 2 || rol == 6)
+        {
+            applicarpagomanual pgm = new applicarpagomanual();
+            try {
+                this.jpprincipal.add(pgm);
+                pgm.setSelected(true);
+                pgm.toFront();
+                pgm.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
         }
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    /*Menu Utilizado Para Modificar las Propiedades de los Contribuyentes Ingresados en el sistema
+     * Los Usuarios Habilitados para este tipo de transacciones son los Usuarios de Tipo Administrador
+     * y los de Cuentas Corrientes.*/
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        if(rol== 2 || rol == 5)
+        {
+            ModificarContribuyente mcnt = new ModificarContribuyente();
+            try {
+                this.jpprincipal.add(mcnt);
+                mcnt.setSelected(true);
+                mcnt.toFront();
+                mcnt.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    /*Menu Utilizado Para la Modificacion de los Usuarios Ingresados en el Sistema, Entiendase
+     * Como Usuarios Los Usuarios del Aplicativo dentro de la Alcaldia, Los Usuarios con Permisos
+     * Para realizar este tipo de transacciones son los Usuarios de tipo Administrador.*/
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        if(rol == 2)
+        {
+            ModificarUsuarios muser = new ModificarUsuarios();
+            try {
+                this.jpprincipal.add(muser);
+                muser.setSelected(true);
+                muser.toFront();
+                muser.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }        
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
+
+    /*Menu Utilizado para Modificar los Formulas Ingresadas en Un Periodo Determinado, En caso de que se haya
+     * cometido un error y esta haya generados cobros antes de la modificacion. Los Usuarios con permisos para realizar
+     * este tipo de transacciones son los usuarios de tipo Administrador*/
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem18ActionPerformed
+        if(rol == 2)
+        {
+            ModificarFormula mdf = new ModificarFormula();
+            try {
+                this.jpprincipal.add(mdf);
+                mdf.setSelected(true);
+                mdf.toFront();
+                mdf.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
+
+    /*Menu utilizado para lanzar la pantalla de aplicacion de pagos relacionados a negocios
+     * provenientes de clesa. Los usuarios con permisos para realizar este tipo de transacciones
+     * son los usuarios de tipo Administrativo y los del depto. de Tesoreria.*/
+    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+        if(rol==2 || rol == 6)
+        {
+            Pagosclesanegocios pgneg = new Pagosclesanegocios();
+            try {
+                this.jpprincipal.add(pgneg);
+                pgneg.setSelected(true);
+                pgneg.toFront();
+                pgneg.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem19ActionPerformed
+
+    /*Menu destinado a la modificacion de los Montos Impuestos Ingresados para un periodo
+     * en caso de equivocacion y cuando este aun no haya sido modificado. Los usuarios con 
+     * permisos para realizar este tipo de transacciones son los usuarios de tipo administrador*/
+    private void jMenuItem21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem21ActionPerformed
+        if(rol==2)
+        {
+            ModificarMontoImpInmuebles MMntImp = new ModificarMontoImpInmuebles();
+            try {
+                this.jpprincipal.add(MMntImp);
+                MMntImp.setSelected(true);
+                MMntImp.toFront();
+                MMntImp.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem21ActionPerformed
+
+    /*Menu utilizado para generar las boletas de pago adelantado para los diferentes Inmuebles y Negocios.
+     * Los usuarios con permisos para realizar este tipo de transacciones son los usuarios de tipo
+     * Administrativo y los del Depto. de Cuentas Corrientes.*/
+    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
+        if(rol == 2 || rol == 5)
+        {
+            GenerarBoletaPagosAdelantados mbladel = new GenerarBoletaPagosAdelantados();
+            try {
+                this.jpprincipal.add(mbladel);
+                mbladel.setSelected(true);
+                mbladel.toFront();
+                mbladel.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem22ActionPerformed
+
+    private void jMenuItem23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem23ActionPerformed
+        if(rol == 2 || rol == 5) 
+        {
+            GenerarSolvencias gnsolv = new GenerarSolvencias();
+            try {
+                this.jpprincipal.add(gnsolv);
+                gnsolv.setSelected(true);
+                gnsolv.toFront();
+                gnsolv.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem23ActionPerformed
+
+    /*Menu utilizado para modificar la calificacion de los negocios para un periodo determinado
+     * y para el cual no se ha generado ningun cobro relacionado. Los Usuarios con permisos para
+     * realizar este tipo de transacciones son los usuarios de tipo Administrador y los del Depto.
+     * de Cuentas Corrientes*/
+    private void jMenuItem25ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem25ActionPerformed
+        if(rol == 2 || rol == 5)       
+        {
+            ModificarCalificacionNegocio mdfCNeg = new ModificarCalificacionNegocio();
+            try {
+                this.jpprincipal.add(mdfCNeg);
+                mdfCNeg.setSelected(true);
+                mdfCNeg.toFront();
+                mdfCNeg.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem25ActionPerformed
+
+    /*Menu utilizado para el lanzamiento del reporte que muestra el listado de los contribuyentes
+     * en Mora con la Municipalidad. Los usuarios con autorizacion para este transaccion son los usuarios
+     * de tipo administrador y los de cuentas corrientes.*/
+    private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
+        if (rol == 2 || rol == 5) {
+            ReportsRepository rr = new ReportsRepository();
+            rr.ContribuyentesMoraGeneral();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem26ActionPerformed
+
+    /*Menu utilizado para el lanzamiento del reporte que muestra el listado de los Inmuebles
+     * en Mora con la Municipalidad. Los usuarios con autorizacion para este transaccion son los usuarios
+     * de tipo administrador y los de cuentas corrientes.*/
+    private void jMenuItem28ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem28ActionPerformed
+        if (rol == 2 || rol == 5) {
+            ReportsRepository rr = new ReportsRepository();
+            rr.InmueblesMoraDetail();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+        
+    }//GEN-LAST:event_jMenuItem28ActionPerformed
+
+    /*Menu utilizado para el lanzamiento del reporte que muestra el listado de los Negocios
+     * en Mora con la Municipalidad. Los usuarios con autorizacion para este transaccion son los usuarios
+     * de tipo administrador y los de cuentas corrientes.*/
+    private void jMenuItem29ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem29ActionPerformed
+        if (rol == 2 || rol == 5) {
+            ReportsRepository rr = new ReportsRepository();
+            rr.NegociosMoraDetail();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+        
+    }//GEN-LAST:event_jMenuItem29ActionPerformed
+
+    /*Menu Destinado/Encargado de llamar a la Pantalla de Inicio de Sesion y/o Cambio de sesion de usuarios
+     * Transaccion Disponible Para Todos los Usuarios en General*/
+    private void jMenuItem31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem31ActionPerformed
+        // TODO add your handling code here:
+        Login cambiosesion = new Login();
+        try {
+            cambiosesion.setVisible(true);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en el Proceso \n Intentar Más Tarde");
+            System.out.println(e.toString());
+        }
+    }//GEN-LAST:event_jMenuItem31ActionPerformed
+
+    /*Menú Destinado Para el Ingreso de Nuevos Giros Comerciales al Sistema, Según Surja la Necesidad en el Tiempo
+     * Los Usuarios con Permisos Para Realizar estas Acciones son los Usuarios de Tipo Administrador*/
+    private void jMenuItem32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem32ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2) {
+            AgregarGiros addgr = new AgregarGiros();
+            try {
+                this.jpprincipal.add(addgr);
+                addgr.setSelected(true);
+                addgr.toFront();
+                addgr.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem32ActionPerformed
+
+    /*Menu Destinado al Ingreso de Nuevos Tipos Comerciales en el Sistema de Acuerdo a los Giros
+     * Existentes, Los Usuarios con Permisos sobre estas acciones son los de tipo Administrador*/
+    private void jMenuItem33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem33ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2) {
+            AgregarTiposComercio ATpCom = new AgregarTiposComercio();
+            try {
+                this.jpprincipal.add(ATpCom);
+                ATpCom.setSelected(true);
+                ATpCom.toFront();
+                ATpCom.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem33ActionPerformed
+
+    /*Menu utilizado para la modificacion de las propiedades de los inmuebles ingresados en el sistema
+      * los usuarios con permisos para realizar este tipo de transacciones son los usuarios de tipo 
+      * Administrador y los del Depto. de Catastro.*/
+    private void jMenuItem34ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem34ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            ModificarInmueble mdinm = new ModificarInmueble();
+            try {
+                this.jpprincipal.add(mdinm);
+                mdinm.setSelected(true);
+                mdinm.toFront();
+                mdinm.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem34ActionPerformed
+
+    /*Menu utilizado para la modificacion de las propiedades de los negocios ingresados en el sistema
+     * los usuarios con permisos para realizar este tipo de transacciones son los usuarios de tipo
+     * Administrador y los del Depto. de Catastro.*/
+    private void jMenuItem35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem35ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            ModificarNegocio mdfneg = new ModificarNegocio();
+            try {
+                this.jpprincipal.add(mdfneg);
+                mdfneg.setSelected(true);
+                mdfneg.toFront();
+                mdfneg.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem35ActionPerformed
+
+    /*Menu utilizado para la modificacion de los Giros Comerciales Ingresados en el sistema
+     * los usuarios con permisos para realizar este tipo de transacciones son los usuarios de tipo
+     * Administrador.*/
+    private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2) {
+            ModificarGiros MfGr = new ModificarGiros();
+            try {
+                this.jpprincipal.add(MfGr);
+                MfGr.setSelected(true);
+                MfGr.toFront();
+                MfGr.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem36ActionPerformed
+
+    /*Menu utilizado para la modificacion de los Tipos de Comercio Ingresados en el sistema
+     * los usuarios con permisos para realizar este tipo de transacciones son los usuarios de tipo
+     * Administrador.*/
+    private void jMenuItem37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem37ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2) {
+            ModificarTiposComercio MTpCom = new ModificarTiposComercio();
+            try {
+                this.jpprincipal.add(MTpCom);
+                MTpCom.setSelected(true);
+                MTpCom.toFront();
+                MTpCom.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem37ActionPerformed
+
+    /*Menu utilizado para la modificacion de las Zonas Ingresadas en el sistema los usuarios
+     * con permisos para realizar este tipo de transacciones son los usuarios de tipo
+     * Administrador y los del Depto. de Catastro.*/
+    private void jMenuItem38ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem38ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            ModificarZonas MdfZn = new ModificarZonas();
+            try {
+                this.jpprincipal.add(MdfZn);
+                MdfZn.setSelected(true);
+                MdfZn.toFront();
+                MdfZn.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permisos para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem38ActionPerformed
+
+    /*Menu Destinado a la Asociacion de la Calificacion Anual o segun los lineamientos de la Alcaldia
+     * Para los diferentes Negocios. Los Usuarios encargados de realizar este tipo de transacciones son
+     * los usuarios de tipo administrativo y los usuarios pertenecientes al Depto. de Cuentas Corrientes.*/
+    private void jMenuItem24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem24ActionPerformed
+        if(rol == 2 || rol == 5)
+        {
+            AplicarCalificacionNegocio appcneg = new AplicarCalificacionNegocio();
+            try {
+                this.jpprincipal.add(appcneg);
+                appcneg.setSelected(true);
+                appcneg.toFront();
+                appcneg.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem24ActionPerformed
+
+    /*Menu Destinado Para la Asociacion y Desasociacion de los Impuestos hacia los Inmuebles basados
+     * en los diferentes criterios de calificacion de la Alcaldia. Los Usuarios Con Permisos para la 
+     * Realizacion de este tipo de transaccion son los Usuarios de Tipo Administrador y los Usuarios
+     * del Depto. de Cuentas Corrientes.*/
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        if(rol== 2 || rol == 5)
+        {
+            addimpuestosinmuebles adiminm = new addimpuestosinmuebles();
+            try {
+                this.jpprincipal.add(adiminm);
+                adiminm.setSelected(true);
+                adiminm.toFront();
+                adiminm.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    /*Menu que Permite el Ingreso de Nuevos Montos Para los Impuestos Ingresados en el Sistema
+     * Cuando estos cambian en un periodo determinado. Los Usuarios con Permisos Para Realizar
+     * Esta Transaccion son los Usuarios de Tipo Administrador*/
+    private void jmmntActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmmntActionPerformed
+        if(rol==2)
+        {
+            EstablecerNMontoImp admnti = new EstablecerNMontoImp();
+            try {
+                this.jpprincipal.add(admnti);
+                admnti.setSelected(true);
+                admnti.toFront();
+                admnti.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jmmntActionPerformed
+
+    /*Menu por Medio del Cual se Agregan Nuevas Formulas Para Diferentes Periodos Para los Impuestos
+     * Ingresados en el Sistema, Los Usuarios con Permisos sobre este tipo de Transaccion son Unicamente
+     * Los Usuarios de Tipo Administrador*/
+    private void jMenuItem20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem20ActionPerformed
+        if(rol==2)
+        {
+            EstablecerNForm nwfor = new EstablecerNForm();
+            try {
+                this.jpprincipal.add(nwfor);
+                nwfor.setSelected(true);
+                nwfor.toFront();
+                nwfor.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem20ActionPerformed
+
+    /*Menu que lanza la pantalla para la generacion del reporte que brinda los ingresos recaudados
+     * Mensualmente. Los usuarios con permisos para realizar esta transaccion son los usuarios de Tipo
+     * Administrador y los del Depto. de Cuentas Corrientes.*/
+    private void jMenuItem39ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem39ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 5) {
+            RecaudacionMensual gb = new RecaudacionMensual();
+            try {
+                this.jpprincipal.add(gb);
+                gb.setSelected(true);
+                gb.toFront();
+                gb.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem39ActionPerformed
+
+    /*Menu que lanza la pantalla para la generacion del reporte que brinda los ingresos recaudados
+     * Anual. Los usuarios con permisos para realizar esta transaccion son los usuarios de Tipo
+     * Administrador y los del Depto. de Cuentas Corrientes.*/
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 5) {
+            RecaudacionAnual gb = new RecaudacionAnual();
+            try {
+                this.jpprincipal.add(gb);
+                gb.setSelected(true);
+                gb.toFront();
+                gb.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    /*Menu utilizado para lanzar el reporte de resumen del estado de los contribuyentes con la municipalidad
+     * Los usuarios con acceso a este reporte son los usuarios administrativos y los encargados del depto. de
+     * cuentas corrientes.*/
+    private void jMenuItem40ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem40ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 5) {
+            ReportsRepository rr = new ReportsRepository();
+            rr.ResumenEstado();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem40ActionPerformed
+
+    private void jMenuItem41ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem41ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            FUATM1 gb = new FUATM1();
+            try {
+                this.jpprincipal.add(gb);
+                gb.setSelected(true);
+                gb.toFront();
+                gb.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem41ActionPerformed
+
+    private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            FUATM2 formulario = new FUATM2();
+            try {
+                this.jpprincipal.add(formulario);
+                formulario.setSelected(true);
+                formulario.toFront();
+                formulario.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem42ActionPerformed
+
+    private void jMenuItem43ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem43ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            FUATM3 gb = new FUATM3();
+            try {
+                this.jpprincipal.add(gb);
+                gb.setSelected(true);
+                gb.toFront();
+                gb.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem43ActionPerformed
+
+    private void jMenuItem44ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem44ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            FUATM4 formulario = new FUATM4();
+            try {
+                this.jpprincipal.add(formulario);
+                formulario.setSelected(true);
+                formulario.toFront();
+                formulario.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem44ActionPerformed
+
+    private void jMenuItem45ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem45ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 4) {
+            FUATM5 formulario = new FUATM5();
+            try {
+                this.jpprincipal.add(formulario);
+                formulario.setSelected(true);
+                formulario.toFront();
+                formulario.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem45ActionPerformed
+
+    private void jMenuItem46ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem46ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 5) {
+            FUATM13i formulario = new FUATM13i();
+            try {
+                this.jpprincipal.add(formulario);
+                formulario.setSelected(true);
+                formulario.toFront();
+                formulario.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem46ActionPerformed
+
+    /*Menu que lanza la pantalla para la generacion del reporte que brinda los ingresos detallados
+     * Por impuesto de acuerdo al periodo ingresado en pantalla. Los usuarios con permisos para 
+     * realizar esta transaccion son los usuarios de Tipo
+     * Administrador y los del Depto. de Cuentas Corrientes.*/
+    private void jMenuItem47ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem47ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 5) {
+            IgresosImpuestos InImp = new IgresosImpuestos();
+            try {
+                this.jpprincipal.add(InImp);
+                InImp.setSelected(true);
+                InImp.toFront();
+                InImp.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem47ActionPerformed
+
+    private void jMenuItem48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem48ActionPerformed
+        if (rol == 2 || rol == 5) {
+            PagosAdelantadoReporte InImp = new PagosAdelantadoReporte();
+            try {
+                this.jpprincipal.add(InImp);
+                InImp.setSelected(true);
+                InImp.toFront();
+                InImp.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem48ActionPerformed
+
+    private void jMenuItem49ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem49ActionPerformed
+        ChancePassword InImp = new ChancePassword();
+            try {
+                this.jpprincipal.add(InImp);
+                InImp.setSelected(true);
+                InImp.toFront();
+                InImp.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_jMenuItem49ActionPerformed
+
+    private void jMenuItem50ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem50ActionPerformed
+        // TODO add your handling code here:
+        if (rol==2 || rol==5) {
+            EstadosDeCuenta stct = new EstadosDeCuenta();
+            try {
+                this.jpprincipal.add(stct);
+                stct.setSelected(true);
+                stct.toFront();
+                stct.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem50ActionPerformed
+
+    private void jMenuItem51ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem51ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol== 5) {
+            FUATM6 ntts = new FUATM6();
+            try {
+                this.jpprincipal.add(ntts);
+                ntts.setSelected(true);
+                ntts.toFront();
+                ntts.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem51ActionPerformed
+
+    private void jMenuItem52ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem52ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol == 5) {
+            FUATM7 sdi = new FUATM7();
+            try {
+                this.jpprincipal.add(sdi);
+                sdi.setSelected(true);
+                sdi.toFront();
+                sdi.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem52ActionPerformed
+
+    private void jMenuItem53ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem53ActionPerformed
+        // TODO add your handling code here:
+        if (rol == 2 || rol ==5) {
+            guia gia= new guia();
+            try {
+                this.jpprincipal.add(gia);
+                gia.setSelected(true);
+                gia.toFront();
+                gia.setVisible(true);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al cargar el formulario");
+                System.out.println(e.toString());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Usted no tiene permiso para usar este modulo");
+        }
+    }//GEN-LAST:event_jMenuItem53ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -547,6 +1823,8 @@ public class SLorenzoParent extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -554,10 +1832,48 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
+    private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
+    private javax.swing.JMenuItem jMenuItem28;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem30;
+    private javax.swing.JMenuItem jMenuItem31;
+    private javax.swing.JMenuItem jMenuItem32;
+    private javax.swing.JMenuItem jMenuItem33;
+    private javax.swing.JMenuItem jMenuItem34;
+    private javax.swing.JMenuItem jMenuItem35;
+    private javax.swing.JMenuItem jMenuItem36;
+    private javax.swing.JMenuItem jMenuItem37;
+    private javax.swing.JMenuItem jMenuItem38;
+    private javax.swing.JMenuItem jMenuItem39;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem40;
+    private javax.swing.JMenuItem jMenuItem41;
+    private javax.swing.JMenuItem jMenuItem42;
+    private javax.swing.JMenuItem jMenuItem43;
+    private javax.swing.JMenuItem jMenuItem44;
+    private javax.swing.JMenuItem jMenuItem45;
+    private javax.swing.JMenuItem jMenuItem46;
+    private javax.swing.JMenuItem jMenuItem47;
+    private javax.swing.JMenuItem jMenuItem48;
+    private javax.swing.JMenuItem jMenuItem49;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem50;
+    private javax.swing.JMenuItem jMenuItem51;
+    private javax.swing.JMenuItem jMenuItem52;
+    private javax.swing.JMenuItem jMenuItem53;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
@@ -566,9 +1882,9 @@ public class SLorenzoParent extends javax.swing.JFrame {
     private javax.swing.JMenu jmarchivo;
     private javax.swing.JMenuItem jmcontribuyente;
     private javax.swing.JMenu jmdf;
-    private javax.swing.JMenu jmeditar;
     private javax.swing.JMenuItem jmimpuesto;
     private javax.swing.JMenuItem jminm;
+    private javax.swing.JMenu jmmantenimientos;
     private javax.swing.JMenuItem jmmnt;
     private javax.swing.JMenuItem jmpsalir;
     private javax.swing.JMenu jmtrans;

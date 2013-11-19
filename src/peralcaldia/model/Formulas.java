@@ -22,6 +22,8 @@ import javax.persistence.Table;
  *
  * @author alex
  */
+/*Clase Formulas que representa a la entidad formula de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="formulas"
     ,schema="public"
@@ -33,17 +35,19 @@ public class Formulas {
     private String fechainicio;
     private String fechafin;
     private String formula;
+    private String uso;
 
     public Formulas() {
     }
 
-    public Formulas(int id, Impuestos impuestos, Estados estados, String fechainicio, String fechafin, String formula) {
+    public Formulas(int id, Impuestos impuestos, Estados estados, String fechainicio, String fechafin, String formula, String uso) {
         this.id = id;
         this.impuestos = impuestos;
         this.estados = estados;
         this.fechainicio = fechainicio;
         this.fechafin = fechafin;
         this.formula = formula;
+        this.uso = uso;
     }
     
     @Id 
@@ -103,5 +107,14 @@ public class Formulas {
 
     public void setFormula(String formula) {
         this.formula = formula;
+    }
+    
+    @Column(name="uso")
+    public String getUso() {
+        return uso;
+    }
+
+    public void setUso(String uso) {
+        this.uso = uso;
     }    
 }

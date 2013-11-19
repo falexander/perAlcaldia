@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report11" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bed7df99-228d-4fd8-b223-262e2f65f58b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nombre" class="java.lang.String"/>
+	<parameter name="inmueble" class="java.lang.String"/>
+	<parameter name="negocio" class="java.lang.String"/>
+	<parameter name="1" class="java.lang.String"/>
+	<parameter name="2" class="java.lang.String"/>
+	<parameter name="3" class="java.lang.String"/>
+	<parameter name="4" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="0ad87a46-53f6-4110-874c-f196655bacc6" x="128" y="1" width="356" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="2a6ba091-c8ab-48da-a5b1-4ddcfbbaa575" mode="Transparent" x="20" y="6" width="90" height="60" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["/home/lazo/NetBeansProjects/perAlcaldia-master/imagenes/San lorenzo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="6a607565-8226-4457-b360-d876827629ef" x="510" y="7" width="62" height="60"/>
+				<imageExpression><![CDATA["/home/lazo/NetBeansProjects/perAlcaldia-master/imagenes/escudo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7bb0bb53-3e21-40d8-82a2-0e3815af0449" x="0" y="0" width="100" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[F-UATM- 11]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3d8e901b-2f8b-4805-96b5-e3186bacd0df" x="110" y="0" width="374" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[CONSTANCIA DE SOLVENCIA MUNICIPAL
+]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5877c94a-d5e5-4418-8b75-be7dc4a2bc49" x="6" y="1" width="562" height="29"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[El infrascrito Jefe de la Unidad de Administración Tributaria Municipal, HACE CONSTAR QUE:
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0565dd33-64da-4db7-adeb-95e3074280cc" x="47" y="14" width="486" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="338" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="cc73d6ce-76f5-4b54-8e8e-9847a7b5d5a8" x="66" y="13" width="482" height="31"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Se encuentra solvente del pago de sus impuestos, tasas y
+contribuciones especiales de este Municipio.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e26622c7-93b1-4242-9a7f-05a6ea907dd1" x="66" y="53" width="482" height="29"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[No se encuentra registrado como contribuyente en nuestra base de
+datos ni tarjetas de cuentas Corrientes.
+]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="bd6f3c5a-b941-40d3-b3d7-17f555cfa37a" x="22" y="13" width="25" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="c348f64d-88ea-41c3-a52d-c5e5d68a7c3e" x="22" y="53" width="25" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="8fc976ed-b8e5-4f3e-b57a-831b10b15524" x="29" y="216" width="521" height="17"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Y para los trámites que estime conveniente se extiende la presente, el dia ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0870fe4-6cbe-400a-984e-7998f790ac86" x="29" y="268" width="521" height="31"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[La presente CONSTANCIA DE SOLVENCIA MUNICIPAL, tiene validez hasta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b60cad43-c813-47ad-9092-7db80f7fab62" x="27" y="311" width="521" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[NOTA: cualquier alteración anula la presente Solvencia Municipal.
+]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement uuid="7c94cbd8-e0af-48fc-8621-05bb25dfb48a" x="29" y="233" width="228" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM yyyy">
+				<reportElement uuid="f9e46c3c-4e00-41f2-baa9-8acb79461836" x="29" y="281" width="228" height="18"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="9f5fd91a-9ac7-4707-814d-1bf430b47b05" x="22" y="92" width="25" height="20"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="a8cccba7-f8f8-477a-989a-9886d440e5ca" x="68" y="92" width="482" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Se encuentra solvente del pago de sus impuestos, del inmueble ubicado en:
+
+]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="35b5ee2a-0065-41e5-a7fd-6244582668dd" x="69" y="105" width="481" height="31"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{inmueble}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="42b396dd-5720-4196-80ec-61769226c249" x="69" y="147" width="482" height="17"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Se encuentra solvente del pago de sus impuestos, del negocio ubicado en:
+
+]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement uuid="2aa290a1-c78b-48fe-b14a-f6e8ee852234" x="22" y="147" width="25" height="20"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="76d3f3a9-abdb-4775-b4d5-2f830758392a" x="71" y="164" width="481" height="31"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{negocio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0f481111-0d89-4e16-9494-a72d77d41535" x="22" y="13" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bda96472-8523-4790-8181-14e0068d69af" x="22" y="53" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e73ce005-e4e4-4741-ac5b-8ff77c6dec81" x="22" y="92" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6e56a30c-f85a-4144-b959-ed4362a88550" x="22" y="147" width="25" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="117" splitType="Stretch">
+			<line>
+				<reportElement uuid="10791503-96f4-477f-b8e1-6ae77842b669" x="19" y="43" width="238" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="e55cd620-2ffb-4f86-949d-dd8394f71764" x="308" y="44" width="256" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="16907b6f-98dd-4fd9-81a8-2d7e15bcb072" x="19" y="67" width="238" height="41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jennifer Elizabeth Cadenas de Fajardo
+Encargado de Cuentas Corrientes, Cobro y
+Recuperación de Mora.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8fdddd57-ca86-4299-af0c-2c14033b3721" x="353" y="66" width="156" height="41"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Rosa Yanira Rodríguez
+Jefe de la UATM
+]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="fb8e9cf0-fe90-4587-892a-b12128de4d76" x="0" y="0" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="b1b4b2c3-9400-44af-846a-19803e777547" x="0" y="116" width="572" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="823097c5-1bfd-47b7-8f0f-db2e30f58b22" x="0" y="1" width="1" height="115"/>
+			</line>
+			<line>
+				<reportElement uuid="9277f144-af19-48db-b4e8-4b5f72130a2e" x="278" y="1" width="1" height="115"/>
+			</line>
+			<line>
+				<reportElement uuid="905fb8ee-d014-40de-8bfd-24a43929706e" x="571" y="1" width="1" height="115"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

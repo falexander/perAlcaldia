@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5A" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0fc07ca2-aacd-493e-bb8c-5da8bdfefa9e">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="662f2850-02ae-4668-aecf-51fcd96059a2" x="131" y="4" width="313" height="69"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALCALDIA MUNICIPAL DE
+SAN LORENZO
+DEPARTAMENTO DE AHUACHAPAN, EL SALVADOR, C. A.
+UNIDAD DE ADMINISTRACION TRIBUTARIA MUNICIPAL
+TEL. 2401-4077 – FAX 2401-4213
+]]></text>
+			</staticText>
+			<image scaleImage="RetainShape" hAlign="Left" vAlign="Top">
+				<reportElement uuid="e14e02f8-6995-4886-b85a-157e0df4f929" mode="Transparent" x="4" y="-2" width="115" height="75" forecolor="#000000" backcolor="#FFFFFF"/>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["C:\\Users\\Florentin\\Documents\\GitHub\\perAlcaldia\\imagenes\\San lorenzo.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement uuid="359a6b67-a1d1-4370-8c97-cb48a0e77838" x="483" y="-2" width="89" height="75"/>
+				<imageExpression><![CDATA["C:\\Users\\Florentin\\Documents\\GitHub\\perAlcaldia\\imagenes\\escudo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="3df74275-ca00-4df6-8e68-27b4b72afc8a" x="4" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F-UATM- 5A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ab4bdd5e-f82d-4db8-baff-446d15ff3472" x="131" y="0" width="313" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACUERDO Y NOTIFICACION MUNICIPAL]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="272" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="478b4762-2c6a-49c9-abcb-281b2f1b3e99" x="4" y="0" width="44" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ACTA Nº]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="13d38bab-7d11-433e-90ce-d0ba04dc6aa6" x="48" y="0" width="100" height="20"/>
+				<textElement/>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -23,6 +23,8 @@ import javax.persistence.Table;
  *
  * @author alex
  */
+/*Clase Montosimpuestosnegocios que representa a la entidad montosimpuestosnegocios de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="montosimpuestosnegocios"
     ,schema="public"
@@ -34,17 +36,19 @@ public class Montosimpuestosnegocios {
     private BigDecimal monto;
     private String fechainicio;
     private String fechafin;
+    private String uso;
 
     public Montosimpuestosnegocios() {
     }
 
-    public Montosimpuestosnegocios(int id, Negocios negocios, Estados estados, BigDecimal monto, String fechainicio, String fechafin) {
+    public Montosimpuestosnegocios(int id, Negocios negocios, Estados estados, BigDecimal monto, String fechainicio, String fechafin, String uso) {
         this.id = id;
         this.negocios = negocios;
         this.estados = estados;
         this.monto = monto;
         this.fechainicio = fechainicio;
         this.fechafin = fechafin;
+        this.uso = uso;
     }
     
     @Id 
@@ -98,12 +102,21 @@ public class Montosimpuestosnegocios {
     }
     
     @Column(name="fecha_fin")    
-
     public String getFechafin() {
         return fechafin;
     }
 
     public void setFechafin(String fechafin) {
         this.fechafin = fechafin;
-    }    
+    }
+    
+    @Column(name="uso")
+    public String getUso() {
+        return uso;
+    }
+
+    public void setUso(String uso) {
+        this.uso = uso;
+    }
+    
 }

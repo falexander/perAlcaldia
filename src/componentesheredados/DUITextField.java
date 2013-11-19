@@ -4,12 +4,17 @@
  */
 package componentesheredados;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author alex
  */
+/*Componente Personalizado, Exclusivo Para la Validación de los DUI que Serán Ingresados en el Sistema
+  en las Diferentes Pantallas que Involucran Dicho Campo*/
 public class DUITextField extends JFormattedTextField{
     
     public DUITextField(){
@@ -25,10 +30,25 @@ public class DUITextField extends JFormattedTextField{
                 if (((caracter < '0') || (caracter > '9')) && (caracter != 127 /* * DELETE/BACK_SPACE */)) {
                     evt.consume();
                 }
+            }
+        });
+        
+        addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+            }
 
-                if (caracter == 13) {
-                    tf.transferFocus();
+            @Override
+            public void focusLost(FocusEvent e) {
+                JFormattedTextField tf = (JFormattedTextField) e.getComponent();
+                if (tf.getText().length() > 0) {
+                    if (tf.getText().length() == 10) {
+                        tf.transferFocus();
+                    } else {
+                        tf.requestFocus();
+                    }
                 }
+
             }
         });        
     }        

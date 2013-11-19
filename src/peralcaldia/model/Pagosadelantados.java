@@ -26,6 +26,8 @@ import javax.persistence.TemporalType;
  *
  * @author alex
  */
+/*Clase Pagosadelantados que representa a la entidad pagosadelantados de la Base de Datos modelo de trabajo de  
+ * hibernate con anotaciones*/
 @Entity
 @Table(name="pagosadelantados"
     ,schema="public"

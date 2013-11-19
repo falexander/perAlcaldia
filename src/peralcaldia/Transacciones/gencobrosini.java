@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.Transacciones;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import util.cobrosiniciales;
 
@@ -11,6 +13,7 @@ import util.cobrosiniciales;
  *
  * @author alex
  */
+/*Pantalla utilizada para la generacion de los cobros iniciales*/
 public class gencobrosini extends javax.swing.JInternalFrame {
 
     /**
@@ -18,6 +21,9 @@ public class gencobrosini extends javax.swing.JInternalFrame {
      */
     public gencobrosini() {
         initComponents();
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
 
     /**
@@ -73,6 +79,7 @@ public class gencobrosini extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /*Comprobacion y Generacion de la Carga Inicial*/
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int contador = 0;

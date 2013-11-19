@@ -12,6 +12,8 @@ import java.math.RoundingMode;
  *
  * @author alex
  */
+/*Clase Destinada a la Visualizacion y Seleccion de los Pagos sin Cancelar de Inmuebles y Negocios
+  Implementando ademas la interfaz IModelTable para la Generalizacion de la Carga de Datos en los JTable*/
 public class Vpgnocansincheckbox implements IModelTable{
     private String PERIODO;
     private BigDecimal MONTO_IMPUESTOS;

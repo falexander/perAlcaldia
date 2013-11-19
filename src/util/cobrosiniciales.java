@@ -23,6 +23,7 @@ import peralcaldia.model.Impuestos;
 import peralcaldia.model.Impuestosinmuebles;
 import peralcaldia.model.Formulas;
 import peralcaldia.model.Contribuyentes;
+import peralcaldia.model.Detallepagos;
 import peralcaldia.model.Estados;
 import peralcaldia.model.Montosimpuestos;
 import peralcaldia.model.Montosimpuestosnegocios;
@@ -30,16 +31,17 @@ import peralcaldia.model.Negocios;
 import peralcaldia.model.Pagos;
 import peralcaldia.model.Pagosadelantados;
 
-
 /**
  *
  * @author alex
  */
+/*Clase utilizada para la generacion de los diferentes tipos de cobros generados por el sistema*/
 public class cobrosiniciales {
 
     AbstractDAO dao = new AbstractDAO();
     Boleta valboleta = new Boleta();
 
+    /*Metodo para Generar la Carga Inicial de los Inmuebles*/
     public boolean cargainicialinmuebles() {
         //Inicializando variables para el calculo e inserción de los pagos/cobros.
         Estados est = new Estados();
@@ -59,7 +61,10 @@ public class cobrosiniciales {
         List<totalesimpuestosinmuebles> listatotalesimp = new ArrayList<totalesimpuestosinmuebles>();
         List<verpagos> listapagosaingresar = new ArrayList<verpagos>();
         verpagos addpagoslist = new verpagos();
-        
+        List<listadetalledepagos> ldetallepagos = new ArrayList<listadetalledepagos>();
+        listadetalledepagos objetodetalle = new listadetalledepagos();
+        Detallepagos detallepago = new Detallepagos();
+
         BigDecimal total = BigDecimal.ZERO;
         //Variables fechas formula para obtener el monto a aplicar durante el periodo de validez de la formula.
         SimpleDateFormat formatoDelTexto = new SimpleDateFormat("MM-yyyy");
@@ -127,7 +132,7 @@ public class cobrosiniciales {
                                 //Formula a Ejecutar
                                 formula = xformula.getFormula();
                                 //Comprobando si el impuesto tiene o no formula a interpretar
-                                if (formula.equals("0")) {
+                                if (formula.equals("0") && !xformula.getUso().equals("OBSOLETO")) {
                                     Iterator itmntimpuestos = listamontos.iterator();
                                     while (itmntimpuestos.hasNext()) {
                                         tmpmontoim = (Montosimpuestos) itmntimpuestos.next();
@@ -188,9 +193,9 @@ public class cobrosiniciales {
                                                 finmonto = c2.getTime();
                                             }
                                             //procesando
-                                            if ((inimonto.compareTo(finifor) > 0 || inimonto.compareTo(finifor) == 0) && (finmonto.compareTo(ffinfor) < 0 || finmonto.compareTo(ffinfor) == 0)) {
+                                            if ((inimonto.compareTo(finifor) > 0 || inimonto.compareTo(finifor) == 0) && (finmonto.compareTo(ffinfor) < 0 || finmonto.compareTo(ffinfor) == 0) && !tmpmontoim.getUso().equals("OBSOLETO")) {
                                                 adding = new totalesimpuestosinmuebles();
-                                                adding.setNImpuesto(impuesto.getNombre());
+                                                adding.setImpuesto(impuesto);
                                                 adding.setFechainicio(tmpmontoim.getFechainicio());
                                                 adding.setFechafin(tmpmontoim.getFechafin());
                                                 adding.setTotalimpuesto(tmpmontoim.getMonto());
@@ -203,7 +208,7 @@ public class cobrosiniciales {
                                         }
                                     }
                                 } //En el caso de interpretación de formulas
-                                else {
+                                else if (!xformula.getUso().equals("OBSOLETO")) {
                                     Iterator itmntimpuestos = listamontos.iterator();
                                     while (itmntimpuestos.hasNext()) {
                                         tmpmontoim = (Montosimpuestos) itmntimpuestos.next();
@@ -291,7 +296,7 @@ public class cobrosiniciales {
                                             finmonto = c2.getTime();
                                         }
 
-                                        if ((inimonto.compareTo(finifor) > 0 || inimonto.compareTo(finifor) == 0) && (finmonto.compareTo(ffinfor) < 0 || finmonto.compareTo(ffinfor) == 0)) {
+                                        if ((inimonto.compareTo(finifor) > 0 || inimonto.compareTo(finifor) == 0) && (finmonto.compareTo(ffinfor) < 0 || finmonto.compareTo(ffinfor) == 0) && !tmpmontoim.getUso().equals("OBSOLETO")) {
                                             adding = new totalesimpuestosinmuebles();
                                             //Intepretando la formula de acuerdo al monto dado
                                             interprete.put("ML", inmueble.getMetros_lineales());
@@ -304,12 +309,11 @@ public class cobrosiniciales {
                                                 System.out.println(e.toString());
                                                 return false;
                                             }
-                                            adding.setNImpuesto(impuesto.getNombre());
+                                            adding.setImpuesto(impuesto);
                                             adding.setFechainicio(tmpmontoim.getFechainicio());
                                             adding.setFechafin(tmpmontoim.getFechafin());
                                             adding.setTotalimpuesto(new BigDecimal(resultado.toString()).setScale(2, RoundingMode.HALF_EVEN));
                                             listatotalesimp.add(adding);
-
                                         }
                                     }
                                 }
@@ -405,9 +409,13 @@ public class cobrosiniciales {
                                             c2.set(Calendar.MILLISECOND, 59);
                                             finmonto = c2.getTime();
                                         }
-
+                                        objetodetalle = new listadetalledepagos();
                                         if ((finifor.compareTo(inimonto) > 0 || finifor.compareTo(inimonto) == 0) && (ffinfor.compareTo(finmonto) < 0 || ffinfor.compareTo(finmonto) == 0)) {
                                             total = total.add(adding.getTotalimpuesto());
+                                            objetodetalle.setInmueble(inmueble);
+                                            objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                            objetodetalle.setTotalimpuesto(adding);
+                                            ldetallepagos.add(objetodetalle);
                                         }
 
                                     }
@@ -498,9 +506,13 @@ public class cobrosiniciales {
                                             c2.set(Calendar.MILLISECOND, 59);
                                             finmonto = c2.getTime();
                                         }
-
+                                        objetodetalle = new listadetalledepagos();
                                         if ((finifor.compareTo(inimonto) > 0 || finifor.compareTo(inimonto) == 0) && (ffinfor.compareTo(finmonto) < 0 || ffinfor.compareTo(finmonto) == 0)) {
                                             total = total.add(adding.getTotalimpuesto());
+                                            objetodetalle.setInmueble(inmueble);
+                                            objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                            objetodetalle.setTotalimpuesto(adding);
+                                            ldetallepagos.add(objetodetalle);
                                         }
                                     }
                                     try {
@@ -541,9 +553,22 @@ public class cobrosiniciales {
                                 pago.setEstadosid(addpagoslist.getEstapagado());
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getInmuebles().getId() == objetodetalle.getInmueble().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setImpuestos(objetodetalle.getTotalimpuesto().getImpuesto());
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             }
                         }
                         listapagosaingresar = new ArrayList<verpagos>();
+                        ldetallepagos = new ArrayList<listadetalledepagos>();
                         return true;
                     } catch (Exception e) {
                         System.out.println("Error en la inserción de pagos a la BD");
@@ -564,6 +589,7 @@ public class cobrosiniciales {
 
     }
 
+    /*Metodo para Generar la Carga Inicial de los Negocios*/
     public boolean cargainicialnegocios() {
         //Declaración de Variables
         List<Negocios> lnegocios = null;
@@ -577,8 +603,11 @@ public class cobrosiniciales {
         List<verpagos> listadepagos = new ArrayList<verpagos>();
         verpagos addpago = new verpagos();
         Estados estado = new Estados();
+        List<listadetalledepagos> ldetallepagos = new ArrayList<listadetalledepagos>();
+        listadetalledepagos objetodetalle = new listadetalledepagos();
+        Detallepagos detallepago = new Detallepagos();
         Date fechainimonto, fechafinmonto, fechainicioperiodo, fechafinperiodo, fecharegistronegocio;
-        
+
         int anio, mes, mesfinal, anioactual, resultado;
         String periodoevaluar;
         BigDecimal total = BigDecimal.ZERO;
@@ -589,7 +618,7 @@ public class cobrosiniciales {
             lpagos = dao.findByWhereStatement(Pagos.class, "negocios_id between 1 and 15 and mespagado <> 'VARIOS ADELANTADO'");
         } catch (Exception e) {
             System.out.println("Hubo un Error en la comprobación inicial");
-            
+
             return false;
         }
         //recuperando todos los inmuebles que se encuentran activos
@@ -598,7 +627,7 @@ public class cobrosiniciales {
             try {
                 lnegocios = dao.findByWhereStatement(Negocios.class, "estados_id = 1");
             } catch (Exception e) {
-                
+
                 System.out.println("Ocurrio un Error durante la carga de los negocios");
                 return false;
             }
@@ -630,12 +659,14 @@ public class cobrosiniciales {
                                 fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                             }
                             //Agregando los montos impuestos del negocio
-                            addtotales = new totalesimpuestosinmuebles();
-                            addtotales.setNImpuesto(Integer.toString(mntimpnegocio.getNegocios().getId()));
-                            addtotales.setFechainicio(fechainimonto);
-                            addtotales.setFechafin(fechafinmonto);
-                            addtotales.setTotalimpuesto(mntimpnegocio.getMonto());
-                            ltotales.add(addtotales);
+                            if (!mntimpnegocio.getUso().equals("OBSOLETO")) {
+                                addtotales = new totalesimpuestosinmuebles();
+                                addtotales.setNImpuesto(Integer.toString(mntimpnegocio.getNegocios().getId()));
+                                addtotales.setFechainicio(fechainimonto);
+                                addtotales.setFechafin(fechafinmonto);
+                                addtotales.setTotalimpuesto(mntimpnegocio.getMonto());
+                                ltotales.add(addtotales);
+                            }
                             //Fin de la Iteración de los montos correspondientes a los impuestos del negocio.
                         }
                         //Calculando los pagos de los negocios
@@ -669,8 +700,13 @@ public class cobrosiniciales {
                                     total = BigDecimal.ZERO;
                                     while (listatotales.hasNext()) {
                                         addtotales = (totalesimpuestosinmuebles) listatotales.next();
+                                        objetodetalle = new listadetalledepagos();
                                         if (codemd5.compararangofechas(fechainicioperiodo, fechafinperiodo, addtotales.getFechainicio(), addtotales.getFechafin())) {
                                             total = total.add(addtotales.getTotalimpuesto());
+                                            objetodetalle.setNegocio(negocio);
+                                            objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                            objetodetalle.setTotalimpuesto(addtotales);
+                                            ldetallepagos.add(objetodetalle);
                                         }
                                     }
                                     try {
@@ -707,8 +743,13 @@ public class cobrosiniciales {
                                     total = BigDecimal.ZERO;
                                     while (listatotales.hasNext()) {
                                         addtotales = (totalesimpuestosinmuebles) listatotales.next();
+                                        objetodetalle = new listadetalledepagos();
                                         if (codemd5.compararangofechas(fechainicioperiodo, fechafinperiodo, addtotales.getFechainicio(), addtotales.getFechafin())) {
                                             total = total.add(addtotales.getTotalimpuesto());
+                                            objetodetalle.setNegocio(negocio);
+                                            objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                            objetodetalle.setTotalimpuesto(addtotales);
+                                            ldetallepagos.add(objetodetalle);
                                         }
                                     }
                                     try {
@@ -750,9 +791,21 @@ public class cobrosiniciales {
                                 pago.setEstadosid(addpago.getEstapagado());
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getNegocios().getId() == objetodetalle.getNegocio().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             }
                         }
                         listadepagos = new ArrayList<verpagos>();
+                        ldetallepagos = new ArrayList<listadetalledepagos>();
                         return true;
                     } catch (Exception e) {
                         System.out.println("Error en la inserción de pagos a la BD");
@@ -772,11 +825,14 @@ public class cobrosiniciales {
         }
     }
 
+    /*Metodo Para Generar la Carga Mensual de los Nuevos Inmuebles Ingresados en el Sistema durante un periodo determinado*/
     public boolean gencbnuevosinmuebles() {
         List<Pagos> lpagos = null;
         Pagos pago = new Pagos();
         List<Inmuebles> linmuebles = null;
         Inmuebles inmueble = new Inmuebles();
+        List<listadetalledepagos> ldetallepagos = new ArrayList<listadetalledepagos>();
+        listadetalledepagos objetodetalle = new listadetalledepagos();
         List<totalesimpuestosinmuebles> ltotales = new ArrayList<totalesimpuestosinmuebles>();
         totalesimpuestosinmuebles addtotal = new totalesimpuestosinmuebles();
         List<verpagos> lverpagos = new ArrayList<verpagos>();
@@ -790,8 +846,9 @@ public class cobrosiniciales {
         Impuestos impuesto = new Impuestos();
         Estados estado = new Estados();
         Estados estcancel = new Estados();
+        Detallepagos detallepago = new Detallepagos();
         Date fechainiformula, fechafinformula, fechainimonto, fechafinmonto, fechainiperiodo, fechafinperiodo, fecharegistro;
-        BigDecimal montototal;        
+        BigDecimal montototal;
         int mes, anioactual;
         String periodoevaluar;
         BigDecimal total = BigDecimal.ZERO;
@@ -812,7 +869,7 @@ public class cobrosiniciales {
 
         try {
             //Cargando lista de inmuebles que han sido ingresados en el periodo actual
-            linmuebles = dao.findByWhereStatement(Inmuebles.class, "fecharegistro between '" + fechainiperiodo.toString() + "' and '" + fechafinperiodo.toString() + "'");
+            linmuebles = dao.findByWhereStatement(Inmuebles.class, "fecharegistro between '" + fechainiperiodo.toString() + "' and '" + fechafinperiodo.toString() + "' and estados_id = 1");
         } catch (Exception e) {
             System.out.println(e.toString());
             System.out.println("Error durante la recuperación de nuevos inmuebles");
@@ -860,7 +917,7 @@ public class cobrosiniciales {
                                 xformula = (Formulas) formit.next();
                                 //Recuperando la formula
                                 formula = xformula.getFormula();
-                                if (formula.equals("0")) {
+                                if (formula.equals("0") && !xformula.getUso().equals("OBSOLETO")) {
                                     //Iterando la lista de montos impuestos para validos para la formula
                                     Iterator iteradormontosimpuesto = lmontosimpuestos.iterator();
                                     while (iteradormontosimpuesto.hasNext()) {
@@ -883,9 +940,10 @@ public class cobrosiniciales {
                                             fechafinmonto = codemd5.formatearfechaultimahora(montoimpuesto.getFechafin());
                                             fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                                         }
-                                        if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula)) {
+                                        if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula) && !montoimpuesto.getUso().equals("OBSOLETO")) {
                                             addtotal = new totalesimpuestosinmuebles();
-                                            addtotal.setNImpuesto(impuesto.getNombre());
+                                            //Lista Totales
+                                            addtotal.setImpuesto(impuesto);
                                             addtotal.setFechainicio(fechainimonto);
                                             addtotal.setFechafin(fechafinmonto);
                                             addtotal.setTotalimpuesto(montoimpuesto.getMonto());
@@ -893,7 +951,7 @@ public class cobrosiniciales {
                                         }
                                     }
                                 } //En el caso de interpretación de formulas
-                                else {
+                                else if (!xformula.getUso().equals("OBSOLETO")) {
                                     Iterator iteradormontosimpuesto = lmontosimpuestos.iterator();
                                     while (iteradormontosimpuesto.hasNext()) {
                                         montoimpuesto = (Montosimpuestos) iteradormontosimpuesto.next();
@@ -922,8 +980,9 @@ public class cobrosiniciales {
                                             fechafinmonto = codemd5.formatearfechaultimahora(montoimpuesto.getFechafin());
                                             fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                                         }
-                                        if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula)) {
+                                        if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula) && !montoimpuesto.getUso().equals("OBSOLETO")) {
                                             addtotal = new totalesimpuestosinmuebles();
+                                            objetodetalle = new listadetalledepagos();
                                             //Intepretando la formula de acuerdo al monto dado
                                             interprete.put("ML", inmueble.getMetros_lineales());
                                             interprete.put("MC", inmueble.getMetros_cuadrados());
@@ -935,7 +994,8 @@ public class cobrosiniciales {
                                                 System.out.println(e.toString());
                                                 return false;
                                             }
-                                            addtotal.setNImpuesto(impuesto.getNombre());
+                                            //listatotales
+                                            addtotal.setImpuesto(impuesto);
                                             addtotal.setFechainicio(fechainimonto);
                                             addtotal.setFechafin(fechafinmonto);
                                             addtotal.setTotalimpuesto(new BigDecimal(resultadoformula.toString()).setScale(2, RoundingMode.HALF_EVEN));
@@ -950,8 +1010,14 @@ public class cobrosiniciales {
                         total = BigDecimal.ZERO;
                         while (ltotalesiterador.hasNext()) {
                             addtotal = (totalesimpuestosinmuebles) ltotalesiterador.next();
+                            objetodetalle = new listadetalledepagos();
                             if (codemd5.compararangofechas(fechainiperiodo, fechafinperiodo, addtotal.getFechainicio(), addtotal.getFechafin())) {
                                 total = total.add(addtotal.getTotalimpuesto());
+                                //Guardando los detalles de los impuestos por inmueble y periodo a evaluar.
+                                objetodetalle.setInmueble(inmueble);
+                                objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                objetodetalle.setTotalimpuesto(addtotal);
+                                ldetallepagos.add(objetodetalle);
                             }
                         }
                         //ingresando el pago del inmueble agregado en el presente periodo
@@ -962,6 +1028,7 @@ public class cobrosiniciales {
                             vpg.setMespagado(periodoevaluar);
                             vpg.setMonto(total);
                             lverpagos.add(vpg);
+
                         } catch (Exception e) {
                             System.out.println("Error durante la carga inicial de pagos");
                             System.out.println(e.toString());
@@ -980,7 +1047,7 @@ public class cobrosiniciales {
                         //seteando el pago.
                         vpg = (verpagos) itvp.next();
                         if (vpg.getInmueble().getImpuestosinmuebleses().size() != 0) {
-                            montototal = aplicarpgadelantado(vpg.getInmueble(),null,vpg.getMonto(),vpg.getMespagado());
+                            montototal = aplicarpgadelantado(vpg.getInmueble(), null, vpg.getMonto(), vpg.getMespagado());
                             if (montototal.compareTo(vpg.getMonto()) == 1) {
                                 pago = new Pagos();
                                 pago.setInmuebles(vpg.getInmueble());
@@ -995,7 +1062,19 @@ public class cobrosiniciales {
                                 pago.setEstadosid(estcancel);
                                 //Guardando
                                 dao.save(pago);
-                                
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getInmuebles().getId() == objetodetalle.getInmueble().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setImpuestos(objetodetalle.getTotalimpuesto().getImpuesto());
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
+
                             } else {
                                 pago = new Pagos();
                                 pago.setInmuebles(vpg.getInmueble());
@@ -1006,10 +1085,23 @@ public class cobrosiniciales {
                                 pago.setEstadosid(vpg.getEstapagado());
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getInmuebles().getId() == objetodetalle.getInmueble().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setImpuestos(objetodetalle.getTotalimpuesto().getImpuesto());
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             }
                         }
                     }
                     lverpagos = new ArrayList<verpagos>();
+                    ldetallepagos = new ArrayList<listadetalledepagos>();
                     return true;
                 } catch (Exception e) {
                     System.out.println("Error en la inserción de pagos a la BD");
@@ -1025,6 +1117,7 @@ public class cobrosiniciales {
         }
     }
 
+    /*Metodo Para Generar la Carga Mensual de los Nuevos Negocios Ingresados en el Sistema durante un periodo determinado*/
     public boolean gencbnuevosnegocios() {
         //Declaración de Variables
         List<Negocios> lnegocios = null;
@@ -1039,8 +1132,11 @@ public class cobrosiniciales {
         verpagos addpago = new verpagos();
         Estados estado = new Estados();
         Estados estcancel = new Estados();
+        List<listadetalledepagos> ldetallepagos = new ArrayList<listadetalledepagos>();
+        listadetalledepagos objetodetalle = new listadetalledepagos();
+        Detallepagos detallepago = new Detallepagos();
         Date fechainimonto, fechafinmonto, fechainicioperiodo, fechafinperiodo;
-        
+
         int anio, mes, mesfinal, anioactual, resultado;
         String periodoevaluar;
         BigDecimal total = BigDecimal.ZERO;
@@ -1057,7 +1153,7 @@ public class cobrosiniciales {
 
         //Cargando lista de negocios que han sido ingresados en el periodo actual
         try {
-            lnegocios = dao.findByWhereStatement(Negocios.class, "fecha_registro between '" + fechainicioperiodo.toString() + "' and '" + fechafinperiodo.toString() + "'");
+            lnegocios = dao.findByWhereStatement(Negocios.class, "fecha_registro between '" + fechainicioperiodo.toString() + "' and '" + fechafinperiodo.toString() + "' and estados_id = 1");
         } catch (Exception e) {
             System.out.println(e.toString());
             System.out.println("Error durante la recuperacion de inmuebles del periodo actual");
@@ -1106,12 +1202,13 @@ public class cobrosiniciales {
                                 fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                             }
                             //Agregando los montos impuestos del negocio
-                            addtotales = new totalesimpuestosinmuebles();
-                            addtotales.setNImpuesto(Integer.toString(mntimpnegocio.getNegocios().getId()));
-                            addtotales.setFechainicio(fechainimonto);
-                            addtotales.setFechafin(fechafinmonto);
-                            addtotales.setTotalimpuesto(mntimpnegocio.getMonto());
-                            ltotales.add(addtotales);
+                            if (!mntimpnegocio.getUso().equals("OBSOLETO")) {
+                                addtotales = new totalesimpuestosinmuebles();
+                                addtotales.setFechainicio(fechainimonto);
+                                addtotales.setFechafin(fechafinmonto);
+                                addtotales.setTotalimpuesto(mntimpnegocio.getMonto());
+                                ltotales.add(addtotales);
+                            }
                             //Fin de la Iteración de los montos correspondientes a los impuestos del negocio.                            
                         }
                         //Iterando los montos impuestos totales.
@@ -1119,8 +1216,13 @@ public class cobrosiniciales {
                         total = BigDecimal.ZERO;
                         while (listatotalesiterador.hasNext()) {
                             addtotales = (totalesimpuestosinmuebles) listatotalesiterador.next();
+                            objetodetalle = new listadetalledepagos();
                             if (codemd5.compararangofechas(fechainicioperiodo, fechafinperiodo, addtotales.getFechainicio(), addtotales.getFechafin())) {
                                 total = total.add(addtotales.getTotalimpuesto());
+                                objetodetalle.setNegocio(negocio);
+                                objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                objetodetalle.setTotalimpuesto(addtotales);
+                                ldetallepagos.add(objetodetalle);
                             }
                         }
                         try {
@@ -1150,7 +1252,7 @@ public class cobrosiniciales {
                         //seteando el pago.
                         addpago = (verpagos) itvp.next();
                         if (addpago.getNegocio().getMntimpuestoes().size() != 0) {
-                            montototal = aplicarpgadelantado(null,addpago.getNegocio(),addpago.getMonto(),addpago.getMespagado());
+                            montototal = aplicarpgadelantado(null, addpago.getNegocio(), addpago.getMonto(), addpago.getMespagado());
                             if (montototal.compareTo(addpago.getMonto()) == 1) {
                                 pago = new Pagos();
                                 pago.setNegocios(addpago.getNegocio());
@@ -1165,6 +1267,17 @@ public class cobrosiniciales {
                                 pago.setEstadosid(estcancel);
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getNegocios().getId() == objetodetalle.getNegocio().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             } else {
                                 pago = new Pagos();
                                 pago.setNegocios(addpago.getNegocio());
@@ -1175,11 +1288,22 @@ public class cobrosiniciales {
                                 pago.setEstadosid(addpago.getEstapagado());
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getNegocios().getId() == objetodetalle.getNegocio().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             }
-
                         }
                     }
                     listadepagos = new ArrayList<verpagos>();
+                    ldetallepagos = new ArrayList<listadetalledepagos>();
                     return true;
                 } catch (Exception e) {
                     System.out.println("Error en la inserción de pagos a la BD");
@@ -1196,6 +1320,7 @@ public class cobrosiniciales {
         }
     }
 
+    /*Metodo Para Generar la Carga Mensual Inmuebles*/
     public boolean generarcobrosmensualesinmuebles() {
         List<Pagos> lpagos = null;
         Pagos pago = new Pagos();
@@ -1214,9 +1339,12 @@ public class cobrosiniciales {
         Impuestos impuesto = new Impuestos();
         Estados estado = new Estados();
         Estados estcancel = new Estados();
+        List<listadetalledepagos> ldetallepagos = new ArrayList<listadetalledepagos>();
+        listadetalledepagos objetodetalle = new listadetalledepagos();
+        Detallepagos detallepago = new Detallepagos();
         Date fechainiformula, fechafinformula, fechainimonto, fechafinmonto, fechainiperiodo, fechafinperiodo, fecharegistro;
         Date fechaultimopago;
-        
+
         int anio, mes, mesfinal, anioactual;
         String periodoevaluar;
         BigDecimal total = BigDecimal.ZERO;
@@ -1268,7 +1396,7 @@ public class cobrosiniciales {
                             //Recuperando la formula.
                             formula = xformula.getFormula();
                             //Comprobando si existe o no formula a Interpretar
-                            if (formula.equals("0")) {
+                            if (formula.equals("0") && !xformula.getUso().equals("OBSOLETO")) {
                                 //Iterando los montos correspondientes al impuesto
                                 Iterator mntimpiterador = lmontosimpuestos.iterator();
                                 while (mntimpiterador.hasNext()) {
@@ -1298,8 +1426,9 @@ public class cobrosiniciales {
                                     }
 
                                     //Agregando los montos a la lista de totales
-                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula)) {
+                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula) && !montoimpuesto.getUso().equals("OBSOLETO")) {
                                         addtotal = new totalesimpuestosinmuebles();
+                                        addtotal.setImpuesto(impuesto);
                                         addtotal.setNImpuesto(impuesto.getNombre());
                                         addtotal.setFechainicio(fechainimonto);
                                         addtotal.setFechafin(fechafinmonto);
@@ -1309,7 +1438,7 @@ public class cobrosiniciales {
                                 }
                             }//Fin de la Iteración cuando no hay formula a interpretar.
                             //Inicio del caso de Interpretación de formulas.
-                            else {
+                            else if (!xformula.getUso().equals("OBSOLETO")) {
                                 Iterator mntimpiterador = lmontosimpuestos.iterator();
                                 while (mntimpiterador.hasNext()) {
                                     montoimpuesto = (Montosimpuestos) mntimpiterador.next();
@@ -1346,7 +1475,7 @@ public class cobrosiniciales {
                                         fechafinmonto = codemd5.formatearfechaultimahora(montoimpuesto.getFechafin());
                                         fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                                     }
-                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula)) {
+                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula) && !montoimpuesto.getUso().equals("OBSOLETO")) {
                                         addtotal = new totalesimpuestosinmuebles();
                                         //Intepretando la formula de acuerdo al monto dado
                                         interprete.put("ML", inmueble.getMetros_lineales());
@@ -1359,6 +1488,7 @@ public class cobrosiniciales {
                                             System.out.println(e.toString());
                                             return false;
                                         }
+                                        addtotal.setImpuesto(impuesto);
                                         addtotal.setNImpuesto(impuesto.getNombre());
                                         addtotal.setFechainicio(fechainimonto);
                                         addtotal.setFechafin(fechafinmonto);
@@ -1403,8 +1533,13 @@ public class cobrosiniciales {
                                 total = BigDecimal.ZERO;
                                 while (ltotiterador.hasNext()) {
                                     addtotal = (totalesimpuestosinmuebles) ltotiterador.next();
+                                    objetodetalle = new listadetalledepagos();
                                     if (codemd5.compararangofechas(fechainiperiodo, fechafinperiodo, addtotal.getFechainicio(), addtotal.getFechafin())) {
                                         total = total.add(addtotal.getTotalimpuesto());
+                                        objetodetalle.setInmueble(inmueble);
+                                        objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                        objetodetalle.setTotalimpuesto(addtotal);
+                                        ldetallepagos.add(objetodetalle);
                                     }
                                 }
                                 //ingresando el pago del inmueble agregado en el presente periodo
@@ -1444,8 +1579,13 @@ public class cobrosiniciales {
                                 total = BigDecimal.ZERO;
                                 while (ltotiterador.hasNext()) {
                                     addtotal = (totalesimpuestosinmuebles) ltotiterador.next();
+                                    objetodetalle = new listadetalledepagos();
                                     if (codemd5.compararangofechas(fechainiperiodo, fechafinperiodo, addtotal.getFechainicio(), addtotal.getFechafin())) {
                                         total = total.add(addtotal.getTotalimpuesto());
+                                        objetodetalle.setInmueble(inmueble);
+                                        objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                        objetodetalle.setTotalimpuesto(addtotal);
+                                        ldetallepagos.add(objetodetalle);
                                     }
                                 }
                                 //ingresando el pago del inmueble agregado en el presente periodo
@@ -1489,7 +1629,7 @@ public class cobrosiniciales {
                             //Recuperando la formula.
                             formula = xformula.getFormula();
                             //Comprobando si existe o no formula a Interpretar
-                            if (formula.equals("0")) {
+                            if (formula.equals("0") && !xformula.getUso().equals("OBSOLETO")) {
                                 //Iterando los montos correspondientes al impuesto
                                 Iterator mntimpiterador = lmontosimpuestos.iterator();
                                 while (mntimpiterador.hasNext()) {
@@ -1519,8 +1659,9 @@ public class cobrosiniciales {
                                     }
 
                                     //Agregando los montos a la lista de totales
-                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula)) {
+                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula) && !montoimpuesto.getUso().equals("OBSOLETO")) {
                                         addtotal = new totalesimpuestosinmuebles();
+                                        addtotal.setImpuesto(impuesto);
                                         addtotal.setNImpuesto(impuesto.getNombre());
                                         addtotal.setFechainicio(fechainimonto);
                                         addtotal.setFechafin(fechafinmonto);
@@ -1530,7 +1671,7 @@ public class cobrosiniciales {
                                 }
                             }//Fin de la Iteración cuando no hay formula a interpretar.
                             //Inicio del caso de Interpretación de formulas.
-                            else {
+                            else if (!xformula.getUso().equals("OBSOLETO")) {
                                 Iterator mntimpiterador = lmontosimpuestos.iterator();
                                 while (mntimpiterador.hasNext()) {
                                     montoimpuesto = (Montosimpuestos) mntimpiterador.next();
@@ -1567,7 +1708,7 @@ public class cobrosiniciales {
                                         fechafinmonto = codemd5.formatearfechaultimahora(montoimpuesto.getFechafin());
                                         fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                                     }
-                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula)) {
+                                    if (codemd5.compararangofechas(fechainimonto, fechafinmonto, fechainiformula, fechafinformula) && !montoimpuesto.getUso().equals("OBSOLETO")) {
                                         addtotal = new totalesimpuestosinmuebles();
                                         //Intepretando la formula de acuerdo al monto dado
                                         interprete.put("ML", inmueble.getMetros_lineales());
@@ -1580,6 +1721,7 @@ public class cobrosiniciales {
                                             System.out.println(e.toString());
                                             return false;
                                         }
+                                        addtotal.setImpuesto(impuesto);
                                         addtotal.setNImpuesto(impuesto.getNombre());
                                         addtotal.setFechainicio(fechainimonto);
                                         addtotal.setFechafin(fechafinmonto);
@@ -1619,8 +1761,13 @@ public class cobrosiniciales {
                                 total = BigDecimal.ZERO;
                                 while (ltotiterador.hasNext()) {
                                     addtotal = (totalesimpuestosinmuebles) ltotiterador.next();
+                                    objetodetalle = new listadetalledepagos();
                                     if (codemd5.compararangofechas(fechainiperiodo, fechafinperiodo, addtotal.getFechainicio(), addtotal.getFechafin())) {
                                         total = total.add(addtotal.getTotalimpuesto());
+                                        objetodetalle.setInmueble(inmueble);
+                                        objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                        objetodetalle.setTotalimpuesto(addtotal);
+                                        ldetallepagos.add(objetodetalle);
                                     }
                                 }
                                 //ingresando el pago del inmueble agregado en el presente periodo
@@ -1660,8 +1807,13 @@ public class cobrosiniciales {
                                 total = BigDecimal.ZERO;
                                 while (ltotiterador.hasNext()) {
                                     addtotal = (totalesimpuestosinmuebles) ltotiterador.next();
+                                    objetodetalle = new listadetalledepagos();
                                     if (codemd5.compararangofechas(fechainiperiodo, fechafinperiodo, addtotal.getFechainicio(), addtotal.getFechafin())) {
                                         total = total.add(addtotal.getTotalimpuesto());
+                                        objetodetalle.setInmueble(inmueble);
+                                        objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                        objetodetalle.setTotalimpuesto(addtotal);
+                                        ldetallepagos.add(objetodetalle);
                                     }
                                 }
                                 //ingresando el pago del inmueble agregado en el presente periodo
@@ -1709,6 +1861,18 @@ public class cobrosiniciales {
                                 pago.setEstadosid(estcancel);
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getInmuebles().getId() == objetodetalle.getInmueble().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setImpuestos(objetodetalle.getTotalimpuesto().getImpuesto());
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             } else {
                                 pago = new Pagos();
                                 pago.setInmuebles(vpg.getInmueble());
@@ -1719,17 +1883,30 @@ public class cobrosiniciales {
                                 pago.setEstadosid(vpg.getEstapagado());
                                 //Guardando
                                 dao.save(pago);
-                            }                            
-                            ncont +=1;
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getInmuebles().getId() == objetodetalle.getInmueble().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setImpuestos(objetodetalle.getTotalimpuesto().getImpuesto());
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
+                            }
+                            ncont += 1;
                         }
-                        
+
                     }
                     lverpagos = new ArrayList<verpagos>();
+                    ldetallepagos = new ArrayList<listadetalledepagos>();
                     if (ncont != 0) {
                         return true;
-                    }else{
+                    } else {
                         return false;
-                    }                    
+                    }
                 } catch (Exception e) {
                     System.out.println("Error en la inserción de pagos a la BD");
                     System.out.println(e.toString());
@@ -1746,6 +1923,7 @@ public class cobrosiniciales {
         }
     }
 
+    /*Metodo Para Generar la Carga Mensual de los Negocios*/
     public boolean generarcobrosmensualesnegocios() {
         //Declaración de Variables
         List<Negocios> lnegocios = null;
@@ -1760,8 +1938,12 @@ public class cobrosiniciales {
         verpagos addpago = new verpagos();
         Estados estado = new Estados();
         Estados estcancel = new Estados();
+        //Lista contenedora de los Detalles de los pagos.
+        List<listadetalledepagos> ldetallepagos = new ArrayList<listadetalledepagos>();
+        listadetalledepagos objetodetalle = new listadetalledepagos();
+        Detallepagos detallepago = new Detallepagos();
         Date fechainimonto, fechafinmonto, fechainicioperiodo, fechafinperiodo, fecharegistronegocio, fechaultimopago;
-        
+
         int anio, mes, mesfinal, anioactual, resultado;
         String periodoevaluar;
         BigDecimal total = BigDecimal.ZERO;
@@ -1830,12 +2012,14 @@ public class cobrosiniciales {
                             fechafinmonto = codemd5.obteniendoultimodiames(fechafinmonto);
                         }
                         //Agregando los montos impuestos del negocio
-                        addtotales = new totalesimpuestosinmuebles();
-                        addtotales.setNImpuesto(Integer.toString(mntimpnegocio.getNegocios().getId()));
-                        addtotales.setFechainicio(fechainimonto);
-                        addtotales.setFechafin(fechafinmonto);
-                        addtotales.setTotalimpuesto(mntimpnegocio.getMonto());
-                        ltotales.add(addtotales);
+                        if (!mntimpnegocio.getUso().equals("OBSOLETO")) {
+                            addtotales = new totalesimpuestosinmuebles();
+                            addtotales.setNImpuesto(Integer.toString(mntimpnegocio.getNegocios().getId()));
+                            addtotales.setFechainicio(fechainimonto);
+                            addtotales.setFechafin(fechafinmonto);
+                            addtotales.setTotalimpuesto(mntimpnegocio.getMonto());
+                            ltotales.add(addtotales);
+                        }
                         //Fin de la Iteración de los montos correspondientes a los impuestos del negocio.
                     }
                     //Calculando los pagos de los negocios
@@ -1860,8 +2044,13 @@ public class cobrosiniciales {
                                 total = BigDecimal.ZERO;
                                 while (listatotales.hasNext()) {
                                     addtotales = (totalesimpuestosinmuebles) listatotales.next();
+                                    objetodetalle = new listadetalledepagos();
                                     if (codemd5.compararangofechas(fechainicioperiodo, fechafinperiodo, addtotales.getFechainicio(), addtotales.getFechafin())) {
                                         total = total.add(addtotales.getTotalimpuesto());
+                                        objetodetalle.setNegocio(negocio);
+                                        objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                        objetodetalle.setTotalimpuesto(addtotales);
+                                        ldetallepagos.add(objetodetalle);
                                     }
                                 }
                                 try {
@@ -1898,8 +2087,13 @@ public class cobrosiniciales {
                                 total = BigDecimal.ZERO;
                                 while (listatotales.hasNext()) {
                                     addtotales = (totalesimpuestosinmuebles) listatotales.next();
+                                    objetodetalle = new listadetalledepagos();
                                     if (codemd5.compararangofechas(fechainicioperiodo, fechafinperiodo, addtotales.getFechainicio(), addtotales.getFechafin())) {
                                         total = total.add(addtotales.getTotalimpuesto());
+                                        objetodetalle.setNegocio(negocio);
+                                        objetodetalle.setPeriodoevaluar(periodoevaluar);
+                                        objetodetalle.setTotalimpuesto(addtotales);
+                                        ldetallepagos.add(objetodetalle);
                                     }
                                 }
                                 try {
@@ -1946,6 +2140,17 @@ public class cobrosiniciales {
                                 pago.setEstadosid(estcancel);
                                 //Guardando
                                 dao.save(pago);
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getNegocios().getId() == objetodetalle.getNegocio().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
                             } else {
                                 pago = new Pagos();
                                 pago.setNegocios(addpago.getNegocio());
@@ -1956,16 +2161,28 @@ public class cobrosiniciales {
                                 pago.setEstadosid(addpago.getEstapagado());
                                 //Guardando
                                 dao.save(pago);
-                            }                         
-                            ncont +=1;
+                                //Iterando la lista de detalles para guardar el respectivo detalle del pago.
+                                Iterator dtliterador = ldetallepagos.iterator();
+                                while (dtliterador.hasNext()) {
+                                    objetodetalle = (listadetalledepagos) dtliterador.next();
+                                    if (pago.getMespagado().equals(objetodetalle.getPeriodoevaluar()) && pago.getNegocios().getId() == objetodetalle.getNegocio().getId()) {
+                                        detallepago = new Detallepagos();
+                                        detallepago.setMonto_impuesto(objetodetalle.getTotalimpuesto().getTotalimpuesto());
+                                        detallepago.setPagos(pago);
+                                        dao.save(detallepago);
+                                    }
+                                }
+                            }
+                            ncont += 1;
                         }
                     }
                     listadepagos = new ArrayList<verpagos>();
+                    ldetallepagos = new ArrayList<listadetalledepagos>();
                     if (ncont != 0) {
                         return true;
-                    }else{
+                    } else {
                         return false;
-                    }                    
+                    }
                 } catch (Exception e) {
                     System.out.println("Error en la inserción de pagos a la BD");
                     System.out.println(e.toString());
@@ -1976,29 +2193,30 @@ public class cobrosiniciales {
                 //cuando se convierta en booleana retorna falso en este bloque
             }
         }//Fin comprobando si la lista de negocios no esta vacia.
-        else{
+        else {
             System.out.println("No se encontraron negocios activos");
             return false;
         }
     }
-    
-    public BigDecimal aplicarpgadelantado(Inmuebles inmueble, Negocios negocio, BigDecimal Monto, String periodo){
+
+    /*Metodo utilizado para la aplicacion de pagos adelantados de inmuebles o negocios*/
+    public BigDecimal aplicarpgadelantado(Inmuebles inmueble, Negocios negocio, BigDecimal Monto, String periodo) {
         if (inmueble != null) {
             BigDecimal mntotal = BigDecimal.ZERO;
             BigDecimal tfiesta = BigDecimal.ZERO;
             Impuestos fiesta;
-            Set<Formulas> forfiesta = null;            
+            Set<Formulas> forfiesta = null;
             Formulas xformula = new Formulas();
             Date fechaforini, fechaforfin, fechaperini, fechaperfin;
             //Variables para interpretar formulas
             ScriptEngineManager manager = new ScriptEngineManager();
             ScriptEngine interprete = manager.getEngineByName("js");
             String formula;
-            Object resultadoformula = new Object();            
+            Object resultadoformula = new Object();
             //Variables para verificar si es posible aplicar el pago adelantado.
             List<Pagosadelantados> listapagosadelantados = null;
             Pagosadelantados pgadel = new Pagosadelantados();
-            BigDecimal Saldo, tmpsaldo, res;                        
+            BigDecimal Saldo, tmpsaldo, res;
             //Formateando fechas correspondientes a los periodos.
             //ini
             fechaperini = codemd5.formatearfechazerohoras(periodo);
@@ -2010,7 +2228,7 @@ public class cobrosiniciales {
             fiesta = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, " nombre = 'FIESTA'");
             forfiesta = fiesta.getFormulaes();
             if (forfiesta != null) {
-                Iterator iteradorformua  = forfiesta.iterator();
+                Iterator iteradorformua = forfiesta.iterator();
                 while (iteradorformua.hasNext()) {
                     xformula = (Formulas) iteradorformua.next();
                     formula = xformula.getFormula();
@@ -2021,8 +2239,7 @@ public class cobrosiniciales {
                         //fin
                         fechaforfin = codemd5.formatearfechaultimahora(xformula.getFechafin());
                         fechaforfin = codemd5.obteniendoultimodiames(fechaforfin);
-                    }
-                    else{
+                    } else {
                         //inicio
                         fechaforini = codemd5.formatearfechazerohoras(xformula.getFechainicio());
                         fechaforini = codemd5.obteniendoprimerdiames(fechaforini);
@@ -2039,9 +2256,9 @@ public class cobrosiniciales {
                             System.out.println("Error durante la evaluación de la formula");
                             System.out.println(e.toString());
                         }
-                        tfiesta = new BigDecimal(resultadoformula.toString()).setScale(2, RoundingMode.HALF_EVEN);                                                                        
+                        tfiesta = new BigDecimal(resultadoformula.toString()).setScale(2, RoundingMode.HALF_EVEN);
                     }
-                }                
+                }
             }
             mntotal = mntotal.add(Monto);
             mntotal = mntotal.add(tfiesta);
@@ -2055,21 +2272,19 @@ public class cobrosiniciales {
                     pgadel = (Pagosadelantados) iteradorpagosadelantados.next();
                     Saldo = pgadel.getSaldo();
                     Saldo = Saldo.add(tmpsaldo);
-                    if (Saldo.compareTo(mntotal) == 1 || Saldo.compareTo(mntotal) == 0) {                        
+                    if (Saldo.compareTo(mntotal) == 1 || Saldo.compareTo(mntotal) == 0) {
                         Saldo = Saldo.subtract(mntotal);
                         pgadel.setSaldo(Saldo);
-                        valboleta = (Boleta) dao.findByWhereStatementoneobj(Boleta.class, "id = "+ pgadel.getBoleta().getId());
+                        valboleta = (Boleta) dao.findByWhereStatementoneobj(Boleta.class, "id = " + pgadel.getBoleta().getId());
                         dao.update(pgadel);
                         return mntotal;
-                    }
-                    else if(!(iteradorpagosadelantados.hasNext())) {
+                    } else if (!(iteradorpagosadelantados.hasNext())) {
                         tmpsaldo = tmpsaldo.add(pgadel.getSaldo());
                         pgadel.setSaldo(tmpsaldo);
                         dao.update(pgadel);
                         return Monto;
-                        
-                    }
-                    else{
+
+                    } else {
                         tmpsaldo = tmpsaldo.add(pgadel.getSaldo());
                         res = pgadel.getSaldo();
                         res = res.subtract(res);
@@ -2077,7 +2292,7 @@ public class cobrosiniciales {
                         dao.update(pgadel);
                         //dejando a cero el pago adelantado anterior.
                     }
-                }                
+                }
             }
             return Monto;
         }//Fin de Calculo de Monto Total para inmueble
@@ -2085,18 +2300,18 @@ public class cobrosiniciales {
             BigDecimal mntotal = BigDecimal.ZERO;
             BigDecimal tfiesta = BigDecimal.ZERO;
             Impuestos fiesta;
-            Set<Formulas> forfiesta = null;            
+            Set<Formulas> forfiesta = null;
             Formulas xformula = new Formulas();
             Date fechaforini, fechaforfin, fechaperini, fechaperfin;
             //Variables para interpretar formulas
             ScriptEngineManager manager = new ScriptEngineManager();
             ScriptEngine interprete = manager.getEngineByName("js");
             String formula;
-            Object resultadoformula = new Object();            
+            Object resultadoformula = new Object();
             //Variables para verificar si es posible aplicar el pago adelantado.
             List<Pagosadelantados> listapagosadelantados = null;
             Pagosadelantados pgadel = new Pagosadelantados();
-            BigDecimal Saldo, tmpsaldo, res;                        
+            BigDecimal Saldo, tmpsaldo, res;
             //Formateando fechas correspondientes a los periodos.
             //ini
             fechaperini = codemd5.formatearfechazerohoras(periodo);
@@ -2108,7 +2323,7 @@ public class cobrosiniciales {
             fiesta = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, " nombre = 'FIESTA'");
             forfiesta = fiesta.getFormulaes();
             if (forfiesta != null) {
-                Iterator iteradorformua  = forfiesta.iterator();
+                Iterator iteradorformua = forfiesta.iterator();
                 while (iteradorformua.hasNext()) {
                     xformula = (Formulas) iteradorformua.next();
                     formula = xformula.getFormula();
@@ -2119,8 +2334,7 @@ public class cobrosiniciales {
                         //fin
                         fechaforfin = codemd5.formatearfechaultimahora(xformula.getFechafin());
                         fechaforfin = codemd5.obteniendoultimodiames(fechaforfin);
-                    }
-                    else{
+                    } else {
                         //inicio
                         fechaforini = codemd5.formatearfechazerohoras(xformula.getFechainicio());
                         fechaforini = codemd5.obteniendoprimerdiames(fechaforini);
@@ -2137,9 +2351,9 @@ public class cobrosiniciales {
                             System.out.println("Error durante la evaluación de la formula");
                             System.out.println(e.toString());
                         }
-                        tfiesta = new BigDecimal(resultadoformula.toString()).setScale(2, RoundingMode.HALF_EVEN);                                                                        
+                        tfiesta = new BigDecimal(resultadoformula.toString()).setScale(2, RoundingMode.HALF_EVEN);
                     }
-                }                
+                }
             }
             mntotal = mntotal.add(Monto);
             mntotal = mntotal.add(tfiesta);
@@ -2153,21 +2367,19 @@ public class cobrosiniciales {
                     pgadel = (Pagosadelantados) iteradorpagosadelantados.next();
                     Saldo = pgadel.getSaldo();
                     Saldo = Saldo.add(tmpsaldo);
-                    if (Saldo.compareTo(mntotal) == 1 || Saldo.compareTo(mntotal) == 0) {                        
-                        Saldo =Saldo.subtract(mntotal);
+                    if (Saldo.compareTo(mntotal) == 1 || Saldo.compareTo(mntotal) == 0) {
+                        Saldo = Saldo.subtract(mntotal);
                         pgadel.setSaldo(Saldo);
-                        valboleta = (Boleta) dao.findByWhereStatementoneobj(Boleta.class, "id = "+ pgadel.getBoleta().getId());                        
+                        valboleta = (Boleta) dao.findByWhereStatementoneobj(Boleta.class, "id = " + pgadel.getBoleta().getId());
                         dao.update(pgadel);
                         return mntotal;
-                    }
-                    else if(!(iteradorpagosadelantados.hasNext())) {
+                    } else if (!(iteradorpagosadelantados.hasNext())) {
                         tmpsaldo = tmpsaldo.add(pgadel.getSaldo());
                         pgadel.setSaldo(tmpsaldo);
                         dao.update(pgadel);
                         return Monto;
-                        
-                    }
-                    else{
+
+                    } else {
                         tmpsaldo = tmpsaldo.add(pgadel.getSaldo());
                         res = pgadel.getSaldo();
                         res = res.subtract(res);
@@ -2175,14 +2387,13 @@ public class cobrosiniciales {
                         dao.update(pgadel);
                         //dejando a cero el pago adelantado anterior.
                     }
-                }                
+                }
             }
-            return Monto;                        
+            return Monto;
         }//Fin de Calculo de Monto Total para Negocios.
-        else{
+        else {
             System.out.print("No se encontraron inmuebles ni negocios");
             return Monto;
         }//Negocio e Inmuebles igual a null                        
     }
-    
 }

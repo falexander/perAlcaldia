@@ -2,12 +2,19 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package peralcaldia;
+package peralcaldia.MantenimientosIngreso;
 
+import beans.VerImpuestosPorInmuebles;
 import controller.AbstractDAO;
+import controller.InmDAO;
+import controller.UserDAO;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -17,24 +24,45 @@ import peralcaldia.model.Impuestos;
 import peralcaldia.model.Impuestosinmuebles;
 import peralcaldia.model.Inmuebles;
 import peralcaldia.model.Usuarios;
+import util.GCMPNativos;
 
 /**
  *
  * @author alex
  */
+/*Pantalla destinada para la asociacion y desasociacion de los impuestos de los diferentes inmuebles*/
 public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
-    AbstractDAO dao = new AbstractDAO();
+    UserDAO dao = new UserDAO();
     DefaultTableModel tablam = new DefaultTableModel();
-    DefaultTableCellRenderer alinearCentro;
+    Inmuebles inmueble = new Inmuebles();
+    GCMPNativos componentes = new GCMPNativos();
+    Contribuyentes contribuyente = new Contribuyentes();
+    DefaultComboBoxModel modelocontribuyente = new DefaultComboBoxModel();
+    DefaultComboBoxModel modeloinmueble = new DefaultComboBoxModel();
+    DefaultComboBoxModel modeloimpuestos = new DefaultComboBoxModel();
+    DefaultComboBoxModel modeloremoveimpuestos = new DefaultComboBoxModel();
+    List otls= new ArrayList();
     /**
      * Creates new form addimpuestosinmuebles
      */
     public addimpuestosinmuebles() {
         initComponents();
-        fillComboBoxcontribuyente();
-        tablam.addColumn("IMPUESTOS ASOCIADOS");
-        jtiminm.setModel(tablam); 
-        centrardatos();
+        jtiminm.setModel(tablam);
+        modelocontribuyente.addElement("-");
+        modeloinmueble.addElement("-");
+        modeloimpuestos.addElement("-");
+        modeloremoveimpuestos.addElement("-");
+        cmbcontiminm.setModel(modelocontribuyente);
+        cmbimpuestosiminm.setModel(modeloimpuestos);
+        cmbimueblesiminm.setModel(modeloinmueble);
+        cmbrmimp.setModel(modeloremoveimpuestos);
+        txtdui1.setEnabled(false);
+        txtnit1.setEnabled(false);
+        txtnombres1.setEnabled(false);
+        cmbrmimp.setEnabled(false);
+        Dimension pantalla = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension ventana = this.getSize();
+        this.setLocation((pantalla.width - ventana.width) / 2, (pantalla.height - ventana.height) / 4);        
     }
 
     /**
@@ -44,126 +72,173 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
      */
     @SuppressWarnings("unchecked")
     
-    private void fillComboBoxcontribuyente(){
-        List<Usuarios> lusu=null;
-        Usuarios usuobj = new Usuarios();
-        lusu = dao.findByWhereStatement(Usuarios.class, "roles_id=3");
-        
-        Iterator it = lusu.iterator();
-        cmbcontiminm.addItem("-");
-        while (it.hasNext()) {            
-            usuobj = (Usuarios) it.next();
-            cmbcontiminm.addItem(usuobj.getNombres() +" "+usuobj.getApellidos());
-        }        
+    /*Busqueda de Contribuyentes Por Nombres*/
+    public void BuscarContribuyenteNombres() {
+        List lusuarios = null;
+        try {
+            /*Buscando Usuarios que coincidan con el nombre o porcion indicada en el Textbox*/
+            if (!txtnombres1.getText().isEmpty()) {
+                lusuarios = dao.find_usuarios_whereStatement(" a.nombres || ' ' || a.apellidos || ' - DUI:' || b.dui like '%" + txtnombres1.getText().toUpperCase() + "%' and a.roles = 3");
+                if (lusuarios != null && lusuarios.size() > 0) {
+                    componentes.llenarmodelo(modelocontribuyente, lusuarios);
+                    contribuyente = null;
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en la busqueda de usuarios");
+            System.out.println(e.toString());
+        }
+    }
+
+    /*Busqueda de Contribuyentes por DUI*/
+    public void BuscarContribuyentesDui() {
+        List lusuarios = null;
+        try {
+            if (!txtdui1.getText().isEmpty() && !txtdui1.getText().equals("-")) {
+                contribuyente = (Contribuyentes) dao.findByWhereStatementoneobj(Contribuyentes.class, "dui = '" + this.txtdui1.getText() + "'");
+                if (contribuyente != null) {
+                    lusuarios = new ArrayList();
+                    lusuarios.add(contribuyente.getUsuarios().getNombres() + " " + contribuyente.getUsuarios().getApellidos());
+                    componentes.llenarmodelo(modelocontribuyente, lusuarios);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No Existen Contribuyentes registrados con el DUI ingresado");
+
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en la busqueda de usuarios");
+            System.out.println(e.toString());
+        }
+
+    }
+
+    /*Busqueda de contribuyentes por NIT*/
+    public void BuscarContribuyenteNit() {
+        List lusuarios = null;
+        try {
+            if (!txtnit1.getText().isEmpty() && !txtnit1.getText().equals("----")) {
+                contribuyente = (Contribuyentes) dao.findByWhereStatementoneobj(Contribuyentes.class, "nit = '" + this.txtnit1.getText() + "'");
+                if (contribuyente != null) {
+                    lusuarios = new ArrayList();
+                    lusuarios.add(contribuyente.getUsuarios().getNombres() + " " + contribuyente.getUsuarios().getApellidos());
+                    componentes.llenarmodelo(modelocontribuyente, lusuarios);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No Existen Contribuyentes registrados con el NIT ingresado");
+                }
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error en la busqueda de usuarios");
+            System.out.println(e.toString());
+        }
+    }    
+    
+    /*Metodo Utilizado para llenar los inmuebles por contribuyente*/
+    private void LlenarComboInmuebles(){
+        List lista = null;
+        lista = new ArrayList();
+        InmDAO daoinm = new InmDAO();
+        if (!cmbcontiminm.getSelectedItem().toString().equals("-")) {
+            try {
+                if (contribuyente == null && jbtnnombres1.isSelected()) {
+                    contribuyente = (Contribuyentes) dao.findByWhereStatementOneJoinObj(Contribuyentes.class, " as b inner join b.usuarios as a where (a.nombres || ' ' || a.apellidos || ' - DUI:' || b.dui) = '" + cmbcontiminm.getSelectedItem().toString() + "'");
+                }
+                lista = daoinm.find_direcciones_whereStatement(" contribuyentes_id = " + contribuyente.getId() + " and estados_id = 1 ");
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+        if (lista.size() != 0 || lista != null) {
+            componentes.llenarmodelo(modeloinmueble, lista);
+            cmbimueblesiminm.setModel(modeloinmueble);
+        }
     }
     
-    private void fillcomboboxinmueble(){
-        Set<Inmuebles> linmu = null;
-        Set<Contribuyentes> lctr=null;        
-        Contribuyentes contobje = new Contribuyentes();
-        Inmuebles inmtmp = new Inmuebles();
-        Usuarios ustmp = new Usuarios();
-        cmbimueblesiminm.removeAllItems();
-        cmbimueblesiminm.addItem("-");
-        if (cmbcontiminm.getSelectedItem().toString()!= "-") {
-            ustmp = (Usuarios) dao.findByWhereStatementoneobj(Usuarios.class, "(nombres || ' ' || apellidos) = '"+ cmbcontiminm.getSelectedItem().toString() +"'");
-            lctr =  ustmp.getContribuyenteses();        
-
-            Iterator uno = lctr.iterator();
-            while (uno.hasNext()) {
-                contobje = (Contribuyentes) uno.next();            
-            }                
-
-            linmu = contobje.getInmuebleses();
-
-            Iterator it = linmu.iterator();
-
-            while (it.hasNext()) {
-                inmtmp = (Inmuebles) it.next();
-                cmbimueblesiminm.addItem(inmtmp.getDireccion());
-
-            }            
-        }        
-    }
-    
-    private void fillcomboboximpuestos(){
+    /*Metodo utilizado para llenar el combobox de impuestos aplicables a los inmuebles*/
+    private void fillcomboboximpuestos() {
         Set<Impuestosinmuebles> limpinm = null;
         List<Impuestos> limp = null;
+        List lista = new ArrayList();
+        List lstrm = new ArrayList();
         Impuestosinmuebles impinm = new Impuestosinmuebles();
+        VerImpuestosPorInmuebles addvip = new VerImpuestosPorInmuebles();
         Impuestos tmpim = new Impuestos();
         Impuestos otrim = new Impuestos();
         Inmuebles tmpinm = new Inmuebles();
 
         try {
             //Cargando los impuestos posibles de aplicación
-            limp = dao.findAll(Impuestos.class);
+            limp = dao.findByWhereStatement(Impuestos.class, " nombre <> 'MORA' and nombre <> 'FIESTA'");
             //verificando y cargando impuestos posibles de aplicación  
-            limpiartabla();
-            cmbimpuestosiminm.removeAllItems();
-            cmbimpuestosiminm.addItem("-");
-            if (cmbimueblesiminm.getSelectedItem().toString().equals("-")) {                
-            }
-            else{
-                tmpinm = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion = '"+ cmbimueblesiminm.getSelectedItem().toString() +"'");
+            componentes.limpiarmodelo2(modeloimpuestos);
+            if (!cmbimueblesiminm.getSelectedItem().toString().equals("-")) {
+                tmpinm = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion = '" + cmbimueblesiminm.getSelectedItem().toString() + "'");
                 limpinm = tmpinm.getImpuestosinmuebleses();
-                if (limpinm.isEmpty()) {                                        
+                if (limpinm.isEmpty()) {
                     Iterator it = limp.iterator();
                     while (it.hasNext()) {
                         tmpim = (Impuestos) it.next();
-                        cmbimpuestosiminm.addItem(tmpim.getNombre());
+                        lista.add(tmpim.getNombre());
                     }
-                }
-                else{
+                    if (lista.size() > 0 && !lista.isEmpty()) {
+                        componentes.llenarmodelo(modeloimpuestos, lista);
+                        otls = new ArrayList();
+                        tablam = componentes.limpiartabla(tablam);
+                        jtiminm.setModel(tablam);
+                        tablam = componentes.llenartabla(tablam, otls, VerImpuestosPorInmuebles.class);
+                        jtiminm.setModel(tablam);
+                        componentes.centrarcabeceras(jtiminm);
+                    }
+                } else {
                     Iterator it = limp.iterator();
-                    while(it.hasNext()){
-                        otrim=(Impuestos) it.next();
-                        impinm = (Impuestosinmuebles) dao.findByWhereStatementoneobj(Impuestosinmuebles.class, "inmuebles_id =" + tmpinm.getId() + " and " + "impuestos_id ="+ otrim.getId());
+                    otls = new ArrayList();
+                    lista = new ArrayList();
+                    lstrm = new ArrayList();
+                    while (it.hasNext()) {
+                        otrim = (Impuestos) it.next();
+                        impinm = (Impuestosinmuebles) dao.findByWhereStatementoneobj(Impuestosinmuebles.class, "inmuebles_id =" + tmpinm.getId() + " and " + "impuestos_id =" + otrim.getId());
                         try {
                             if (impinm != null) {
-                                Object[] datos = new Object[1];                    
-                                datos[0]=otrim.getNombre();
-                                tablam.addRow(datos);
+                                addvip = new VerImpuestosPorInmuebles();
+                                addvip.setIMPUESTOS_ASIGNADOS_AL_INMUEBLE(otrim.getNombre());
+                                otls.add(addvip);
+                                lstrm.add(otrim.getNombre());
+                            } else {
+                                lista.add(otrim.getNombre());
                             }
-                            else{
-                                cmbimpuestosiminm.addItem(otrim.getNombre());
-                            }                            
                         } catch (Exception e) {
-                        
+                            System.out.println(e.toString());
                         }
-                    }                    
-                }                
+                    }
+                    componentes.llenarmodelo(modeloimpuestos, lista);
+                    componentes.llenarmodelo(modeloremoveimpuestos, lstrm);
+                    tablam = componentes.limpiartabla(tablam);
+                    jtiminm.setModel(tablam);
+                    tablam = componentes.llenartabla(tablam, otls, VerImpuestosPorInmuebles.class);
+                    jtiminm.setModel(tablam);
+                    componentes.centrarcabeceras(jtiminm);
+                }
             }
-            
-            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error en la carga de datos");
-            e.printStackTrace();            
-        }        
+            e.printStackTrace();
+        }
     }
     
-    public void limpiartabla(){
-        try {
-            for (int i=jtiminm.getRowCount()-1; i>=0;i--)
-            {
-            tablam.removeRow(i);
-            }
-        } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error limpiando tabla");
-        }
+    /*Metodo para limpiar pantalla*/
+    public void LimpiarPantalla(){
+        componentes.limpiarmodelo2(modelocontribuyente);
+        componentes.limpiarmodelo2(modeloimpuestos);
+        componentes.limpiarmodelo2(modeloinmueble);
+        componentes.limpiarmodelo2(modeloremoveimpuestos);
+        tablam = componentes.limpiartabla(tablam);
         jtiminm.setModel(tablam);
-    }     
+    }
     
-    public void centrardatos(){
-        alinearCentro = new DefaultTableCellRenderer();
-        alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
-        jtiminm.getColumnModel().getColumn(0).setHeaderRenderer(alinearCentro);
-    }    
-    
+    /*Metodo utilizado para asociar un nuevo impuesto a un inmueble determinado*/
     public void aplicar(){
         Impuestosinmuebles addimpunm = new Impuestosinmuebles();
-        Impuestos impuesto = new Impuestos();
-        Inmuebles inmueble = new Inmuebles();
-        
+        Impuestos impuesto = new Impuestos();        
+        inmueble = new Inmuebles();
         try {
             impuesto = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, "nombre = '"+ cmbimpuestosiminm.getSelectedItem().toString() +"'");
             inmueble = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion = '"+ cmbimueblesiminm.getSelectedItem().toString() +"'");
@@ -173,7 +248,27 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Impuesto Asignado");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar la información");
-            e.printStackTrace();
+            System.out.println(e.toString());
+        }
+        
+    }
+    
+    /*Metodo utilizado para desasociar un impuesto a un inmueble determinado*/
+    public void RemoverImpuesto(){
+        Impuestosinmuebles imptoremv = new Impuestosinmuebles();
+        Impuestos impuesto = new Impuestos();
+        inmueble = new Inmuebles();
+        try {
+            impuesto = (Impuestos) dao.findByWhereStatementoneobj(Impuestos.class, "nombre = '"+ cmbrmimp.getSelectedItem().toString() +"'");
+            inmueble = (Inmuebles) dao.findByWhereStatementoneobj(Inmuebles.class, "direccion = '"+ cmbimueblesiminm.getSelectedItem().toString() +"'");
+            imptoremv = (Impuestosinmuebles) dao.findByWhereStatementoneobj(Impuestosinmuebles.class, " inmuebles_id = " + inmueble.getId() + " and impuestos_id = " + impuesto.getId());
+            inmueble.getImpuestosinmuebleses().remove(imptoremv);
+            dao.delete(imptoremv);
+            dao.update(impuesto);
+            JOptionPane.showMessageDialog(this, "Desasociación Completada");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al Intentar Desasociar el Impuesto");
+            System.out.println(e.toString());
         }
         
     }
@@ -181,6 +276,7 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         cmbcontiminm = new javax.swing.JComboBox();
@@ -195,83 +291,62 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         btnasignar = new javax.swing.JButton();
         btnsiminm = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        txtnombres1 = new componentesheredados.LettersJTextField();
+        jLabel22 = new javax.swing.JLabel();
+        txtdui1 = new componentesheredados.DUITextField();
+        jLabel23 = new javax.swing.JLabel();
+        txtnit1 = new componentesheredados.NitJTextField();
+        btnbuscar1 = new javax.swing.JButton();
+        jbtnnombres1 = new javax.swing.JRadioButton();
+        jbtndui1 = new javax.swing.JRadioButton();
+        jbtnnit1 = new javax.swing.JRadioButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        chxremoverimp = new javax.swing.JCheckBox();
+        cmbrmimp = new javax.swing.JComboBox();
 
         setClosable(true);
         setIconifiable(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Contribuyente:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 14, -1, -1));
 
         cmbcontiminm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbcontiminmActionPerformed(evt);
             }
         });
+        jPanel1.add(cmbcontiminm, new org.netbeans.lib.awtextra.AbsoluteConstraints(93, 11, 264, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmbcontiminm, 0, 197, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(cmbcontiminm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 135, 376, 40));
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Inmueble:");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 14, -1, -1));
 
         cmbimueblesiminm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbimueblesiminmActionPerformed(evt);
             }
         });
+        jPanel2.add(cmbimueblesiminm, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 11, 264, -1));
 
         jLabel3.setText("Impuestos:");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 52, -1, -1));
 
-        cmbimpuestosiminm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbimpuestosiminmActionPerformed(evt);
-            }
-        });
+        jPanel2.add(cmbimpuestosiminm, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 49, 264, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbimueblesiminm, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmbimpuestosiminm, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(cmbimueblesiminm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbimpuestosiminm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 183, 376, 80));
+
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jtiminm.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -286,26 +361,19 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(jtiminm);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 356, 126));
 
-        btnasignar.setText("Asignar Impuesto");
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 269, -1, -1));
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnasignar.setText("Asignar Imp.");
         btnasignar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnasignarActionPerformed(evt);
             }
         });
+        jPanel4.add(btnasignar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, -1));
 
         btnsiminm.setText("Salir");
         btnsiminm.addActionListener(new java.awt.event.ActionListener() {
@@ -313,49 +381,147 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
                 btnsiminmActionPerformed(evt);
             }
         });
+        jPanel4.add(btnsiminm, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 110, -1));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        jButton1.setText("Remover Imp.");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 110, -1));
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 376, 50));
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel20.setText("Criterios de Busqueda");
+
+        jLabel21.setText("Nombres:");
+
+        jLabel22.setText("DUI:");
+
+        try {
+            txtdui1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        jLabel23.setText("NIT:");
+
+        try {
+            txtnit1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-######-###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        btnbuscar1.setText("Buscar");
+        btnbuscar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscar1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jbtnnombres1);
+        jbtnnombres1.setText("Nombres y Apellidos");
+        jbtnnombres1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnnombres1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jbtndui1);
+        jbtndui1.setText("DUI");
+        jbtndui1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtndui1ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jbtnnit1);
+        jbtnnit1.setText("NIT");
+        jbtnnit1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnnit1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnasignar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnsiminm, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel20)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jbtnnombres1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbtndui1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbtnnit1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnbuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtnombres1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtdui1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel23)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtnit1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(84, 84, 84))))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnasignar)
-                    .addComponent(btnsiminm))
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnbuscar1)
+                    .addComponent(jbtnnombres1)
+                    .addComponent(jbtndui1)
+                    .addComponent(jbtnnit1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(txtnombres1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel22)
+                    .addComponent(txtdui1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel23)
+                    .addComponent(txtnit1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, -1));
+
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel4.setText("Impuesto a Remover:");
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 37, -1, -1));
+
+        chxremoverimp.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        chxremoverimp.setText("Desasociar Impuesto al Inmueble");
+        chxremoverimp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chxremoverimpActionPerformed(evt);
+            }
+        });
+        jPanel5.add(chxremoverimp, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 7, -1, -1));
+
+        jPanel5.add(cmbrmimp, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 34, 228, -1));
+
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 370, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -367,43 +533,129 @@ public class addimpuestosinmuebles extends javax.swing.JInternalFrame {
 
     private void cmbcontiminmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbcontiminmActionPerformed
         // TODO add your handling code here:
-        if (cmbcontiminm.getSelectedItem().toString()!= "-") {            
-            fillcomboboxinmueble();
+        if (cmbcontiminm.getSelectedItem() != null) {
+            if (cmbcontiminm.getSelectedItem().toString() != "-") {
+                LlenarComboInmuebles();
+            }
         }
     }//GEN-LAST:event_cmbcontiminmActionPerformed
 
     private void cmbimueblesiminmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbimueblesiminmActionPerformed
         // TODO add your handling code here:
-        if (cmbimueblesiminm.getSelectedItem().toString()!="-") {
-            fillcomboboximpuestos();   
+        if (cmbimueblesiminm.getSelectedItem() != null) {
+            if (cmbimueblesiminm.getSelectedItem().toString() != "-") {
+                fillcomboboximpuestos();
+            }
         }
     }//GEN-LAST:event_cmbimueblesiminmActionPerformed
 
     private void btnasignarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnasignarActionPerformed
         // TODO add your handling code here:        
-        aplicar();
-        fillcomboboximpuestos();
+        if (cmbimpuestosiminm.getSelectedItem() != null) {
+            aplicar();
+            fillcomboboximpuestos();
+        }        
     }//GEN-LAST:event_btnasignarActionPerformed
 
-    private void cmbimpuestosiminmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbimpuestosiminmActionPerformed
+    private void btnbuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscar1ActionPerformed
         // TODO add your handling code here:
+        LimpiarPantalla();
+        if (jbtnnombres1.isSelected()) {
+            BuscarContribuyenteNombres();
+        } else if (jbtndui1.isSelected()) {
+            BuscarContribuyentesDui();
+        } else if (jbtnnit1.isSelected()) {
+            BuscarContribuyenteNit();
+        } else {
+            JOptionPane.showMessageDialog(this, "Elija un criterio de Busqueda e Ingrese el valor a buscar");
+        }
+    }//GEN-LAST:event_btnbuscar1ActionPerformed
 
-    }//GEN-LAST:event_cmbimpuestosiminmActionPerformed
+    private void jbtnnombres1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnnombres1ActionPerformed
+        // TODO add your handling code here:
+        txtnombres1.setEnabled(true);
+        txtdui1.setEnabled(false);
+        txtnit1.setEnabled(false);
+        txtdui1.setText("");
+        txtnit1.setText("");
+        LimpiarPantalla();
+    }//GEN-LAST:event_jbtnnombres1ActionPerformed
+
+    private void jbtndui1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtndui1ActionPerformed
+        // TODO add your handling code here:
+        txtdui1.setEnabled(true);
+        txtnit1.setEnabled(false);
+        txtnombres1.setEnabled(false);
+        txtnit1.setText("");
+        txtnombres1.setText("");
+        LimpiarPantalla();
+    }//GEN-LAST:event_jbtndui1ActionPerformed
+
+    private void jbtnnit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnnit1ActionPerformed
+        // TODO add your handling code here:
+        txtnit1.setEnabled(true);
+        txtnombres1.setEnabled(false);
+        txtdui1.setEnabled(false);
+        txtnombres1.setText("");
+        txtdui1.setText("");
+        LimpiarPantalla();
+    }//GEN-LAST:event_jbtnnit1ActionPerformed
+
+    private void chxremoverimpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chxremoverimpActionPerformed
+        // TODO add your handling code here:
+        if (chxremoverimp.isSelected()) {
+            cmbrmimp.setEnabled(true);
+        }else{
+            cmbrmimp.setEnabled(false);
+            cmbrmimp.setSelectedIndex(0);
+        }
+    }//GEN-LAST:event_chxremoverimpActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if (cmbrmimp.getSelectedItem() != null) {
+            if (!cmbrmimp.getSelectedItem().toString().equals("-")) {
+                RemoverImpuesto();
+                fillcomboboximpuestos();
+                chxremoverimp.setSelected(false);
+                cmbrmimp.setSelectedIndex(0);
+                cmbrmimp.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnasignar;
+    private javax.swing.JButton btnbuscar1;
     private javax.swing.JButton btnsiminm;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox chxremoverimp;
     private javax.swing.JComboBox cmbcontiminm;
     private javax.swing.JComboBox cmbimpuestosiminm;
     private javax.swing.JComboBox cmbimueblesiminm;
+    private javax.swing.JComboBox cmbrmimp;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton jbtndui1;
+    private javax.swing.JRadioButton jbtnnit1;
+    private javax.swing.JRadioButton jbtnnombres1;
     private javax.swing.JTable jtiminm;
+    private componentesheredados.DUITextField txtdui1;
+    private componentesheredados.NitJTextField txtnit1;
+    private componentesheredados.LettersJTextField txtnombres1;
     // End of variables declaration//GEN-END:variables
 }
